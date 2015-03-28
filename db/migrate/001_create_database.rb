@@ -15,9 +15,9 @@ class CreateDatabase < ActiveRecord::Migration
 
   def self.up
 
-  execute "create table persons (id char(10), password char(20) NOT NULL, p_type varchar(10), fname varchar(20) NOT NULL, mname varchar(20), lname varchar(20) NOT NULL, nationality varchar(10), street varchar(50), city varchar(50), state varchar(50), country varchar(50), DOB date, phone char(15), alt_phone char(15), gender char(1), primary key(id) );"
+  execute "create table persons (pid char(10), password char(20) NOT NULL, p_type varchar(10), fname varchar(20) NOT NULL, mname varchar(20), lname varchar(20) NOT NULL, nationality varchar(10), street varchar(50), city varchar(50), state varchar(50), country varchar(50), DOB date, phone char(15), alt_phone char(15), gender char(1), primary key(pid) );"
 
-  execute "create table students( sid char(10), s_type varchar(5), add_comment varchar(100), s_status integer, smoke boolean, spec_sneeds varchar(50), category varchar(20), kin_street varchar(50), kin_city varchar(50), kin_country varchar(50), kin_fname varchar(20) NOT NULL, kin_lname varchar(20) NOT NULL, kin_phone char(10) NOT NULL, kin_middle_name varchar(20), primary key(sid), foreign key(sid) references persons(id) );"
+  execute "create table students( sid char(10), s_type varchar(5), add_comment varchar(100), s_status integer, smoke boolean, spec_sneeds varchar(50), category varchar(20), kin_street varchar(50), kin_city varchar(50), kin_country varchar(50), kin_fname varchar(20) NOT NULL, kin_lname varchar(20) NOT NULL, kin_phone char(10) NOT NULL, kin_middle_name varchar(20), primary key(sid), foreign key(sid) references persons(pid) );"
 
   execute "create table family_members( sid char(10) NOT NULL, fname varchar(20), lname varchar(20), mname varchar(20), DOB date, primary key(sid, fname, lname), foreign key(sid) references students(sid) ON DELETE cascade);"
 
@@ -43,7 +43,7 @@ class CreateDatabase < ActiveRecord::Migration
 
   execute "create table maintenance_requests( ticket_no int, severity varchar(10), created_date date, apt_no varchar(10), place_no varchar(20), unit_no varchar(20), comments varchar(50), sid char(10) NOT NULL, primary key(ticket_no), foreign key(sid) references students(sid), foreign key (apt_no) references family_apts(apt_no), foreign key(place_no) references rooms(place_no), foreign key(unit_no) references buildings_apts(unit_no));"
 
-  execute "create table staffs( staff_id char(10), works_in_building varchar(20), works_in_apt varchar(10), job_title varchar(10), primary key(staff_id), foreign key(staff_id) references persons(id), foreign key(works_in_building) references buildings_apts(unit_no), foreign key(works_in_apt) references family_apts(apt_no));"
+  execute "create table staffs( staff_id char(10), works_in_building varchar(20), works_in_apt varchar(10), job_title varchar(10), primary key(staff_id), foreign key(staff_id) references persons(pid), foreign key(works_in_building) references buildings_apts(unit_no), foreign key(works_in_apt) references family_apts(apt_no));"
 
   execute "create table proc_housing( staff_id char(10), req_no int, process_date date, process_comments varchar(100), primary key(staff_id, req_no), foreign key(req_no) references housing_requests(req_no) on delete cascade, foreign key(staff_id) references staffs(staff_id));"
 

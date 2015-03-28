@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 1) do
   add_index "parking_spots", ["class_id"], name: "class_id", using: :btree
   add_index "parking_spots", ["lot_no"], name: "lot_no", using: :btree
 
-  create_table "persons", force: true do |t|
+  create_table "persons", primary_key: "pid", force: true do |t|
     t.string "password",    limit: 20, null: false
     t.string "p_type",      limit: 10
     t.string "fname",       limit: 20, null: false
