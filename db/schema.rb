@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 1) do
 
   create_table "housing_requests", primary_key: "req_no", force: true do |t|
     t.string  "sid",             limit: 10, null: false
-    t.integer "status"
+    t.integer "app_status"
     t.boolean "parking"
     t.integer "park_class"
     t.boolean "pref_nearby"
@@ -106,13 +106,14 @@ ActiveRecord::Schema.define(version: 1) do
 
   create_table "persons", force: true do |t|
     t.string "password",    limit: 20, null: false
-    t.string "type",        limit: 10
+    t.string "p_type",      limit: 10
     t.string "fname",       limit: 20, null: false
     t.string "mname",       limit: 20
     t.string "lname",       limit: 20, null: false
     t.string "nationality", limit: 10
     t.string "street",      limit: 50
     t.string "city",        limit: 50
+    t.string "state",       limit: 50
     t.string "country",     limit: 50
     t.date   "DOB"
     t.string "phone",       limit: 15
@@ -203,7 +204,7 @@ ActiveRecord::Schema.define(version: 1) do
   create_table "termination_requests", primary_key: "t_req_no", force: true do |t|
     t.integer "lease_no",                    null: false
     t.date    "insp_date"
-    t.integer "status"
+    t.integer "app_status"
     t.string  "reason",           limit: 50
     t.date    "termination_date"
   end
