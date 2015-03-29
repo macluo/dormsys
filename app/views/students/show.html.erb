@@ -1,6 +1,11 @@
 <p id="Student_profile"><%= notice %></p>
 
 <p>
+  <strong>Student ID:</strong>
+  <%= @student.sid %>
+</p>
+
+<p>
   <strong>First Name:</strong>
   <%= @student.person.fname %>
 </p>
@@ -107,7 +112,7 @@
 
 <p>
   <strong>Contact Person Middle Name:</strong>
-  <%= @student.kin_mname %>
+  <%= @student.kin_middle_name %>
 </p>
 
 <p>
@@ -133,6 +138,11 @@
 <p>
   <strong>Contact Person Country:</strong>
   <%= @student.kin_country %>
+</p>
+
+<p>
+  <strong>Add comments:</strong>
+  <%= @student.add_comment %>
 </p>
 
 <%= link_to 'Back', students_path %>
