@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  get 'welcome/index'
+  #get 'welcome/index'
+  #get 'log_in' => 'sessions#new', :as => 'log_in'
+  #get 'log_out' => 'sessions#destroy', :as => 'log_out'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -14,7 +16,7 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-  resources :students, :staffs, :housing_requests, :maintenance_requests, :termination_requests, :signed_leases
+  resources :persons, :students, :staffs, :housing_requests, :maintenance_requests, :termination_requests, :signed_leases
 
   # Example resource route with options:
   #   resources :products do
