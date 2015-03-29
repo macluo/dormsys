@@ -1,5 +1,6 @@
 class Person < ActiveRecord::Base
 
+    self.table_name = "persons" # because Rails think this should be "people"
     self.primary_key = :pid
 
     has_many :staffs, :class_name => 'Staff'
