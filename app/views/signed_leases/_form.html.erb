@@ -1,0 +1,17 @@
+<%= form_for(@signed_lease) do |f| %>
+  <% if @signed_lease.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@signed_lease.errors.count, "error") %> prohibited this signed_lease from being saved:</h2>
+
+      <ul>
+      <% @signed_lease.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

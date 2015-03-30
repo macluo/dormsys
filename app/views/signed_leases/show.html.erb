@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+
+<p>
+  <strong>Student ID:</strong>
+  <%= @signed_lease.sid %>
+</p>
+
+<p>
+  <strong>First Name:</strong>
+  <%= @signed_lease.person.fname %>
+</p>
+
+
+<%= link_to 'Edit', edit_signed_lease_path(@signed_lease) %> |
+<%= link_to 'Back', signed_leases_path %>

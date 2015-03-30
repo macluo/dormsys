@@ -41,8 +41,9 @@ class StudentsController < ApplicationController
   end
 
   private #Variables after this line will be private only!
-  def article_params
-    params.require(:student).permit(:sid)
+  def student_params
+    params.require(:student).permit(:sid, :s_type, :s_status, :smoke, :spec_sneeds, :category, :kin_fname,
+    :kin_middle_name, :kin_lname, :kin_phone, :kin_street, :kin_city, :kin_country, :add_comment)
   end
 
 end
