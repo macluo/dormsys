@@ -1,10 +1,10 @@
-<%= form_for @student do |f| %>
-    <% if @student.errors.any? %>
+<%= form_for @person, url: students_path(@person) do |f| %>
+    <% if @person.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@student.errors.count, "error") %> prohibited
+          <h2><%= pluralize(@person.errors.count, "error") %> prohibited
             this article from being saved:</h2>
           <ul>
-            <% @student.errors.full_messages.each do |msg| %>
+            <% @person.errors.full_messages.each do |msg| %>
                 <li><%= msg %></li>
             <% end %>
           </ul>
@@ -12,74 +12,143 @@
     <% end %>
 
     <p>
-      <%= f.label :sid %><br>
-      <%= f.text_field :sid %>
+      <%= f.label :pid %><br>
+      <%= f.text_field :pid %>
     </p>
 
     <p>
-      <%= f.label :s_type %><br>
-      <%= f.text_field :s_type %>
+      <%= f.label :password %><br>
+      <%= f.text_field :password %>
     </p>
 
     <p>
-      <%= f.label :s_status %><br>
-      <%= f.text_field :s_status %>
+      <%= f.label :p_type %><br>
+      <%= f.text_field :p_type %>
     </p>
 
     <p>
-      <%= f.label :smoke %><br>
-      <%= f.text_field :smoke %>
+      <%= f.label :fname %><br>
+      <%= f.text_field :fname %>
     </p>
 
     <p>
-      <%= f.label :spec_sneeds %><br>
-      <%= f.text_field :spec_sneeds %>
+      <%= f.label :mname %><br>
+      <%= f.text_field :mname %>
     </p>
 
     <p>
-      <%= f.label :category %><br>
-      <%= f.text_field :category %>
+      <%= f.label :lname %><br>
+      <%= f.text_field :lname %>
     </p>
 
     <p>
-      <%= f.label :kin_fname %><br>
-      <%= f.text_field :kin_fname %>
+      <%= f.label :nationality %><br>
+      <%= f.text_field :nationality %>
     </p>
 
     <p>
-      <%= f.label :kin_middle_name %><br>
-      <%= f.text_field :kin_street %>
+      <%= f.label :street %><br>
+      <%= f.text_field :street %>
     </p>
 
     <p>
-      <%= f.label :kin_lname %><br>
-      <%= f.text_field :kin_lname %>
+      <%= f.label :city %><br>
+      <%= f.text_field :city %>
     </p>
 
     <p>
-      <%= f.label :kin_phone %><br>
-      <%= f.text_field :kin_phone %>
+      <%= f.label :state %><br>
+      <%= f.text_field :state %>
     </p>
 
     <p>
-      <%= f.label :kin_street %><br>
-      <%= f.text_field :kin_street %>
+      <%= f.label :country %><br>
+      <%= f.text_field :country %>
     </p>
 
     <p>
-      <%= f.label :kin_city %><br>
-      <%= f.text_field :kin_city %>
+      <%= f.label :DOB %><br>
+      <%= f.text_field :DOB %>
     </p>
 
     <p>
-      <%= f.label :kin_country %><br>
-      <%= f.text_field :kin_country %>
+      <%= f.label :phone %><br>
+      <%= f.text_field :phone %>
     </p>
 
     <p>
-      <%= f.label :add_comment %><br>
-      <%= f.text_area :add_comment %>
+      <%= f.label :alt_phone %><br>
+      <%= f.text_field :alt_phone %>
     </p>
+
+    <%= f.fields_for :student do |g| %>
+
+        <p>
+          <%= g.label :s_type %><br>
+          <%= g.text_field :s_type %>
+        </p>
+
+        <p>
+          <%= g.label :s_status %><br>
+          <%= g.text_field :s_status %>
+        </p>
+
+        <p>
+          <%= g.label :smoke %><br>
+          <%= g.text_field :smoke %>
+        </p>
+
+        <p>
+          <%= g.label :spec_sneeds %><br>
+          <%= g.text_field :spec_sneeds %>
+        </p>
+
+        <p>
+          <%= g.label :category %><br>
+          <%= g.text_field :category %>
+        </p>
+
+        <p>
+          <%= g.label :kin_fname %><br>
+          <%= g.text_field :kin_fname %>
+        </p>
+
+        <p>
+          <%= g.label :kin_middle_name %><br>
+          <%= g.text_field :kin_street %>
+        </p>
+
+        <p>
+          <%= g.label :kin_lname %><br>
+          <%= g.text_field :kin_lname %>
+        </p>
+
+        <p>
+          <%= g.label :kin_phone %><br>
+          <%= g.text_field :kin_phone %>
+        </p>
+
+        <p>
+          <%= g.label :kin_street %><br>
+          <%= g.text_field :kin_street %>
+        </p>
+
+        <p>
+          <%= g.label :kin_city %><br>
+          <%= g.text_field :kin_city %>
+        </p>
+
+        <p>
+          <%= g.label :kin_country %><br>
+          <%= g.text_field :kin_country %>
+        </p>
+
+        <p>
+          <%= g.label :add_comment %><br>
+          <%= g.text_area :add_comment %>
+        </p>
+
+    <% end %>
 
     <p>
       <%= f.submit %>

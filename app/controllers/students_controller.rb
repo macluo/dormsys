@@ -1,13 +1,15 @@
 class StudentsController < ApplicationController
 
   def new
-    @student = Student.new
+    @person = Person.new
+    @person.build_student
   end
 
   def create
-    @student = Student.new(student_params)
+    @person = Person.new(student_params)
+    @person.build_student(student_params[:student_attributes])
 
-    if @student.save
+    if @person.save
       redirect_to @student
     else
       render 'new'
@@ -42,8 +44,7 @@ class StudentsController < ApplicationController
 
   private #Variables after this line will be private only!
   def student_params
-    params.require(:student).permit(:sid, :s_type, :s_status, :smoke, :spec_sneeds, :category, :kin_fname,
-    :kin_middle_name, :kin_lname, :kin_phone, :kin_street, :kin_city, :kin_country, :add_comment)
+    params.require(:person).permit! # allow mass params
   end
 
 end
