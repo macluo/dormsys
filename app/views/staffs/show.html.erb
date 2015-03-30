@@ -1,99 +1,88 @@
-<p id="Student_profile"><%= notice %></p>
+<p id="Staff_profile"><%= notice %></p>
 
 <p>
   <strong>Student ID:</strong>
-  <%= @staff.sid %>
+  <%= @person.pid %>
 </p>
 
 <p>
   <strong>First Name:</strong>
-  <%= @staff.person.fname %>
+  <%= @person.fname %>
 </p>
 
 <p>
   <strong>Middle Name:</strong>
-  <%= @staff.person.mname %>
+  <%= @person.mname %>
 </p>
 
 <p>
   <strong>Last Name:</strong>
-  <%= @staff.person.lname %>
+  <%= @person.lname %>
 </p>
 
 <p>
   <strong>Gender:</strong>
-  <%= @staff.person.gender %>
+  <%= @person.gender %>
 </p>
 
 <p>
   <strong>P_type:</strong>
-  <%= @staff.person.p_type %>
-</p>
-
-<p>
-  <strong>P_type:</strong>
-  <%= @staff.person.p_type %>
+  <%= @person.p_type %>
 </p>
 
 <p>
   <strong>Nationality:</strong>
-  <%= @staff.person.nationality %>
+  <%= @person.nationality %>
 </p>
 
 <p>
   <strong>Street:</strong>
-  <%= @staff.person.street %>
+  <%= @person.street %>
 </p>
 
 <p>
   <strong>City:</strong>
-  <%= @staff.person.city %>
+  <%= @person.city %>
 </p>
 
 <p>
   <strong>State:</strong>
-  <%= @staff.person.state %>
+  <%= @person.state %>
 </p>
 
 <p>
   <strong>Country:</strong>
-  <%= @staff.person.country %>
+  <%= @person.country %>
 </p>
 
 <p>
   <strong>Date of Birth:</strong>
-  <%= @staff.person.DOB %>
+  <%= @person.DOB %>
 </p>
 
 <p>
   <strong>Phone:</strong>
-  <%= @staff.person.phone %>
+  <%= @person.phone %>
 </p>
 
 <p>
   <strong>Second phone number:</strong>
-  <%= @staff.person.alt_phone %>
-</p>
-
-<p>
-  <strong>Nationality:</strong>
-  <%= @staff.person.nationality %>
-</p>
-
-<p>
-  <strong>Works in:</strong>
-  <%= @staff.works_in_building %>
-</p>
-
-<p>
-  <strong>Works in Apt:</strong>
-  <%= @staff.works_in_apt %>
+  <%= @person.alt_phone %>
 </p>
 
 <p>
   <strong>Job Title:</strong>
-  <%= @staff.job_title %>
+  <%= @people.staff.job_title %>
 </p>
 
+<p>
+  <strong>Works in:</strong>
+  <%= @people.staff.works_in_building %>
+</p>
+
+<p>
+  <strong>Works in Apt:</strong>
+  <%= @people.staff.works_in_apt %>
+</p>
 
 <%= link_to 'Back', staffs_path %>

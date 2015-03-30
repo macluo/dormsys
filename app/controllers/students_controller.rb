@@ -7,10 +7,10 @@ class StudentsController < ApplicationController
 
   def create
     @person = Person.new(student_params)
-    @person.build_student(student_params[:student_attributes])
+    @person.build_student(student_params[:student_attributes]) #nested parameters
 
     if @person.save
-      redirect_to @student
+      redirect_to :action => 'show', :id => @person.pid
     else
       render 'new'
     end
@@ -18,7 +18,7 @@ class StudentsController < ApplicationController
   end
 
   def show
-    @student = Student.find(params[:sid])
+    @person = Person.find(params[:id])
   end
 
   def index
@@ -26,9 +26,9 @@ class StudentsController < ApplicationController
   end
 
   def update
-    @student = Student.find(params[:sid])
+    @student = Person.find(params[:id])
 
-    if @student.update(student_params)
+    if @person.update(student_params)
       redirect_to @student
     else
       render 'edit'
@@ -36,15 +36,15 @@ class StudentsController < ApplicationController
   end
 
   def destroy
-    @student = Student.find(params[:sid])
-    @student.destroy
+    @person = Person.find(params[:id])
+    @person.destroy
 
     redirect_to students_path
   end
 
   private #Variables after this line will be private only!
   def student_params
-    params.require(:person).permit! # allow mass params
+    params.require(:person).permit! # allow mass params for now
   end
 
 end

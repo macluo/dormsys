@@ -1,10 +1,10 @@
-<%= form_for @staff do |f| %>
-    <% if @staff.errors.any? %>
+<%= form_for @person, url: staffs_path(@person) do |f| %>
+    <% if @person.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@staff.errors.count, "error") %> prohibited
+          <h2><%= pluralize(@person.errors.count, "error") %> prohibited
             this article from being saved:</h2>
           <ul>
-            <% @staff.errors.full_messages.each do |msg| %>
+            <% @person.errors.full_messages.each do |msg| %>
                 <li><%= msg %></li>
             <% end %>
           </ul>
@@ -12,24 +12,93 @@
     <% end %>
 
     <p>
-      <%= f.label :staff_id %><br>
-      <%= f.text_field :staff_id %>
+      <%= f.label :pid %><br>
+      <%= f.text_field :pid %>
     </p>
 
     <p>
-      <%= f.label :job_title %><br>
-      <%= f.text_field :job_title %>
+      <%= f.label :password %><br>
+      <%= f.text_field :password %>
     </p>
 
     <p>
-      <%= f.label :works_in_building %><br>
-      <%= f.text_field :works_in_building %>
+      <%= f.label :p_type %><br>
+      <%= f.text_field :p_type %>
     </p>
 
     <p>
-      <%= f.label :works_in_apt %><br>
-      <%= f.text_field :works_in_apt %>
+      <%= f.label :fname %><br>
+      <%= f.text_field :fname %>
     </p>
+
+    <p>
+      <%= f.label :mname %><br>
+      <%= f.text_field :mname %>
+    </p>
+
+    <p>
+      <%= f.label :lname %><br>
+      <%= f.text_field :lname %>
+    </p>
+
+    <p>
+      <%= f.label :nationality %><br>
+      <%= f.text_field :nationality %>
+    </p>
+
+    <p>
+      <%= f.label :street %><br>
+      <%= f.text_field :street %>
+    </p>
+
+    <p>
+      <%= f.label :city %><br>
+      <%= f.text_field :city %>
+    </p>
+
+    <p>
+      <%= f.label :state %><br>
+      <%= f.text_field :state %>
+    </p>
+
+    <p>
+      <%= f.label :country %><br>
+      <%= f.text_field :country %>
+    </p>
+
+    <p>
+      <%= f.label :DOB %><br>
+      <%= f.text_field :DOB %>
+    </p>
+
+    <p>
+      <%= f.label :phone %><br>
+      <%= f.text_field :phone %>
+    </p>
+
+    <p>
+      <%= f.label :alt_phone %><br>
+      <%= f.text_field :alt_phone %>
+    </p>
+
+    <%= f.fields_for :staff do |g| %>
+
+        <p>
+          <%= g.label :job_title %><br>
+          <%= g.text_field :job_title %>
+        </p>
+
+        <p>
+          <%= g.label :works_in_building %><br>
+          <%= g.text_field :works_in_building %>
+        </p>
+
+        <p>
+          <%= g.label :works_in_apt %><br>
+          <%= g.text_field :works_in_apt %>
+        </p>
+
+    <% end %>
 
     <p>
       <%= f.submit %>

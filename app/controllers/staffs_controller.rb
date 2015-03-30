@@ -1,14 +1,16 @@
 class StaffsController < ApplicationController
 
   def new
-    @staff = Staff.new
+    @person = Person.new
+    @person.build_staff
   end
 
   def create
-    @staff = Staff.new(staff_params)
+    @person = Person.new(staff_params)
+    @person.build_staff(staff_params[:staff_attributes]) #nested parameters
 
-    if @staff.save
-      redirect_to @staff
+    if @person.save
+      redirect_to :action => 'show', :id => @person.pid
     else
       render 'new'
     end
@@ -16,7 +18,7 @@ class StaffsController < ApplicationController
   end
 
   def show
-    @staff = Staff.find(params[:sid])
+    @person = Person.find(params[:id])
   end
 
   def index
@@ -24,7 +26,7 @@ class StaffsController < ApplicationController
   end
 
   def update
-    @staff = Staff.find(params[:sid])
+    @staff = Staff.find(params[:id])
 
     if @staff.update(staff_params)
       redirect_to @staff
@@ -34,15 +36,15 @@ class StaffsController < ApplicationController
   end
 
   def destroy
-    @staff = Staff.find(params[:sid])
-    @staff.destroy
+    @person = Person.find(params[:sid])
+    @person.destroy
 
     redirect_to staffs_path
   end
 
   private #Variables after this line will be private only!
-  def article_params
-    params.require(:staff).permit(:sid)
+  def staff_params
+    params.require(:person).permit! # allow mass params for now
   end
 
 end
