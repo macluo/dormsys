@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Student ID:</strong>
+  <%= @person.pid %>
+</p>
+
+<p>
+  <strong>Middle Name:</strong>
+  <%= @person.mname %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @person.lname %>
+</p>
+
+<p>
+  <strong>Lease No.:</strong>
+  <%= @signedLease.lease_no %>
+</p>
+
+<p>
+  <strong>Place No.:</strong>
+  <%= @signedLease.place_no %>
+</p>
+
+<p>
+  <strong>Apt No.:</strong>
+  <%= @signedLease.apt_no %>
+</p>
+
+<p>
+  <strong>Ticket No.:</strong>
+  <%= @maintenance_request.ticket_no %>
+</p>
+
+<p>
+  <strong>Created Date:</strong>
+  <%= @maintenance_request.date %>
+</p>
+
+<p>
+  <strong>Severity:</strong>
+  <%= @maintenance_request.severity %>
+</p>
+
+<p>
+  <strong>Created Date:</strong>
+  <%= @maintenance_request.ticket_no %>
+</p>
+
+<p>
+  <strong>Unit No.:</strong>
+  <%= @maintenance_request.unit_no %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @maintenance_request.comments %>
+</p>
+
+<%= link_to 'Edit', edit_maintenance_request_path(@maintenance_request) %> |
+<%= link_to 'Back', maintenance_requests_path %>

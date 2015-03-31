@@ -1,5 +1,26 @@
 <h1>New signed_lease</h1>
 
+<p>
+  <strong>Student ID:</strong>
+  <%= @person.pid %>
+</p>
+
+<p>
+  <strong>First Name:</strong>
+  <%= @person.fname %>
+</p>
+
+<p>
+  <strong>Middle Name:</strong>
+  <%= @person.mname %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @person.lname %>
+</p>
+
+
 <%= render 'form' %>
 
 <%= link_to 'Back', signed_leases_path %>

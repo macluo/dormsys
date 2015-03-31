@@ -1,0 +1,17 @@
+<%= form_for(@termination_request) do |f| %>
+  <% if @termination_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@termination_request.errors.count, "error") %> prohibited this termination_request from being saved:</h2>
+
+      <ul>
+      <% @termination_request.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

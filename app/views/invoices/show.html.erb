@@ -1,5 +1,4 @@
-<p id="Lease_content"><%= notice %></p>
-
+<p id="notice"><%= notice %></p>
 
 <p>
   <strong>Student ID:</strong>
@@ -22,11 +21,6 @@
 </p>
 
 <p>
-  <strong>Lease No.:</strong>
-  <%= @signedLease.lease_no %>
-</p>
-\
-<p>
   <strong>Place No.:</strong>
   <%= @signedLease.place_no %>
 </p>
@@ -46,7 +40,6 @@
   <%= @signedLease.permit_id %>
 </p>
 
-
 <p>
   <strong>Rent:</strong>
   <%= @signedLease.rent %>
@@ -58,28 +51,45 @@
 </p>
 
 <p>
-  <strong>Start semester:</strong>
-  <%= @signedLease.start_sem %>
+  <strong>Invoice No.</strong>
+  <%= @invoice.inv_no %>
 </p>
 
 <p>
-  <strong>End semester:</strong>
-  <%= @signedLease.end_sem %>
+  <strong>Due date.</strong>
+  <%= @invoice.duedate %>
 </p>
 
 <p>
-  <strong>Apt No.:</strong>
-  <%= @signedLease.deposit %>
+  <strong>Amount Due</strong>
+  <%= @invoice.payment_due %>
 </p>
 
 <p>
-  <strong>Apt No.:</strong>
-  <%= @signedLease.pay_option %>
+  <strong>Paid date</strong>
+  <%= @invoice.paid_date %>
+</p>
+
+<p>
+  <strong>Paid Y/N?</strong>
+  <%= @invoice.paid %>
+</p>
+
+<p>
+  <strong>Payment method</strong>
+  <%= @invoice.pay_method %>
+</p>
+
+<p>
+  <strong>Billing period starts on:</strong>
+  <%= @invoice.bill_start_date %>
+</p>
+
+<p>
+  <strong>Billing period ends on:</strong>
+  <%= @invoice.bill_end_date %>
 </p>
 
 
-
-
-
-<%= link_to 'Edit', edit_signed_lease_path(@signed_lease) %> |
-<%= link_to 'Back', signed_leases_path %>
+<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
+<%= link_to 'Back', invoices_path %>

@@ -1,0 +1,37 @@
+<%= form_for(@maintenance_request) do |f| %>
+  <% if @maintenance_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@maintenance_request.errors.count, "error") %> prohibited this maintenance_request from being saved:</h2>
+
+      <ul>
+      <% @maintenance_request.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <p>
+      <%= f.label :created_date %><br>
+      <%= f.text_field :created_date %>
+    </p>
+
+    <p>
+      <%= f.label :severity %><br>
+      <%= f.text_field :severity %>
+    </p>
+
+    <p>
+      <%= f.label :place_no %><br>
+      <%= f.text_field :place_no %>
+    </p>
+
+    <p>
+      <%= f.label :unit_no %><br>
+      <%= f.text_field :unit_no %>
+    </p>
+
+    <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

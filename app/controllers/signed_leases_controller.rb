@@ -14,6 +14,8 @@ class SignedLeasesController < ApplicationController
 
   # GET /signed_leases/new
   def new
+    @person = Person.new # new for now
+    @person.build_student
     @signed_lease = SignedLease.new
   end
 

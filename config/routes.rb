@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :invoices
+
+  resources :termination_requests
+
+  resources :maintenance_requests
+
+  resources :housing_requests
+
   resources :signed_leases
 
   #get 'welcome/index'

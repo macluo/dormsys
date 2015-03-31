@@ -1,13 +1,8 @@
-<h1>Editing signed_lease</h1>
+<h1>Editing housing_request</h1>
 
 <p>
   <strong>Student ID:</strong>
   <%= @person.pid %>
-</p>
-
-<p>
-  <strong>First Name:</strong>
-  <%= @person.fname %>
 </p>
 
 <p>
@@ -20,8 +15,12 @@
   <%= @person.lname %>
 </p>
 
+<p>
+  <strong>P_type:</strong>
+  <%= @person.p_type %>
+</p>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @signed_lease %> |
-<%= link_to 'Back', signed_leases_path %>
+<%= link_to 'Show', @housing_request %> |
+<%= link_to 'Back', housing_requests_path %>

@@ -7,5 +7,5 @@ class Student < ActiveRecord::Base
     has_many :invoices, :class_name => 'Invoice', :foreign_key => :sid
     has_many :maintenance_requests, :class_name => 'MaintenanceRequest', :foreign_key => :sid
     has_many :signed_leases, :class_name => 'SignedLease', :foreign_key => :sid
-    belongs_to :persons, :class_name => 'Person', :foreign_key => :sid
+    belongs_to :person, :class_name => 'Person', :foreign_key => :sid
 end

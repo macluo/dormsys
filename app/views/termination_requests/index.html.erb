@@ -1,0 +1,23 @@
+<h1>Listing termination_requests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @termination_requests.each do |termination_request| %>
+      <tr>
+        <td><%= link_to 'Show', termination_request %></td>
+        <td><%= link_to 'Edit', edit_termination_request_path(termination_request) %></td>
+        <td><%= link_to 'Destroy', termination_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Termination request', new_termination_request_path %>

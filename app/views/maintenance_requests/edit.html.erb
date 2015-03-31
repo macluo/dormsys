@@ -1,0 +1,36 @@
+<h1>Editing maintenance_request</h1>
+
+<p>
+  <strong>Student ID:</strong>
+  <%= @person.pid %>
+</p>
+
+<p>
+  <strong>Middle Name:</strong>
+  <%= @person.mname %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @person.lname %>
+</p>
+
+<p>
+  <strong>Lease No.:</strong>
+  <%= @signedLease.lease_no %>
+</p>
+
+<p>
+  <strong>Place No.:</strong>
+  <%= @signedLease.place_no %>
+</p>
+
+<p>
+  <strong>Apt No.:</strong>
+  <%= @signedLease.apt_no %>
+</p>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @maintenance_request %> |
+<%= link_to 'Back', maintenance_requests_path %>

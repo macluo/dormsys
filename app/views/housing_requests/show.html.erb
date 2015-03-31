@@ -1,0 +1,70 @@
+<p id="housing_request"><%= notice %></p>
+
+<p>
+  <strong>Student ID:</strong>
+  <%= @person.pid %>
+</p>
+
+<p>
+  <strong>Middle Name:</strong>
+  <%= @person.mname %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @person.lname %>
+</p>
+
+<p>
+  <strong>P_type:</strong>
+  <%= @person.p_type %>
+</p>
+
+<p>
+  <strong>Need parking?</strong>
+  <%= @housing_request.parking %>
+</p>
+
+<p>
+  <strong>Parking preference:</strong>
+  <%= @housing_request.pref_nearby %>
+</p>
+
+<p>
+  <strong>Building preference 1:</strong>
+  <%= @housing_request.building_pref_1 %>
+</p>
+
+<p>
+  <strong>Building preference 2:</strong>
+  <%= @housing_request.building_pref_2 %>
+</p>
+
+<p>
+  <strong>Building preference 3:</strong>
+  <%= @housing_request.building_pref_3 %>
+</p>
+
+<p>
+  <strong>Apartment preference 1:</strong>
+  <%= @housing_request.apt_pref_1 %>
+</p>
+
+<p>
+  <strong>Apartment preference 2:</strong>
+  <%= @housing_request.apt_pref_2 %>
+</p>
+
+<p>
+  <strong>Apartment preference 3:</strong>
+  <%= @housing_request.apt_pref_3 %>
+</p>
+
+<p>
+  <strong>Application status:</strong>
+  <%= @housing_request.app_status %>
+</p>
+
+
+<%= link_to 'Edit', edit_housing_request_path(@housing_request) %> |
+<%= link_to 'Back', housing_requests_path %>
