@@ -53,91 +53,66 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
-    primary.item :user, '1. Login', 'welcome#index'
-    primary.item :guest, '2. Guest Login'
-    primary.item :exit, '3. Exit'
-    primary.item :admin, 'test'
+    primary.item :user, '1. Login' do |user|
+      user.item :user_3_1_1, '1. Housing option' do |sub_nav1|
+        sub_nav1.item :user_3A_1, '1. View invoices' do |sub_nav2|
+          sub_nav2.item :user_3A_1_1, '1. View current invoice'
+          sub_nav2.item :user_3A_1_2, '2. View past invoices'
+          sub_nav2.item :user_3A_1_3, '3. Back'
+        end
+        sub_nav1.item :user_3A_2, '2. View leases' do |sub_nav1|
+          sub_nav1.item :user_3A_2_1, '1. View current lease'
+          sub_nav1.item :user_3A_2_2, '2. View past leases'
+          sub_nav1.item :user_3A_2_3, '3. Back'
+        end
 
-    # Add an item which has a sub navigation (same params, but with block)
-    primary.item :user, 'Main Menu' do |sub_nav|
-      # Add an item to the sub navigation (same params again)
-      sub_nav.item :user_3_1_1, '1. Housing option'
-      sub_nav.item :user_3_1_2, '2. Parking option'
-      sub_nav.item :user_3_1_3, '3. Maintenance'
-      sub_nav.item :user_3_1_4, '4. Profile'
-      sub_nav.item :user_3_1_5, '5. Logout'
-    end
+        sub_nav1.item :user_3A_3, '3. New request'
+        sub_nav1.item :user_3A_4, '4. View/Cancel requests' do |sub_nav1|
+          sub_nav1.item :user_3A_4_1, '1. View request'
+          sub_nav1.item :user_3A_4_2, '2. Cancel request'
+          sub_nav1.item :user_3A_4_3, '3. Back'
+        end
 
-      user.item :user_3_1_1, 'Housing Options' do |sub_nav|
-        # Add an item to the sub navigation (same params again)
-        sub_nav.item :user_3A_1, '1. View invoices'
-        sub_nav.item :user_3A_2, '2. View leases'
-        sub_nav.item :user_3A_3, '3. New request'
-        sub_nav.item :user_3A_4, '4. View/Cancel requests'
-        sub_nav.item :user_3A_5, '5. View vacancy'
-        sub_nav.item :user_3A_6, '6. Back'
+        sub_nav1.item :user_3A_5, '5. View vacancy'
+        sub_nav1.item :user_3A_6, '6. Back'
       end
 
-        user_3_1_1.item :user_3A_1, 'Invoice Options' do |sub_nav|
-          # Add an item to the sub navigation (same params again)
-          sub_nav.item :user_3A_1_1, '1. View current invoice'
-          sub_nav.item :user_3A_1_2, '2. View past invoices'
-          sub_nav.item :user_3A_1_3, '3. Back'
-        end
-
-        user_3_1_1.item :user_3A_2, 'Lease Options' do |sub_nav|
-          # Add an item to the sub navigation (same params again)
-          sub_nav.item :user_3A_2_1, '1. View current lease'
-          sub_nav.item :user_3A_2_2, '2. View past leases'
-          sub_nav.item :user_3A_2_3, '3. Back'
-        end
-
-        user_3_1_1.item :user_3A_4, 'View/Cancel Request'  do |sub_nav|
-          sub_nav.item :user_3A_4_1, '1. View request'
-          sub_nav.item :user_3A_4_2, '2. Cancel request'
-          sub_nav.item :user_3A_4_3, '3. Back'
-        end
-
-      user.item :user_3_1_2, 'Parking Option' do |sub_nav|
-        sub_nav.item :user_3B_1, '1. Request parking'
-        sub_nav.item :user_3B_2, '2. View parking info'
-        sub_nav.item :user_3B_3, '3. View current parking spot'
-        sub_nav.item :user_3B_4, '4. Renew parking spot'
-        sub_nav.item :user_3B_5, '5. Cancel parking spot'
-        sub_nav.item :user_3B_6, '6. View request status'
-        sub_nav.item :user_3B_7, '7. Back'
+      user.item :user_3_1_2, '2. Parking option' do |parking|
+        parking.item :user_3B_1, '1. Request parking'
+        parking.item :user_3B_2, '2. View parking info'
+        parking.item :user_3B_3, '3. View current parking spot'
+        parking.item :user_3B_4, '4. Renew parking spot'
+        parking.item :user_3B_5, '5. Cancel parking spot'
+        parking.item :user_3B_6, '6. View request status'
+        parking.item :user_3B_7, '7. Back'
       end
 
-      user.item :user_3_1_3, 'Maintenance Option' do |sub_nav|
+      user.item :user_3_1_3, '3. Maintenance' do |sub_nav|
         sub_nav.item :user_3C_1, '1. New ticket'
         sub_nav.item :user_3C_2, '2. View ticket status'
         sub_nav.item :user_3C_3, '3. Back'
       end
 
-      user.item :user_3_1_4, 'User Profile' do |sub_nav|
+      user.item :user_3_1_4, '4. Profile' do |sub_nav|
         sub_nav.item :user_3D_1, '1. View profile'
         sub_nav.item :user_3D_2, '2. Edit profile'
         sub_nav.item :user_3D_3, '3. Back'
       end
 
-    # Add an item which has a sub navigation (same params, but with block)
-    primary.item :guest, 'Main Menu' do |sub_nav|
-      # Add an item to the sub navigation (same params again)
-      sub_nav.item :user_3_1_1, '1. Housing option'
-      sub_nav.item :user_3_1_2, '2. Parking option'
-      sub_nav.item :user_3_1_3, '3. Maintenance'
-      sub_nav.item :user_3_1_4, '4. Profile'
-      sub_nav.item :user_3_1_5, '5. Logout'
+      user.item :user_3_1_5, '5. Logout'
     end
 
-    primary.item :admin, 'Main Menu'  do |sub_nav|
-      sub_nav.item :adm_4A_1, '1. View new lease requests'
-      sub_nav.item :adm_4A_2, '2. View termination requests'
-      sub_nav.item :adm_4A_3, '3. View maintenance tickets'
-      sub_nav.item :adm_4A_4, '4. View parking requests'
-      sub_nav.item :adm_4A_5, '5. View profiles'
-      sub_nav.item :adm_4A_6, '6. Back'
-    end
+    primary.item :guest, '2. Guest Login'
+    primary.item :exit, '3. Exit'
+
+    #primary.item :admin, 'Main Menu'  do |sub_nav|
+    #  sub_nav.item :adm_4A_1, '1. View new lease requests'
+    #  sub_nav.item :adm_4A_2, '2. View termination requests'
+    #  sub_nav.item :adm_4A_3, '3. View maintenance tickets'
+    #  sub_nav.item :adm_4A_4, '4. View parking requests'
+    #  sub_nav.item :adm_4A_5, '5. View profiles'
+    #  sub_nav.item :adm_4A_6, '6. Back'
+    #end
 
 
 
