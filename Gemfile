@@ -29,6 +29,10 @@ gem 'spring',        group: :development
 # RMRE creates activeRecord models for legacy databases with all constraints
 gem 'rmre', '~> 0.0.9'
 
+# Simple navigation system
+
+gem 'simple-navigation', '~> 3.14.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
