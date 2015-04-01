@@ -53,7 +53,7 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
-    primary.item :user, '1. Login' do |user|
+    primary.item :user, '1. Login', 'log_in' do |user|
       user.item :user_3_1_1, '1. Housing option' do |sub_nav1|
         sub_nav1.item :user_3A_1, '1. View invoices' do |sub_nav2|
           sub_nav2.item :user_3A_1_1, '1. View current invoice'
@@ -99,7 +99,7 @@ SimpleNavigation::Configuration.run do |navigation|
         sub_nav.item :user_3D_3, '3. Back'
       end
 
-      user.item :user_3_1_5, '5. Logout'
+      user.item :user_3_1_5, '5. Logout', 'log_out'
     end
 
     primary.item :guest, '2. Guest Login'

@@ -10,8 +10,11 @@ Rails.application.routes.draw do
   resources :signed_leases
 
   #get 'welcome/index'
-  #get 'log_in' => 'sessions#new', :as => 'log_in'
-  #get 'log_out' => 'sessions#destroy', :as => 'log_out'
+  get 'log_in' => 'sessions#new', :as => 'log_in'
+  get 'log_out' => 'sessions#destroy', :as => 'log_out'
+  get 'menu_student' => 'menu#student', :as => 'menu_student'
+  get 'menu_staff' => 'menu#staff', :as => 'menu_staff'
+  get 'menu_guest' => 'menu#guest', :as => 'menu_guest'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -27,6 +30,8 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   resources :students, :staffs, :housing_requests, :maintenance_requests, :termination_requests, :signed_leases
+
+  resources :sessions
 
   # Example resource route with options:
   #   resources :products do

@@ -10,6 +10,11 @@ class Person < ActiveRecord::Base
 
   accepts_nested_attributes_for :student, :staff  # for constructing the object
 
+  validates :pid, :presence => true
+  validates :password, :presence => true
+  validates :fname, :presence => true
+
+
   def self.authenticate(pid, password)
     person = find_by_pid(pid)
     if person && person.password == password
