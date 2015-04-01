@@ -35,7 +35,7 @@ SimpleNavigation::Configuration.run do |navigation|
   # navigation.consider_item_names_as_safe = false
 
   # Define the primary navigation
-  navigation.items do |primary|
+  navigation.items do |user|
     # Add an item to the primary navigation. The following params apply:
     # key - a symbol which uniquely defines your navigation item in the scope of the primary_navigation
     # name - will be displayed in the rendered navigation. This can also be a call to your I18n-framework.
@@ -53,24 +53,29 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
-    primary.item :user, '1. Login', 'log_in' do |user|
+    #primary.item :user, '1. Login', 'log_in' do |user|
       user.item :user_3_1_1, '1. Housing option' do |sub_nav1|
-        sub_nav1.item :user_3A_1, '1. View invoices' do |sub_nav2|
+        sub_nav1.item :user_3A_1, '1. View invoices', invoices_url do |sub_nav2|
           sub_nav2.item :user_3A_1_1, '1. View current invoice'
           sub_nav2.item :user_3A_1_2, '2. View past invoices'
           sub_nav2.item :user_3A_1_3, '3. Back'
         end
-        sub_nav1.item :user_3A_2, '2. View leases' do |sub_nav1|
-          sub_nav1.item :user_3A_2_1, '1. View current lease'
-          sub_nav1.item :user_3A_2_2, '2. View past leases'
-          sub_nav1.item :user_3A_2_3, '3. Back'
+
+        sub_nav1.item :user_3A_2, '2. View leases' do |sub_nav2|
+          sub_nav2.item :user_3A_2_1, '1. View current lease'
+          sub_nav2.item :user_3A_2_2, '2. View past leases'
+          sub_nav2.item :user_3A_2_3, '3. Back'
         end
 
-        sub_nav1.item :user_3A_3, '3. New request'
-        sub_nav1.item :user_3A_4, '4. View/Cancel requests' do |sub_nav1|
-          sub_nav1.item :user_3A_4_1, '1. View request'
-          sub_nav1.item :user_3A_4_2, '2. Cancel request'
-          sub_nav1.item :user_3A_4_3, '3. Back'
+        sub_nav1.item :user_3A_3, '3. New request' do |sub_nav2|
+          sub_nav2.item :user_3A_3_1, '1. New lease request', new_housing_request_url
+          sub_nav2.item :user_3A_3_2, '2. Terminate lease request'
+          sub_nav2.item :user_3A_3_3, '3. Back'
+        end
+        sub_nav1.item :user_3A_4, '4. View/Cancel requests' do |sub_nav2|
+          sub_nav2.item :user_3A_4_1, '1. View request'
+          sub_nav2.item :user_3A_4_2, '2. Cancel request'
+          sub_nav2.item :user_3A_4_3, '3. Back'
         end
 
         sub_nav1.item :user_3A_5, '5. View vacancy'
@@ -100,10 +105,10 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       user.item :user_3_1_5, '5. Logout', 'log_out'
-    end
+    #end
 
-    primary.item :guest, '2. Guest Login'
-    primary.item :exit, '3. Exit'
+    #primary.item :guest, '2. Guest Login'
+    #primary.item :exit, '3. Exit'
 
     #primary.item :admin, 'Main Menu'  do |sub_nav|
     #  sub_nav.item :adm_4A_1, '1. View new lease requests'

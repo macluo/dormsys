@@ -14,8 +14,8 @@ class HousingRequestsController < ApplicationController
 
   # GET /housing_requests/new
   def new
-    @person = Person.new #for now
-    @person.build_student #for now
+    @person = Person.find_by_pid(session[:pid])
+    @student= Student.find_by_sid(session[:pid])
     @housing_request = HousingRequest.new
   end
 
@@ -26,6 +26,7 @@ class HousingRequestsController < ApplicationController
   # POST /housing_requests
   # POST /housing_requests.json
   def create
+    housing_request_params << {:sid => session[:pid]}
     @housing_request = HousingRequest.new(housing_request_params)
 
     respond_to do |format|
