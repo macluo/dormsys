@@ -12,43 +12,30 @@
   <% end %>
 
     <p>
-      <%= f.label :parking %><br>
-      <%= f.text_field :parking %>
+      <%= f.radio_button :parking, true %>
+      <%= f.label :parking, "YES" %>
+      <%= f.radio_button :parking, false %>
+      <%= f.label :parking, "NO" %>
     </p>
 
     <p>
       <%= f.label :pref_nearby %><br>
-      <%= f.text_field :pref_nearby %>
+      <%= f.select :pref_nearby, options_from_collection_for_select(@nearby_parking, "lot_no", "lot_no") %>
     </p>
 
     <p>
       <%= f.label :building_pref1 %><br>
-      <%= f.text_field :building_pref_1 %>
+      <%= f.select :building_pref_1, options_from_collection_for_select(@pref_housing, @select_item, @select_item) %>
     </p>
 
     <p>
       <%= f.label :building_pref2 %><br>
-      <%= f.text_field :building_pref_2 %>
+      <%= f.select :building_pref_1, options_from_collection_for_select(@pref_housing, @select_item, @select_item) %>
     </p>
 
     <p>
       <%= f.label :building_pref3 %><br>
-      <%= f.text_field :building_pref_3 %>
-    </p>
-
-    <p>
-      <%= f.label :apt_pref1 %><br>
-      <%= f.text_field :apt_pref_1 %>
-    </p>
-
-    <p>
-      <%= f.label :apt_pref2 %><br>
-      <%= f.text_field :apt_pref_2 %>
-    </p>
-
-    <p>
-      <%= f.label :apt_pref3 %><br>
-      <%= f.text_field :apt_pref_3 %>
+      <%= f.select :building_pref_1, options_from_collection_for_select(@pref_housing, @select_item, @select_item) %>
     </p>
 
     <div class="actions">

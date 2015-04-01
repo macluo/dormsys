@@ -16,6 +16,16 @@ class HousingRequestsController < ApplicationController
   def new
     @person = Person.find_by_pid(session[:pid])
     @student= Student.find_by_sid(session[:pid])
+    @nearby_parking = ParkingLot.select(:lot_no)
+
+    if @student.s_type == "family"
+      @pref_housing = FamilyApt.select(:apt_no)
+      @select_item = "apt_no"
+    else # if not specified then treat students as single student
+      @pref_housing = BuildingsApt.select(:unit_no)
+      @select_item = "unit_no"
+    end
+
     @housing_request = HousingRequest.new
   end
 
@@ -26,7 +36,7 @@ class HousingRequestsController < ApplicationController
   # POST /housing_requests
   # POST /housing_requests.json
   def create
-    housing_request_params << {:sid => session[:pid]}
+    housing_request_params.merge({:sid => session[:pid]})
     @housing_request = HousingRequest.new(housing_request_params)
 
     respond_to do |format|

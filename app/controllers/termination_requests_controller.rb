@@ -14,10 +14,17 @@ class TerminationRequestsController < ApplicationController
 
   # GET /termination_requests/new
   def new
-    @person = Person.new # for now
-    @person.build_student # for now
-    @signed_lease = SignedLease.new # for now
-    @termination_request = TerminationRequest.new
+    @person = Person.find_by_pid(session[:pid])
+    @student= Student.find_by_sid(session[:pid])
+    lease = SignedLease.getCurrentLease(session[:pid])
+
+    if lease
+      @termination_request = TerminationRequest.new
+    else
+      flash.now.alert = 'No active lease is found.'
+      redirect_to menu_student_url
+    end
+
   end
 
   # GET /termination_requests/1/edit

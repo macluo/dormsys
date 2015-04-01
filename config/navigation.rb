@@ -69,7 +69,7 @@ SimpleNavigation::Configuration.run do |navigation|
 
         sub_nav1.item :user_3A_3, '3. New request' do |sub_nav2|
           sub_nav2.item :user_3A_3_1, '1. New lease request', new_housing_request_url
-          sub_nav2.item :user_3A_3_2, '2. Terminate lease request'
+          sub_nav2.item :user_3A_3_2, '2. Terminate lease request', new_termination_request_url
           sub_nav2.item :user_3A_3_3, '3. Back'
         end
         sub_nav1.item :user_3A_4, '4. View/Cancel requests' do |sub_nav2|
