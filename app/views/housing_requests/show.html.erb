@@ -6,8 +6,8 @@
 </p>
 
 <p>
-  <strong>Middle Name:</strong>
-  <%= @person.mname %>
+  <strong>First Name:</strong>
+  <%= @person.fname %>
 </p>
 
 <p>
@@ -16,8 +16,8 @@
 </p>
 
 <p>
-  <strong>P_type:</strong>
-  <%= @person.p_type %>
+  <strong>S_type:</strong>
+  <%= @student.s_type %>
 </p>
 
 <p>
@@ -30,35 +30,41 @@
   <%= @housing_request.pref_nearby %>
 </p>
 
+<% if @student.s_type != 'family' %>
+
 <p>
-  <strong>Building preference 1:</strong>
+  <strong>Building & apartment preference 1:</strong>
   <%= @housing_request.building_pref_1 %>
 </p>
 
 <p>
-  <strong>Building preference 2:</strong>
+  <strong>Building & apartment preference 2:</strong>
   <%= @housing_request.building_pref_2 %>
 </p>
 
 <p>
-  <strong>Building preference 3:</strong>
+  <strong>Building & apartment preference 3:</strong>
   <%= @housing_request.building_pref_3 %>
 </p>
 
+<% else %>
+
 <p>
-  <strong>Apartment preference 1:</strong>
+  <strong>Family apartment preference 1:</strong>
   <%= @housing_request.apt_pref_1 %>
 </p>
 
 <p>
-  <strong>Apartment preference 2:</strong>
+  <strong>Family apartment preference 2:</strong>
   <%= @housing_request.apt_pref_2 %>
 </p>
 
 <p>
-  <strong>Apartment preference 3:</strong>
+  <strong>Family apartment preference 3:</strong>
   <%= @housing_request.apt_pref_3 %>
 </p>
+
+<% end %>
 
 <p>
   <strong>Application status:</strong>
@@ -67,4 +73,4 @@
 
 
 <%= link_to 'Edit', edit_housing_request_path(@housing_request) %> |
-<%= link_to 'Back', housing_requests_path %>
+<%= link_to 'Back', menu_student_url %>

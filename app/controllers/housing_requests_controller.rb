@@ -10,6 +10,12 @@ class HousingRequestsController < ApplicationController
   # GET /housing_requests/1
   # GET /housing_requests/1.json
   def show
+    @person = Person.find_by_pid(session[:pid])
+    @student = Student.find_by_sid(session[:pid])
+    request = HousingRequest.find_by_sid(session[:pid])
+    if !request
+      redirect_to menu_student_url
+    end
   end
 
   # GET /housing_requests/new
@@ -36,7 +42,7 @@ class HousingRequestsController < ApplicationController
   # POST /housing_requests
   # POST /housing_requests.json
   def create
-    housing_request_params.merge({:sid => session[:pid]})
+    housing_request_params.merge!({:sid => session[:pid]})
     @housing_request = HousingRequest.new(housing_request_params)
 
     respond_to do |format|
@@ -82,6 +88,6 @@ class HousingRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def housing_request_params
-      params[:housing_request]
+      params[:housing_request].permit! #allow all parameters for now
     end
 end

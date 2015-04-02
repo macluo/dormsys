@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :parking_requests
+
   #get 'welcome/index'
   get 'log_in' => 'sessions#new', :as => 'log_in'
   get 'log_out' => 'sessions#destroy', :as => 'log_out'
@@ -22,7 +24,7 @@ Rails.application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   resources :students, :staffs, :housing_requests, :maintenance_requests, :termination_requests, :signed_leases
 
-  resources :invoices, :proc_housing, :proc_maintenace, :proc_termination
+  resources :parking_requests, :invoices, :proc_housing, :proc_maintenace, :proc_termination
 
   resources :sessions
 

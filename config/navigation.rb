@@ -73,7 +73,7 @@ SimpleNavigation::Configuration.run do |navigation|
           sub_nav2.item :user_3A_3_3, '3. Back'
         end
         sub_nav1.item :user_3A_4, '4. View/Cancel requests' do |sub_nav2|
-          sub_nav2.item :user_3A_4_1, '1. View request'
+          sub_nav2.item :user_3A_4_1, '1. View request', housing_request_url(session[:pid])
           sub_nav2.item :user_3A_4_2, '2. Cancel request'
           sub_nav2.item :user_3A_4_3, '3. Back'
         end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 1) do
+ActiveRecord::Schema.define(version: 4) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
     t.string  "manager_fname", limit: 20
@@ -46,6 +46,9 @@ ActiveRecord::Schema.define(version: 1) do
     t.string  "apt_pref_1",      limit: 10
     t.string  "apt_pref_2",      limit: 10
     t.string  "apt_pref_3",      limit: 10
+    t.integer "period"
+    t.integer "pay_option"
+    t.date    "movein_date"
   end
 
   add_index "housing_requests", ["apt_pref_1"], name: "apt_pref_1", using: :btree
@@ -95,6 +98,16 @@ ActiveRecord::Schema.define(version: 1) do
   create_table "parking_lots", primary_key: "lot_no", force: true do |t|
     t.string "nearby_housing", limit: 60
   end
+
+  create_table "parking_requests", primary_key: "req_no", force: true do |t|
+    t.string  "sid",          limit: 10, null: false
+    t.integer "app_status"
+    t.integer "vehicle_type"
+    t.boolean "pref_nearby"
+    t.boolean "is_disabled"
+  end
+
+  add_index "parking_requests", ["sid"], name: "sid", using: :btree
 
   create_table "parking_spots", primary_key: "spot_no", force: true do |t|
     t.integer "class_id"
