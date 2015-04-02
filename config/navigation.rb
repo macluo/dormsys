@@ -99,8 +99,8 @@ SimpleNavigation::Configuration.run do |navigation|
       end
 
       user.item :user_3_1_4, '4. Profile' do |sub_nav|
-        sub_nav.item :user_3D_1, '1. View profile'
-        sub_nav.item :user_3D_2, '2. Edit profile'
+        sub_nav.item :user_3D_1, '1. View profile', student_url(session[:pid])
+        sub_nav.item :user_3D_2, '2. Edit profile', edit_student_url(session[:pid])
         sub_nav.item :user_3D_3, '3. Back'
       end
 

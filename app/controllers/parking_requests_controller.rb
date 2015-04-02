@@ -71,4 +71,8 @@ class ParkingRequestsController < ApplicationController
     def parking_request_params
       params[:parking_request]
     end
+
+    def has_active_lease?
+      true
+    end
 end

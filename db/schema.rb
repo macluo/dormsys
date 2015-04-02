@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 4) do
+ActiveRecord::Schema.define(version: 5) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
     t.string  "manager_fname", limit: 20
@@ -168,6 +168,11 @@ ActiveRecord::Schema.define(version: 4) do
   end
 
   add_index "rooms", ["unit_no"], name: "unit_no", using: :btree
+
+  create_table "semesters", primary_key: "no", force: true do |t|
+    t.integer "year"
+    t.string  "term", limit: 10
+  end
 
   create_table "signed_leases", primary_key: "lease_no", force: true do |t|
     t.string  "sid",          limit: 10, null: false

@@ -26,6 +26,11 @@
 </p>
 
 <p>
+  <strong>Date of Birth:</strong>
+  <%= @person.DOB %>
+</p>
+
+<p>
   <strong>P_type:</strong>
   <%= @person.p_type %>
 </p>
@@ -33,6 +38,21 @@
 <p>
   <strong>Nationality:</strong>
   <%= @person.nationality %>
+</p>
+
+<p>
+  <strong>Student Type:</strong>
+  <%= @person.student.s_type %>
+</p>
+
+<p>
+  <strong>Student Status:</strong>
+  <%= @person.student.s_status %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @person.student.category %>
 </p>
 
 <p>
@@ -56,11 +76,6 @@
 </p>
 
 <p>
-  <strong>Date of Birth:</strong>
-  <%= @person.DOB %>
-</p>
-
-<p>
   <strong>Phone:</strong>
   <%= @person.phone %>
 </p>
@@ -71,16 +86,6 @@
 </p>
 
 <p>
-  <strong>Student Type:</strong>
-  <%= @person.student.s_type %>
-</p>
-
-<p>
-  <strong>Student Status:</strong>
-  <%= @person.student.s_status %>
-</p>
-
-<p>
   <strong>Smoke Y/N?:</strong>
   <%= @person.student.smoke %>
 </p>
@@ -88,11 +93,6 @@
 <p>
   <strong>Special Needs:</strong>
   <%= @person.student.spec_sneeds %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @person.student.category %>
 </p>
 
 <p>

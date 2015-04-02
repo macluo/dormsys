@@ -1,0 +1,69 @@
+<p id="Student_profile"><%= notice %></p>
+
+<% if @current_user == 'student' %>
+
+<p>
+  <strong>Student ID:</strong>
+  <%= @person.pid %>
+</p>
+
+<p>
+  <strong>First Name:</strong>
+  <%= @person.fname %>
+</p>
+
+<p>
+  <strong>Middle Name:</strong>
+  <%= @person.mname %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @person.lname %>
+</p>
+
+<p>
+  <strong>Gender:</strong>
+  <%= @person.gender %>
+</p>
+
+<p>
+  <strong>Date of Birth:</strong>
+  <%= @person.DOB %>
+</p>
+
+<p>
+  <strong>P_type:</strong>
+  <%= @person.p_type %>
+</p>
+
+<p>
+  <strong>Nationality:</strong>
+  <%= @person.nationality %>
+</p>
+
+<p>
+  <strong>Student Type:</strong>
+  <%= @person.student.s_type %>
+</p>
+
+<p>
+  <strong>Student Status:</strong>
+  <%= @person.student.s_status %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @person.student.category %>
+</p>
+
+<% end %>
+
+<p>
+  <strong>Add comments:</strong>
+  <%= @person.student.add_comment %>
+</p>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', students_path %>

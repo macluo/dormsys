@@ -19,6 +19,16 @@
     </p>
 
     <p>
+      <%= f.label :period %>
+      <%= f.select :period, options_for_select([1,2,3,4,5,6]) %>
+    </p>
+
+    <p>
+      <%= f.label :pay_option %>
+      <%= f.select :pay_option, options_for_select({"monthly" => 1,"per semester" => 2}) %>
+    </p>
+
+    <p>
       <%= f.label :pref_nearby %><br>
       <%= f.select :pref_nearby, options_from_collection_for_select(@nearby_parking, "lot_no", "lot_no") %>
     </p>
@@ -36,6 +46,11 @@
     <p>
       <%= f.label :building_pref3 %><br>
       <%= f.select :building_pref_3, options_from_collection_for_select(@pref_housing, @select_item, @select_item) %>
+    </p>
+
+    <p>
+      <%= f.label :movein_date %>
+      <%= f.date_field :movein_date %>
     </p>
 
     <div class="actions">

@@ -8,13 +8,22 @@ class ApplicationController < ActionController::Base
   #  redirect_to root_url, alert => 'Permission denied'
   #end
 
-  #private
+  private
   # Based on http://railscasts.com/episodes/250-authentication-from-scratch
-  #def current_user
-  #  @current_user ||= Person.find_by(id: session[:user_id]) if session[:user_id]
+  def current_user_id
+    @current_user_id ||= Person.find_by_pid(session[:pid]) if session[:pid]
 
     # Default to Guest user
     # @current_user ||= Guest.new
-  #end
+  end
+
+  def current_user
+    @current_user = session[:user]
+  end
+
+  # use numerical value to represent the current semester
+  def current_semester
+
+  end
 
 end

@@ -73,4 +73,5 @@
 
 
 <%= link_to 'Edit', edit_housing_request_path(@housing_request) %> |
+<%= link_to 'Destroy', @housing_request, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', menu_student_url %>

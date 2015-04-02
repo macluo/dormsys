@@ -10,16 +10,19 @@ class HousingRequestsController < ApplicationController
   # GET /housing_requests/1
   # GET /housing_requests/1.json
   def show
+    redirect_to menu_student_url if !has_pending_request?
     @person = Person.find_by_pid(session[:pid])
     @student = Student.find_by_sid(session[:pid])
     request = HousingRequest.find_by_sid(session[:pid])
     if !request
-      redirect_to menu_student_url
+      flash.now.alert = 'No pending request is found'
+      #redirect_to menu_student_url
     end
   end
 
   # GET /housing_requests/new
   def new
+    redirect_to menu_student_url if has_pending_request?
     @person = Person.find_by_pid(session[:pid])
     @student= Student.find_by_sid(session[:pid])
     @nearby_parking = ParkingLot.select(:lot_no)
@@ -42,8 +45,10 @@ class HousingRequestsController < ApplicationController
   # POST /housing_requests
   # POST /housing_requests.json
   def create
-    housing_request_params.merge!({:sid => session[:pid]})
+    #housing_request_params.merge!({:sid => session[:pid]})
     @housing_request = HousingRequest.new(housing_request_params)
+    @housing_request.app_status = 0; #set pending flag
+    @housing_request.sid = current_user_id
 
     respond_to do |format|
       if @housing_request.save
@@ -83,7 +88,16 @@ class HousingRequestsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_housing_request
-      @housing_request = HousingRequest.find(params[:id])
+      #@housing_request = HousingRequest.find(params[:id])
+    end
+
+    def has_pending_request?
+      request = HousingRequest.where("sid = :student_id AND app_status <= 1", {student_id: current_user_id}) # pending or reviewing
+      if request.count > 0
+        return true
+      else
+        return false
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

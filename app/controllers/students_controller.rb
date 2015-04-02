@@ -18,7 +18,14 @@ class StudentsController < ApplicationController
   end
 
   def show
-    @person = Person.find(params[:id])
+    @person = Person.find_by_pid(current_user_id)
+    @student = Student.find_by_sid(current_user_id)
+  end
+
+  def edit
+    @person = Person.find_by_pid(current_user_id)
+    @student = Student.find_by_sid(current_user_id)
+    @current_user = current_user
   end
 
   def index
