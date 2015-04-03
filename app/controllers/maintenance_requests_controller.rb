@@ -4,6 +4,7 @@ class MaintenanceRequestsController < ApplicationController
   # GET /maintenance_requests
   # GET /maintenance_requests.json
   def index
+    permission_denied if !is_adm?
     @maintenance_requests = MaintenanceRequest.all
   end
 

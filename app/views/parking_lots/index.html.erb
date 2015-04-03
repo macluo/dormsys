@@ -3,20 +3,16 @@
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th colspan="3">Lot No.</th>
+      <th colspan="6">Nearby Housing</th>
     </tr>
   </thead>
 
   <tbody>
-    <tr>
-      <td>Lot No.</td>
-      <td>Nearby Housing </td>
-    </tr>
-
     <% @parking_lots.each do |f| %>
       <tr>
-        <td><%= f.lot_no %></td>
-        <td><%= f.nearby_housing %></td>
+        <th colspan="3"><%= f.lot_no %></th>
+        <th colspan="3"><%= f.nearby_housing %></th>
       </tr>
     <% end %>
 

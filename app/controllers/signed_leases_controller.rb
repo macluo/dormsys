@@ -4,6 +4,7 @@ class SignedLeasesController < ApplicationController
   # GET /signed_leases
   # GET /signed_leases.json
   def index
+    permission_denied if !is_adm?
     @signed_leases = SignedLease.all
   end
 

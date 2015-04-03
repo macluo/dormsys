@@ -4,6 +4,7 @@ class TerminationRequestsController < ApplicationController
   # GET /termination_requests
   # GET /termination_requests.json
   def index
+    permission_denied if !is_adm?
     @termination_requests = TerminationRequest.all
   end
 

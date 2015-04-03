@@ -54,10 +54,10 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
     #primary.item :user, '1. Login', 'log_in' do |user|
-      user.item :user_4A_1, '1. View new lease requests'
-      user.item :user_4A_2, '2. View lease termination request'
-      user.item :user_4A_3, '3. View maintenance tickets'
-      user.item :user_4A_4, '4. View parking requests'
+      user.item :user_4A_1, '1. View new lease requests', housing_requests_url
+      user.item :user_4A_2, '2. View lease termination request', termination_requests_url
+      user.item :user_4A_3, '3. View maintenance tickets', maintenance_requests_url
+      user.item :user_4A_4, '4. View parking requests', parking_requests_url
       user.item :user_3_1_5, '5. Profile'
       user.item :user_3_1_5, '6. Logout', 'log_out'
     #end

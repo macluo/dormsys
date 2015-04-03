@@ -4,6 +4,7 @@ class ParkingRequestsController < ApplicationController
   # GET /parking_requests
   # GET /parking_requests.json
   def index
+    permission_denied if !is_adm?
     @parking_requests = ParkingRequest.all
   end
 

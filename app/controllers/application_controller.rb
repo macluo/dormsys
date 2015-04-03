@@ -4,9 +4,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #helper_method :current_user
 
-  #def permission_denied
-  #  redirect_to root_url, alert => 'Permission denied'
-  #end
+  def permission_denied
+    case current_user
+      when 'staff'
+        redirect_to menu_staff_url, alert => 'Permission denied'
+      when 'student'
+        redirect_to menu_student_url, alert => 'Permission denied'
+      when 'guest'
+        redirect_to menu_guest_url, alert => 'Permission denied'
+    end
+  end
 
   private
   # Based on http://railscasts.com/episodes/250-authentication-from-scratch
@@ -24,6 +31,18 @@ class ApplicationController < ActionController::Base
   # use numerical value to represent the current semester
   def current_semester
     5 # 2015, Spring
+  end
+
+  def is_adm?
+    (current_user == "staff")
+  end
+
+  def is_student?
+    (current_user == 'student')
+  end
+
+  def is_guest?
+    (current_user == 'guest')
   end
 
 end
