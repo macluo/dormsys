@@ -23,8 +23,14 @@ class SessionsController < ApplicationController
         session[:user] = 'staff'
         redirect_to menu_staff_url, :notice => 'Logged in'
       elsif Student.exists?(user.pid)
-        session[:user] = 'student'
-        redirect_to menu_student_url, :notice => 'Logged in!'
+        student = Student.find_by_sid(user.pid)
+        if student.s_type == "guest" # guest student
+          session[:user] = 'guest'
+          redirec_to menu_guest_url, :noteice => 'Logged in!'
+        else
+          session[:user] = 'student'
+          redirect_to menu_student_url, :notice => 'Logged in!'
+        end
       end
 
       #redirect_to root_url, :notice => 'Logged in!'

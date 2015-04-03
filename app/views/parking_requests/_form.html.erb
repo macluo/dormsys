@@ -11,6 +11,22 @@
     </div>
   <% end %>
 
+    <p>
+      <%= f.label :vehicle_type %>
+      <%= f.select :vehicle_type, options_for_select({"generic" => 1, "small car" => 2, "large car" => 3}) %>
+    </p>
+
+    <p>
+      <%= f.label :pref_nearby, "Prefer nearby" %>
+      <%= f.check_box :pref_nearby %>
+    </p>
+
+    <p>
+      <%= f.label :is_disabled, "Disabeled" %>
+      <%= f.check_box :is_disabled %>
+    </p>
+
+
   <div class="actions">
     <%= f.submit %>
   </div>

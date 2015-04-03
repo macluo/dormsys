@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :parking_requests
-
   #get 'welcome/index'
   get 'log_in' => 'sessions#new', :as => 'log_in'
   get 'log_out' => 'sessions#destroy', :as => 'log_out'
@@ -26,7 +24,7 @@ Rails.application.routes.draw do
 
   resources :parking_requests, :invoices, :proc_housing, :proc_maintenace, :proc_termination
 
-  resources :sessions
+  resources :parking_lots, :sessions
 
   # Example resource route with options:
   #   resources :products do

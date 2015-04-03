@@ -19,6 +19,7 @@ class StaffsController < ApplicationController
 
   def show
     @person = Person.find(params[:id])
+    @student = Student.find_by_sid(current_user_id)
   end
 
   def index

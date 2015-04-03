@@ -10,11 +10,19 @@ class ParkingRequestsController < ApplicationController
   # GET /parking_requests/1
   # GET /parking_requests/1.json
   def show
+    redirect_to menu_student_url if !has_pending_request?
+    request = ParkingRequest.find_by_sid(session[:pid])
+    if !request
+      flash.now.alert = 'No pending request is found'
+      #redirect_to menu_student_url
+    end
   end
 
   # GET /parking_requests/new
   def new
+    redirect_to menu_student_url if has_pending_request? || !has_active_lease?
     @parking_request = ParkingRequest.new
+    @student= Student.find_by_sid(session[:pid])
   end
 
   # GET /parking_requests/1/edit
@@ -25,6 +33,8 @@ class ParkingRequestsController < ApplicationController
   # POST /parking_requests.json
   def create
     @parking_request = ParkingRequest.new(parking_request_params)
+    @parking_request.sid = current_user_id
+    @parking_request.app_status = 0 #set pending flag
 
     respond_to do |format|
       if @parking_request.save
@@ -64,12 +74,21 @@ class ParkingRequestsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_parking_request
-      @parking_request = ParkingRequest.find(params[:id])
+      #@parking_request = ParkingRequest.find(params[:id])
+    end
+
+    def has_pending_request?
+      request = ParkingRequest.where("sid = :student_id AND app_status <= 1", {student_id: current_user_id}) # pending or reviewing
+      if request.count > 0
+        return true
+      else
+        return false
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def parking_request_params
-      params[:parking_request]
+      params[:parking_request].permit! #allow all parameters for now
     end
 
     def has_active_lease?

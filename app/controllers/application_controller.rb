@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   # use numerical value to represent the current semester
   def current_semester
-
+    5 # 2015, Spring
   end
 
 end
