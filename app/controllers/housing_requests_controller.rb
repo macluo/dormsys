@@ -4,20 +4,32 @@ class HousingRequestsController < ApplicationController
   # GET /housing_requests
   # GET /housing_requests.json
   def index
-    @housing_requests = HousingRequest.all
+    permission_denied if !is_adm?
+    @housing_requests = HousingRequest.where("app_status = 0") # pending cases
   end
 
   # GET /housing_requests/1
   # GET /housing_requests/1.json
   def show
-    redirect_to menu_student_url if !has_pending_request?
-    @person = Person.find_by_pid(session[:pid])
-    @student = Student.find_by_sid(session[:pid])
-    request = HousingRequest.find_by_sid(session[:pid])
-    if !request
-      flash.now.alert = 'No pending request is found'
-      #redirect_to menu_student_url
+    if (is_student?)
+      redirect_to menu_student_url if !has_pending_request?
+      @person = Person.find_by_pid(session[:pid])
+      @student = Student.find_by_sid(session[:pid])
+      request = HousingRequest.find_by_sid(session[:pid])
+      if !request
+        flash.now.alert = 'No pending request is found'
+        #redirect_to menu_student_url
+      end
+    elsif (is_adm?)
+      request = HousingRequest.find_by_req_no(params[:id])
+      @person = Person.find_by_pid(request.sid)
+      @student = Student.find_by_sid(request.sid)
+      if !request
+        flash.now.alert = 'No pending request is found'
+        #redirect_to menu_student_url
+      end
     end
+    @housing_request = request
   end
 
   # GET /housing_requests/new

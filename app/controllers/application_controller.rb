@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
   #helper_method :current_user
 
   def permission_denied
+
+    redirect_to root_url if !is_login?
+
     case current_user
       when 'staff'
         redirect_to menu_staff_url, alert => 'Permission denied'
@@ -28,11 +31,6 @@ class ApplicationController < ActionController::Base
     @current_user = session[:user]
   end
 
-  # use numerical value to represent the current semester
-  def current_semester
-    5 # 2015, Spring
-  end
-
   def is_adm?
     (current_user == "staff")
   end
@@ -44,5 +42,19 @@ class ApplicationController < ActionController::Base
   def is_guest?
     (current_user == 'guest')
   end
+
+  def is_login?
+    return (session[:user] != nil)
+  end
+
+  # use numerical value to represent the current semester
+  def current_semester
+    5 # 2015, Spring
+  end
+
+  def semester_list
+    Semester.all
+  end
+
 
 end

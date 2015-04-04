@@ -11,20 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 5) do
+ActiveRecord::Schema.define(version: 6) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
-    t.string  "manager_fname", limit: 20
-    t.string  "manager_lname", limit: 20
-    t.string  "phone_no",      limit: 10
+    t.string  "manager_fname",    limit: 20
+    t.string  "manager_lname",    limit: 20
+    t.string  "phone_no",         limit: 10
     t.integer "category"
+    t.boolean "upper_class_only"
   end
 
   create_table "family_apts", primary_key: "apt_no", force: true do |t|
     t.integer "no_bedrm"
     t.integer "no_bath"
     t.float   "rent",     limit: 24
+    t.integer "lease_no"
   end
+
+  add_index "family_apts", ["lease_no"], name: "lease_no", using: :btree
 
   create_table "family_members", id: false, force: true do |t|
     t.string "sid",   limit: 10,              null: false
@@ -112,9 +116,11 @@ ActiveRecord::Schema.define(version: 5) do
   create_table "parking_spots", primary_key: "spot_no", force: true do |t|
     t.integer "class_id"
     t.integer "lot_no",   null: false
+    t.integer "lease_no"
   end
 
   add_index "parking_spots", ["class_id"], name: "class_id", using: :btree
+  add_index "parking_spots", ["lease_no"], name: "lease_no", using: :btree
   add_index "parking_spots", ["lot_no"], name: "lot_no", using: :btree
 
   create_table "persons", primary_key: "pid", force: true do |t|
@@ -162,11 +168,13 @@ ActiveRecord::Schema.define(version: 5) do
   add_index "proc_termination", ["t_req_no"], name: "t_req_no", using: :btree
 
   create_table "rooms", primary_key: "place_no", force: true do |t|
-    t.string  "unit_no", limit: 20, null: false
+    t.string  "unit_no",  limit: 20, null: false
     t.integer "room_no"
-    t.float   "rent",    limit: 24
+    t.float   "rent",     limit: 24
+    t.integer "lease_no"
   end
 
+  add_index "rooms", ["lease_no"], name: "lease_no", using: :btree
   add_index "rooms", ["unit_no"], name: "unit_no", using: :btree
 
   create_table "semesters", primary_key: "no", force: true do |t|

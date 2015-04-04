@@ -78,7 +78,7 @@ SimpleNavigation::Configuration.run do |navigation|
           sub_nav2.item :user_3A_4_3, '3. Back'
         end
 
-        sub_nav1.item :user_3A_5, '5. View vacancy'
+        sub_nav1.item :user_3A_5, '5. View vacancy', menu_housing_vacancy_url
         sub_nav1.item :user_3A_6, '6. Back'
       end
 

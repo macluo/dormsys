@@ -21,6 +21,11 @@
 </p>
 
 <p>
+  <strong>Payment option:</strong>
+  <%= @housing_request.pay_option %>
+</p>
+
+<p>
   <strong>Need parking?</strong>
   <%= @housing_request.parking %>
 </p>
@@ -71,7 +76,13 @@
   <%= @housing_request.app_status %>
 </p>
 
+<% if session[:user] == 'student' %>
+ <%= link_to 'Edit', edit_housing_request_path(@housing_request) %> |
+ <%= link_to 'Cancel', @housing_request, method: :delete, data: { confirm: 'Are you sure?' } %> |
+ <%= link_to 'Back', menu_student_url %>
+<% elsif session[:user] == 'staff' %>
+ <%= link_to 'Approve the housing request', new_signed_lease_url(:signed_lease => {:req_no => @housing_request.req_no}), data: {confirm: 'Proceed to create a new lease?'} %> |
+ <%= link_to 'Deny the housing request', edit_housing_request_url(@housing_request), data: {confirm: 'Proceed to deny this request?'} %> |
+ <%= link_to 'Back', menu_staff_url %>
+<% end %>
 
-<%= link_to 'Edit', edit_housing_request_path(@housing_request) %> |
-<%= link_to 'Destroy', @housing_request, method: :delete, data: { confirm: 'Are you sure?' } %> |
-<%= link_to 'Back', menu_student_url %>

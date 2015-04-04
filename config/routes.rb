@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'menu_student' => 'menu#student', :as => 'menu_student'
   get 'menu_staff' => 'menu#staff', :as => 'menu_staff'
   get 'menu_guest' => 'menu#guest', :as => 'menu_guest'
+  get 'menu_housing_vacancy' => 'menu#housing_vacancy', :as => 'menu_housing_vacancy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

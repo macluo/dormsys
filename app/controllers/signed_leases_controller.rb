@@ -15,8 +15,10 @@ class SignedLeasesController < ApplicationController
 
   # GET /signed_leases/new
   def new
-    @person = Person.new # new for now
-    @person.build_student
+    permission_denied if !is_adm?
+    request = HousingRequest.find_by_req_no(signed_lease_params[:req_no])
+    @person = Person.find_by_pid(request.sid) # new for now
+    @student = Student.find_by_sid(request.sid)
     @signed_lease = SignedLease.new
   end
 
@@ -72,6 +74,8 @@ class SignedLeasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def signed_lease_params
-      params[:signed_lease]
+      params[:signed_lease].permit! #pass all parameters for now
     end
+
+
 end

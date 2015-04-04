@@ -29,8 +29,11 @@
     </p>
 
     <p>
-      <%= f.label :pref_nearby %><br>
-      <%= f.select :pref_nearby, options_from_collection_for_select(@nearby_parking, "lot_no", "lot_no") %>
+      <%= f.radio_button :pref_nearby, true %>
+      <%= f.label :pref_nearby, "YES" %><br>
+      <%= f.radio_button :pref_nearby, false %>
+      <%= f.label :pref_nearby, "NO" %><br>
+      <%#= f.select :pref_nearby, options_from_collection_for_select(@nearby_parking, "lot_no", "lot_no") %>
     </p>
 
     <p>
