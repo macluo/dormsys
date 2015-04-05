@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 6) do
+ActiveRecord::Schema.define(version: 7) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
     t.string  "manager_fname",    limit: 20

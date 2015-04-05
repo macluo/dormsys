@@ -56,5 +56,17 @@ class ApplicationController < ActionController::Base
     Semester.all
   end
 
+  def housing_vacant_list
+    the_list = []
+    builds_apts = BuildingsApt.all
+
+    builds_apts.each do |b|
+      the_list << {:unit_no => b.unit_no, :vacancy => Room.where(:unit_no => b.unit_no,
+                                                                 :lease_no => nil).count}
+    end
+
+    # add family apartments
+    the_list << {:unit_no => 'Family housing', :vacancy => FamilyApt.where(:lease_no => nil).count}
+  end
 
 end
