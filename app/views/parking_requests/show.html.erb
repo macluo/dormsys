@@ -1,4 +1,24 @@
-<p id="notice"><%= notice %></p>
+<p id="parking_content"><%= notice %></p>
+
+<p>
+  <strong>Vehicle Type:</strong>
+  <%= @parking_request.vehicle_type %>
+</p>
+
+<p>
+  <strong>Prefer nearby</strong>
+  <%= @parking_request.pref_nearby %>
+</p>
+
+<p>
+  <strong>Is disabled?</strong>
+  <%= @parking_request.is_disabled %>
+</p>
+
+<p>
+  <strong>status</strong>
+  <%= @parking_request.app_status %>
+</p>
 
 <%= link_to 'Edit', edit_parking_request_path(@parking_request) %> |
 <%= link_to 'Back', parking_requests_path %>

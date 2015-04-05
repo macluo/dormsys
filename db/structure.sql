@@ -28,6 +28,7 @@ CREATE TABLE `buildings_apts` (
   `manager_lname` varchar(20) DEFAULT NULL,
   `phone_no` char(10) DEFAULT NULL,
   `category` int(11) DEFAULT NULL,
+  `upper_class_only` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`unit_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -44,7 +45,10 @@ CREATE TABLE `family_apts` (
   `no_bedrm` int(11) DEFAULT NULL,
   `no_bath` int(11) DEFAULT NULL,
   `rent` float DEFAULT NULL,
-  PRIMARY KEY (`apt_no`)
+  `occupant` char(10) DEFAULT NULL,
+  PRIMARY KEY (`apt_no`),
+  KEY `occupant` (`occupant`),
+  CONSTRAINT `family_apts_ibfk_1` FOREIGN KEY (`occupant`) REFERENCES `students` (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -86,6 +90,9 @@ CREATE TABLE `housing_requests` (
   `apt_pref_1` varchar(10) DEFAULT NULL,
   `apt_pref_2` varchar(10) DEFAULT NULL,
   `apt_pref_3` varchar(10) DEFAULT NULL,
+  `period` int(11) DEFAULT NULL,
+  `pay_option` int(11) DEFAULT NULL,
+  `movein_date` date DEFAULT NULL,
   PRIMARY KEY (`req_no`),
   KEY `sid` (`sid`),
   KEY `park_class` (`park_class`),
@@ -114,7 +121,7 @@ DROP TABLE IF EXISTS `invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invoices` (
-  `inv_no` int(11) NOT NULL DEFAULT '0',
+  `inv_no` int(11) NOT NULL AUTO_INCREMENT,
   `duedate` date DEFAULT NULL,
   `payment_due` float DEFAULT NULL,
   `sid` char(10) DEFAULT NULL,
@@ -125,9 +132,9 @@ CREATE TABLE `invoices` (
   `bill_start_date` date DEFAULT NULL,
   `bill_end_date` date DEFAULT NULL,
   PRIMARY KEY (`inv_no`),
-  KEY `lease_no` (`lease_no`),
   KEY `sid` (`sid`),
-  CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`lease_no`) REFERENCES `signed_leases` (`lease_no`),
+  KEY `lease_no` (`lease_no`),
+  CONSTRAINT `invoices_ibfk_3` FOREIGN KEY (`lease_no`) REFERENCES `signed_leases` (`lease_no`),
   CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `students` (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -140,7 +147,7 @@ DROP TABLE IF EXISTS `maintenance_requests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `maintenance_requests` (
-  `ticket_no` int(11) NOT NULL DEFAULT '0',
+  `ticket_no` int(11) NOT NULL AUTO_INCREMENT,
   `severity` varchar(10) DEFAULT NULL,
   `created_date` date DEFAULT NULL,
   `apt_no` varchar(10) DEFAULT NULL,
@@ -190,6 +197,26 @@ CREATE TABLE `parking_lots` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `parking_requests`
+--
+
+DROP TABLE IF EXISTS `parking_requests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parking_requests` (
+  `req_no` int(11) NOT NULL AUTO_INCREMENT,
+  `sid` char(10) NOT NULL,
+  `app_status` int(11) DEFAULT NULL,
+  `vehicle_type` int(11) DEFAULT NULL,
+  `pref_nearby` tinyint(1) DEFAULT NULL,
+  `is_disabled` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`req_no`),
+  KEY `sid` (`sid`),
+  CONSTRAINT `parking_requests_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `students` (`sid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `parking_spots`
 --
 
@@ -200,9 +227,12 @@ CREATE TABLE `parking_spots` (
   `spot_no` char(10) NOT NULL DEFAULT '',
   `class_id` int(11) DEFAULT NULL,
   `lot_no` int(11) NOT NULL,
+  `occupant` char(10) DEFAULT NULL,
   PRIMARY KEY (`spot_no`),
   KEY `lot_no` (`lot_no`),
   KEY `class_id` (`class_id`),
+  KEY `occupant` (`occupant`),
+  CONSTRAINT `parking_spots_ibfk_3` FOREIGN KEY (`occupant`) REFERENCES `students` (`sid`),
   CONSTRAINT `parking_spots_ibfk_1` FOREIGN KEY (`lot_no`) REFERENCES `parking_lots` (`lot_no`),
   CONSTRAINT `parking_spots_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `parking_class` (`class_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -268,7 +298,7 @@ CREATE TABLE `proc_maintenance` (
   `process_comments` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`staff_id`,`ticket_no`),
   KEY `ticket_no` (`ticket_no`),
-  CONSTRAINT `proc_maintenance_ibfk_1` FOREIGN KEY (`ticket_no`) REFERENCES `maintenance_requests` (`ticket_no`),
+  CONSTRAINT `proc_maintenance_ibfk_3` FOREIGN KEY (`ticket_no`) REFERENCES `maintenance_requests` (`ticket_no`),
   CONSTRAINT `proc_maintenance_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -287,7 +317,7 @@ CREATE TABLE `proc_termination` (
   `process_comments` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`staff_id`,`t_req_no`),
   KEY `t_req_no` (`t_req_no`),
-  CONSTRAINT `proc_termination_ibfk_1` FOREIGN KEY (`t_req_no`) REFERENCES `termination_requests` (`t_req_no`),
+  CONSTRAINT `proc_termination_ibfk_3` FOREIGN KEY (`t_req_no`) REFERENCES `termination_requests` (`t_req_no`),
   CONSTRAINT `proc_termination_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -304,8 +334,11 @@ CREATE TABLE `rooms` (
   `place_no` varchar(10) NOT NULL DEFAULT '',
   `room_no` int(11) DEFAULT NULL,
   `rent` float DEFAULT NULL,
+  `occupant` char(10) DEFAULT NULL,
   PRIMARY KEY (`place_no`),
   KEY `unit_no` (`unit_no`),
+  KEY `occupant` (`occupant`),
+  CONSTRAINT `rooms_ibfk_2` FOREIGN KEY (`occupant`) REFERENCES `students` (`sid`),
   CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`unit_no`) REFERENCES `buildings_apts` (`unit_no`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -324,6 +357,21 @@ CREATE TABLE `schema_migrations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `semesters`
+--
+
+DROP TABLE IF EXISTS `semesters`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `semesters` (
+  `no` int(11) NOT NULL DEFAULT '0',
+  `year` int(11) DEFAULT NULL,
+  `term` char(10) DEFAULT NULL,
+  PRIMARY KEY (`no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `signed_leases`
 --
 
@@ -331,7 +379,7 @@ DROP TABLE IF EXISTS `signed_leases`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `signed_leases` (
-  `lease_no` int(11) NOT NULL DEFAULT '0',
+  `lease_no` int(11) NOT NULL AUTO_INCREMENT,
   `sid` char(10) NOT NULL,
   `place_no` varchar(10) DEFAULT NULL,
   `apt_no` varchar(10) DEFAULT NULL,
@@ -353,7 +401,7 @@ CREATE TABLE `signed_leases` (
   CONSTRAINT `signed_leases_ibfk_2` FOREIGN KEY (`parking_spot`) REFERENCES `parking_spots` (`spot_no`),
   CONSTRAINT `signed_leases_ibfk_3` FOREIGN KEY (`place_no`) REFERENCES `rooms` (`place_no`),
   CONSTRAINT `signed_leases_ibfk_4` FOREIGN KEY (`apt_no`) REFERENCES `family_apts` (`apt_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -412,7 +460,7 @@ DROP TABLE IF EXISTS `termination_requests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `termination_requests` (
-  `t_req_no` int(11) NOT NULL DEFAULT '0',
+  `t_req_no` int(11) NOT NULL AUTO_INCREMENT,
   `lease_no` int(11) NOT NULL,
   `insp_date` date DEFAULT NULL,
   `app_status` int(11) DEFAULT NULL,
@@ -433,6 +481,18 @@ CREATE TABLE `termination_requests` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-29 23:05:18
+-- Dump completed on 2015-04-05 15:29:31
 INSERT INTO schema_migrations (version) VALUES ('1');
+
+INSERT INTO schema_migrations (version) VALUES ('3');
+
+INSERT INTO schema_migrations (version) VALUES ('4');
+
+INSERT INTO schema_migrations (version) VALUES ('5');
+
+INSERT INTO schema_migrations (version) VALUES ('6');
+
+INSERT INTO schema_migrations (version) VALUES ('7');
+
+INSERT INTO schema_migrations (version) VALUES ('8');
 

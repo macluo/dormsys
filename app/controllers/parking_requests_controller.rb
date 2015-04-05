@@ -5,25 +5,38 @@ class ParkingRequestsController < ApplicationController
   # GET /parking_requests.json
   def index
     permission_denied if !is_adm?
-    @parking_requests = ParkingRequest.all
+    @parking_requests = ParkingRequest.where("app_status = 0")
   end
 
   # GET /parking_requests/1
   # GET /parking_requests/1.json
   def show
-    redirect_to menu_student_url if !has_pending_request?
-    request = ParkingRequest.find_by_sid(session[:pid])
-    if !request
-      flash.now.alert = 'No pending request is found'
-      #redirect_to menu_student_url
+    if (is_student?)
+      redirect_to menu_student_url if !has_pending_request?
+      @person = Person.find_by_pid(session[:pid])
+      @student = Student.find_by_sid(session[:pid])
+      request = ParkingRequest.where("sid = :student_id AND app_status <= 1", {student_id: current_user_id}).first
+      if !request
+        flash.now.alert = 'No pending request is found'
+        #redirect_to menu_student_url
+      end
+    elsif (is_adm?)
+      request = ParkingRequest.find_by_req_no(params[:id])
+      @person = Person.find_by_pid(request.sid)
+      @student = Student.find_by_sid(request.sid)
+      if !request
+        flash.now.alert = 'No pending request is found'
+        #redirect_to menu_student_url
+      end
     end
+    @parking_request = request
   end
 
   # GET /parking_requests/new
   def new
     redirect_to menu_student_url if has_pending_request? || !has_active_lease?
     @parking_request = ParkingRequest.new
-    @student= Student.find_by_sid(session[:pid])
+    @student= Student.find_by_sid(current_user_id)
   end
 
   # GET /parking_requests/1/edit
@@ -92,7 +105,4 @@ class ParkingRequestsController < ApplicationController
       params[:parking_request].permit! #allow all parameters for now
     end
 
-    def has_active_lease?
-      true
-    end
 end
