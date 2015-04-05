@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 7) do
+ActiveRecord::Schema.define(version: 8) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
     t.string  "manager_fname",    limit: 20
@@ -25,10 +25,10 @@ ActiveRecord::Schema.define(version: 7) do
     t.integer "no_bedrm"
     t.integer "no_bath"
     t.float   "rent",     limit: 24
-    t.integer "lease_no"
+    t.string  "occupant", limit: 10
   end
 
-  add_index "family_apts", ["lease_no"], name: "lease_no", using: :btree
+  add_index "family_apts", ["occupant"], name: "occupant", using: :btree
 
   create_table "family_members", id: false, force: true do |t|
     t.string "sid",   limit: 10,              null: false
@@ -115,13 +115,13 @@ ActiveRecord::Schema.define(version: 7) do
 
   create_table "parking_spots", primary_key: "spot_no", force: true do |t|
     t.integer "class_id"
-    t.integer "lot_no",   null: false
-    t.integer "lease_no"
+    t.integer "lot_no",              null: false
+    t.string  "occupant", limit: 10
   end
 
   add_index "parking_spots", ["class_id"], name: "class_id", using: :btree
-  add_index "parking_spots", ["lease_no"], name: "lease_no", using: :btree
   add_index "parking_spots", ["lot_no"], name: "lot_no", using: :btree
+  add_index "parking_spots", ["occupant"], name: "occupant", using: :btree
 
   create_table "persons", primary_key: "pid", force: true do |t|
     t.string "password",    limit: 20, null: false
@@ -171,10 +171,10 @@ ActiveRecord::Schema.define(version: 7) do
     t.string  "unit_no",  limit: 20, null: false
     t.integer "room_no"
     t.float   "rent",     limit: 24
-    t.integer "lease_no"
+    t.string  "occupant", limit: 10
   end
 
-  add_index "rooms", ["lease_no"], name: "lease_no", using: :btree
+  add_index "rooms", ["occupant"], name: "occupant", using: :btree
   add_index "rooms", ["unit_no"], name: "unit_no", using: :btree
 
   create_table "semesters", primary_key: "no", force: true do |t|

@@ -1,4 +1,4 @@
-<%= form_for(@signed_lease) do |f| %>
+<%= form_for @signed_lease, :url => signed_leases_path(:req_no => @request_id,:type => @type) do |f| %>
   <% if @signed_lease.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@signed_lease.errors.count, "error") %> prohibited this signed_lease from being saved:</h2>

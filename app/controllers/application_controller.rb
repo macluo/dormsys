@@ -62,11 +62,22 @@ class ApplicationController < ActionController::Base
 
     builds_apts.each do |b|
       the_list << {:unit_no => b.unit_no, :vacancy => Room.where(:unit_no => b.unit_no,
-                                                                 :lease_no => nil).count}
+                                                                 :occupant => nil).count}
     end
 
     # add family apartments
-    the_list << {:unit_no => 'Family housing', :vacancy => FamilyApt.where(:lease_no => nil).count}
+    the_list << {:unit_no => 'Family housing', :vacancy => FamilyApt.where(:occupant => nil).count}
+  end
+
+  def parking_vacant_list
+    the_list = []
+    parking = ParkingLot.all
+
+    parking.each do |p|
+      the_list << {:unit_no => p.lot_no, :vacancy => ParkingSpot.where(:lot_no => p.lot_no, :occupant => nil).count}
+    end
+
+    the_list
   end
 
 end

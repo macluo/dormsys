@@ -1,4 +1,4 @@
-<h1>Listing signed_leases</h1>
+<h1>List of leases</h1>
 
 <table>
   <thead>
@@ -11,8 +11,10 @@
     <% @signed_leases.each do |signed_lease| %>
       <tr>
         <td><%= link_to 'Show', signed_lease %></td>
-        <td><%= link_to 'Edit', edit_signed_lease_path(signed_lease) %></td>
-        <td><%= link_to 'Destroy', signed_lease, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if session[:user] == "staff" %>
+            <td><%= link_to 'Edit', edit_signed_lease_path(signed_lease) %></td>
+        <% end %>
+        <td><%#= link_to 'Destroy', signed_lease, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -20,4 +22,4 @@
 
 <br>
 
-<%= link_to 'New Signed lease', new_signed_lease_path %>
+<%#= link_to 'New Signed lease', new_signed_lease_path %>

@@ -62,8 +62,8 @@ SimpleNavigation::Configuration.run do |navigation|
         end
 
         sub_nav1.item :user_3A_2, '2. View leases' do |sub_nav2|
-          sub_nav2.item :user_3A_2_1, '1. View current lease'
-          sub_nav2.item :user_3A_2_2, '2. View past leases'
+          sub_nav2.item :user_3A_2_1, '1. View current lease', signed_lease_url(session[:pid])
+          sub_nav2.item :user_3A_2_2, '2. View past leases', signed_leases_url
           sub_nav2.item :user_3A_2_3, '3. Back'
         end
 

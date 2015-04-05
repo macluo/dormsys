@@ -23,63 +23,62 @@
 
 <p>
   <strong>Lease No.:</strong>
-  <%= @signedLease.lease_no %>
+  <%= @signed_lease.lease_no %>
 </p>
-\
+
 <p>
   <strong>Place No.:</strong>
-  <%= @signedLease.place_no %>
+  <%= @signed_lease.place_no %>
 </p>
 
 <p>
   <strong>Apt No.:</strong>
-  <%= @signedLease.apt_no %>
+  <%= @signed_lease.apt_no %>
 </p>
 
 <p>
   <strong>Parking:</strong>
-  <%= @signedLease.parking_spot %>
+  <%= @signed_lease.parking_spot %>
 </p>
 
 <p>
   <strong>Parking Permit ID.:</strong>
-  <%= @signedLease.permit_id %>
+  <%= @signed_lease.permit_id %>
 </p>
 
 
 <p>
   <strong>Rent:</strong>
-  <%= @signedLease.rent %>
+  <%= @signed_lease.rent %>
 </p>
 
 <p>
   <strong>Parking fee:</strong>
-  <%= @signedLease.parking_fee %>
+  <%= @signed_lease.parking_fee %>
 </p>
 
 <p>
   <strong>Start semester:</strong>
-  <%= @signedLease.start_sem %>
+  <%= @signed_lease.start_sem %>
 </p>
 
 <p>
   <strong>End semester:</strong>
-  <%= @signedLease.end_sem %>
+  <%= @signed_lease.end_sem %>
 </p>
 
 <p>
   <strong>Apt No.:</strong>
-  <%= @signedLease.deposit %>
+  <%= @signed_lease.deposit %>
 </p>
 
 <p>
   <strong>Apt No.:</strong>
-  <%= @signedLease.pay_option %>
+  <%= @signed_lease.pay_option %>
 </p>
 
 
-
-
-
+<% if session[:user] == 'staff' %>
 <%= link_to 'Edit', edit_signed_lease_path(@signed_lease) %> |
+<% end %>
 <%= link_to 'Back', signed_leases_path %>
