@@ -45,7 +45,7 @@
  <%= link_to 'Cancel', @parking_request, method: :delete, data: { confirm: 'Are you sure?' } %> |
  <%= link_to 'Back', menu_student_url %>
 <% elsif session[:user] == 'staff' %>
- <%= link_to 'Approve parking request', signed_lease_path(signed_lease: {lease_no: @lease_no}), method: :put, type: "approve_parking", data: {confirm: 'Proceed to approve the parking request?'} %> |
+ <%= link_to 'Approve parking request', signed_lease_path(signed_lease: {lease_no: @lease_no}, type: "approve_parking"), method: :put, data: {confirm: 'Proceed to approve the parking request?'} %> |
  <%= link_to 'Deny the paring request', edit_parking_request_url(@parking_request), data: {confirm: 'Proceed to deny this request?'} %> |
  <%= link_to 'Back', menu_staff_url %>
 <% end %>
