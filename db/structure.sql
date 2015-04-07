@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.11, for osx10.7 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.20, for osx10.7 (x86_64)
 --
 -- Host: localhost    Database: CSC540_Project1
 -- ------------------------------------------------------
--- Server version	5.6.11
+-- Server version	5.6.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -134,8 +134,8 @@ CREATE TABLE `invoices` (
   PRIMARY KEY (`inv_no`),
   KEY `sid` (`sid`),
   KEY `lease_no` (`lease_no`),
-  CONSTRAINT `invoices_ibfk_3` FOREIGN KEY (`lease_no`) REFERENCES `signed_leases` (`lease_no`),
-  CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `students` (`sid`)
+  CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `students` (`sid`),
+  CONSTRAINT `invoices_ibfk_3` FOREIGN KEY (`lease_no`) REFERENCES `signed_leases` (`lease_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -158,12 +158,12 @@ CREATE TABLE `maintenance_requests` (
   PRIMARY KEY (`ticket_no`),
   KEY `sid` (`sid`),
   KEY `apt_no` (`apt_no`),
-  KEY `place_no` (`place_no`),
   KEY `unit_no` (`unit_no`),
+  KEY `place_no` (`place_no`),
   CONSTRAINT `maintenance_requests_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `students` (`sid`),
   CONSTRAINT `maintenance_requests_ibfk_2` FOREIGN KEY (`apt_no`) REFERENCES `family_apts` (`apt_no`),
-  CONSTRAINT `maintenance_requests_ibfk_3` FOREIGN KEY (`place_no`) REFERENCES `rooms` (`place_no`),
-  CONSTRAINT `maintenance_requests_ibfk_4` FOREIGN KEY (`unit_no`) REFERENCES `buildings_apts` (`unit_no`)
+  CONSTRAINT `maintenance_requests_ibfk_4` FOREIGN KEY (`unit_no`) REFERENCES `buildings_apts` (`unit_no`),
+  CONSTRAINT `maintenance_requests_ibfk_5` FOREIGN KEY (`place_no`) REFERENCES `rooms` (`place_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -232,9 +232,9 @@ CREATE TABLE `parking_spots` (
   KEY `lot_no` (`lot_no`),
   KEY `class_id` (`class_id`),
   KEY `occupant` (`occupant`),
-  CONSTRAINT `parking_spots_ibfk_3` FOREIGN KEY (`occupant`) REFERENCES `students` (`sid`),
   CONSTRAINT `parking_spots_ibfk_1` FOREIGN KEY (`lot_no`) REFERENCES `parking_lots` (`lot_no`),
-  CONSTRAINT `parking_spots_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `parking_class` (`class_id`)
+  CONSTRAINT `parking_spots_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `parking_class` (`class_id`),
+  CONSTRAINT `parking_spots_ibfk_3` FOREIGN KEY (`occupant`) REFERENCES `students` (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -298,8 +298,8 @@ CREATE TABLE `proc_maintenance` (
   `process_comments` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`staff_id`,`ticket_no`),
   KEY `ticket_no` (`ticket_no`),
-  CONSTRAINT `proc_maintenance_ibfk_3` FOREIGN KEY (`ticket_no`) REFERENCES `maintenance_requests` (`ticket_no`),
-  CONSTRAINT `proc_maintenance_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`)
+  CONSTRAINT `proc_maintenance_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`),
+  CONSTRAINT `proc_maintenance_ibfk_3` FOREIGN KEY (`ticket_no`) REFERENCES `maintenance_requests` (`ticket_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -317,8 +317,8 @@ CREATE TABLE `proc_termination` (
   `process_comments` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`staff_id`,`t_req_no`),
   KEY `t_req_no` (`t_req_no`),
-  CONSTRAINT `proc_termination_ibfk_3` FOREIGN KEY (`t_req_no`) REFERENCES `termination_requests` (`t_req_no`),
-  CONSTRAINT `proc_termination_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`)
+  CONSTRAINT `proc_termination_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`),
+  CONSTRAINT `proc_termination_ibfk_3` FOREIGN KEY (`t_req_no`) REFERENCES `termination_requests` (`t_req_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -335,11 +335,11 @@ CREATE TABLE `rooms` (
   `room_no` int(11) DEFAULT NULL,
   `rent` float DEFAULT NULL,
   `occupant` char(10) DEFAULT NULL,
-  PRIMARY KEY (`place_no`),
+  PRIMARY KEY (`place_no`,`unit_no`),
   KEY `unit_no` (`unit_no`),
   KEY `occupant` (`occupant`),
-  CONSTRAINT `rooms_ibfk_2` FOREIGN KEY (`occupant`) REFERENCES `students` (`sid`),
-  CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`unit_no`) REFERENCES `buildings_apts` (`unit_no`) ON DELETE CASCADE
+  CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`unit_no`) REFERENCES `buildings_apts` (`unit_no`) ON DELETE CASCADE,
+  CONSTRAINT `rooms_ibfk_2` FOREIGN KEY (`occupant`) REFERENCES `students` (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -391,17 +391,20 @@ CREATE TABLE `signed_leases` (
   `pay_option` int(11) DEFAULT NULL,
   `parking_spot` char(10) DEFAULT NULL,
   `permit_id` int(11) DEFAULT NULL,
+  `unit_no` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`lease_no`),
   UNIQUE KEY `permit_id` (`permit_id`),
   UNIQUE KEY `chk_duplicate` (`sid`,`start_sem`,`end_sem`),
   KEY `parking_spot` (`parking_spot`),
-  KEY `place_no` (`place_no`),
   KEY `apt_no` (`apt_no`),
+  KEY `unit_no` (`unit_no`),
+  KEY `place_no` (`place_no`),
   CONSTRAINT `signed_leases_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `students` (`sid`),
   CONSTRAINT `signed_leases_ibfk_2` FOREIGN KEY (`parking_spot`) REFERENCES `parking_spots` (`spot_no`),
-  CONSTRAINT `signed_leases_ibfk_3` FOREIGN KEY (`place_no`) REFERENCES `rooms` (`place_no`),
-  CONSTRAINT `signed_leases_ibfk_4` FOREIGN KEY (`apt_no`) REFERENCES `family_apts` (`apt_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  CONSTRAINT `signed_leases_ibfk_4` FOREIGN KEY (`apt_no`) REFERENCES `family_apts` (`apt_no`),
+  CONSTRAINT `signed_leases_ibfk_5` FOREIGN KEY (`unit_no`) REFERENCES `rooms` (`unit_no`),
+  CONSTRAINT `signed_leases_ibfk_6` FOREIGN KEY (`place_no`) REFERENCES `rooms` (`place_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -481,7 +484,7 @@ CREATE TABLE `termination_requests` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-05 15:29:31
+-- Dump completed on 2015-04-07 16:35:39
 INSERT INTO schema_migrations (version) VALUES ('1');
 
 INSERT INTO schema_migrations (version) VALUES ('3');
@@ -495,4 +498,6 @@ INSERT INTO schema_migrations (version) VALUES ('6');
 INSERT INTO schema_migrations (version) VALUES ('7');
 
 INSERT INTO schema_migrations (version) VALUES ('8');
+
+INSERT INTO schema_migrations (version) VALUES ('9');
 
