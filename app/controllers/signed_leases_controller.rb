@@ -144,11 +144,11 @@ class SignedLeasesController < ApplicationController
 
     if params[:type] == "approve_parking" # by staff
       parking_request = ParkingRequest.find_by_req_no(params[:id])
+      the_lease = get_active_lease(parking_request.sid);
 
       if (parking_request.pref_nearby == true)
 
         #find nearby housing first
-        the_lease = get_active_lease(parking_request.sid);
 
         if the_lease.place_no.nil? #family student
           building_no = the_lease.apt_no
@@ -157,28 +157,29 @@ class SignedLeasesController < ApplicationController
         end
 
         ParkingLot.all.each do |t|
-          if JSON.parse(t.nearby_housing).include(building_no)?
+          if JSON.parse(t.nearby_housing).include?(building_no)
               the_lot = t.lot_no
-              next
           end
-          the_lot = nil
+          break if !the_lot.nil?
         end
 
         if (parking_request.is_disabled)  # disabled?
           ParkingSpot.where(:spot_no => the_lot, :occupant => nil).each do |t|
             if t.class_id == 5
-              the_spot = t.spot_no
-              next
+              the_spot = t
+              the_fee = ParkingClass.find_by_class_id(p.class_id).fee
             end
+            break if !the_spot.nil?
           end
 
         else # not disabled!
 
           ParkingSpot.where(:spot_no => the_lot, :occupant => nil).each do |t|
             if t.class_id == parking_request.vehicle_type
-              the_spot = t.spot_no
-              next
+              the_spot = t
+              the_fee = ParkingClass.find_by_class_id(p.class_id).fee
             end
+            break if !the_spot.nil?
           end
 
         end
@@ -187,25 +188,49 @@ class SignedLeasesController < ApplicationController
 
         Room.where(:occupant => nil).each do |p|
           if (parking_request.is_disabled && p.class_id == 5)
-            the_spot = p.spot_no
+            the_spot = p
+            the_fee = ParkingClass.find_by_class_id(p.class_id).fee
           elsif (parking_request.vehicle_type == p.class_id)
-            the_spot = p.spot_no
+            the_spot = p
+            the_fee = ParkingClass.find_by_class_id(p.class_id).fee
           end
+          break if !the_spot.nil?
         end
 
       end
 
+      if the_spot.nil?
+        # error message! no parking spot available
+        redirect_to parking_request
+        return
+      end
+      # update to signed lease
+
+      if SignedLease.update(the_lease.lease_no, :parking_spot => the_spot.spot_no, :parking_fee => the_fee)
+
+        the_spot.occupant = parking_request.sid
+        the_spot.save
+
+        parking_request.app_status = 2
+        parking_request.save
+
+        redirect_to parking_requests_url
+        return
+      else
+        # something is wrong!!!!
+      end
+
     end
 
-    respond_to do |format|
-      if @signed_lease.update(signed_lease_params)
-        format.html { redirect_to @signed_lease, notice: 'Signed lease was successfully updated.' }
-        format.json { render :show, status: :ok, location: @signed_lease }
-      else
-        format.html { render :edit }
-        format.json { render json: @signed_lease.errors, status: :unprocessable_entity }
-      end
-    end
+    #respond_to do |format|
+    #  if @signed_lease.update(signed_lease_params)
+    #    format.html { redirect_to @signed_lease, notice: 'Signed lease was successfully updated.' }
+    #    format.json { render :show, status: :ok, location: @signed_lease }
+    #  else
+    #    format.html { render :edit }
+    #    format.json { render json: @signed_lease.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   # DELETE /signed_leases/1
