@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 8) do
+ActiveRecord::Schema.define(version: 9) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
     t.string  "manager_fname",    limit: 20
@@ -167,8 +167,9 @@ ActiveRecord::Schema.define(version: 8) do
 
   add_index "proc_termination", ["t_req_no"], name: "t_req_no", using: :btree
 
-  create_table "rooms", primary_key: "place_no", force: true do |t|
-    t.string  "unit_no",  limit: 20, null: false
+  create_table "rooms", id: false, force: true do |t|
+    t.string  "unit_no",  limit: 20,              null: false
+    t.string  "place_no", limit: 10, default: "", null: false
     t.integer "room_no"
     t.float   "rent",     limit: 24
     t.string  "occupant", limit: 10
@@ -194,6 +195,7 @@ ActiveRecord::Schema.define(version: 8) do
     t.integer "pay_option"
     t.string  "parking_spot", limit: 10
     t.integer "permit_id"
+    t.string  "unit_no",      limit: 20
   end
 
   add_index "signed_leases", ["apt_no"], name: "apt_no", using: :btree
@@ -201,6 +203,7 @@ ActiveRecord::Schema.define(version: 8) do
   add_index "signed_leases", ["permit_id"], name: "permit_id", unique: true, using: :btree
   add_index "signed_leases", ["place_no"], name: "place_no", using: :btree
   add_index "signed_leases", ["sid", "start_sem", "end_sem"], name: "chk_duplicate", unique: true, using: :btree
+  add_index "signed_leases", ["unit_no"], name: "unit_no", using: :btree
 
   create_table "staffs", primary_key: "staff_id", force: true do |t|
     t.string "works_in_building", limit: 20
