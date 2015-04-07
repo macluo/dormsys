@@ -90,4 +90,8 @@ class ApplicationController < ActionController::Base
     return SignedLease.where("sid = ? AND end_sem <= ?", current_user_id, current_semester).first
   end
 
+  def get_active_lease(sid)
+    return SignedLease.where("sid = ? AND end_sem <= ?", sid, current_semester).first
+  end
+
 end

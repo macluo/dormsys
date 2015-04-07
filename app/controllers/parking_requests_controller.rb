@@ -24,6 +24,7 @@ class ParkingRequestsController < ApplicationController
       request = ParkingRequest.find_by_req_no(params[:id])
       @person = Person.find_by_pid(request.sid)
       @student = Student.find_by_sid(request.sid)
+      @lease_no = get_active_lease(request.sid).lease_no
       if !request
         flash.now.alert = 'No pending request is found'
         #redirect_to menu_student_url

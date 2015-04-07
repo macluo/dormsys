@@ -141,6 +141,58 @@ class SignedLeasesController < ApplicationController
   # PATCH/PUT /signed_leases/1
   # PATCH/PUT /signed_leases/1.json
   def update
+
+    if params[:type] == "approve_parking" # by staff
+      parking_request = ParkingRequest.find_by_req_no(params[:id])
+
+      if (parking_request.pref_nearby == true)
+
+        #find nearby housing first
+        the_lease = get_active_lease(parking_request.sid);
+
+        if the_lease.place_no.nil? #family student
+          building_no = the_lease.apt_no
+        else #single student
+          building_no = Room.find_by_place_no(the_lease.place_no).unit_no
+        end
+
+        ParkingLot.all.each do |t|
+          if JSON.parse(t.nearby_housing).include(building_no)?
+              the_lot = t.lot_no
+              next
+          end
+          the_lot = nil
+        end
+
+        if (parking_request.is_disabled)  # disabled?
+          ParkingSpot.where(:spot_no => the_lot, :occupant => nil).each do |t|
+            if t.class_id == 5
+              the_spot = t.spot_no
+              next
+            end
+          end
+
+        else # not disabled!
+
+          ParkingSpot.where(:spot_no => the_lot, :occupant => nil).each do |t|
+            if t.class_id == parking_request.vehicle_type
+              the_spot = t.spot_no
+              next
+            end
+          end
+
+        end
+
+      else # any parking is fine
+
+        ParkingLot.all.each do |p|
+          
+        end
+
+      end
+
+    end
+
     respond_to do |format|
       if @signed_lease.update(signed_lease_params)
         format.html { redirect_to @signed_lease, notice: 'Signed lease was successfully updated.' }

@@ -1,6 +1,26 @@
 <p id="parking_content"><%= notice %></p>
 
 <p>
+  <strong>Request No.:</strong>
+  <%= @parking_request.req_no %>
+</p>
+
+<p>
+  <strong>First Name:</strong>
+  <%= @person.fname %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @person.lname %>
+</p>
+
+<p>
+  <strong>S_type:</strong>
+  <%= @student.s_type %>
+</p>
+
+<p>
   <strong>Vehicle Type:</strong>
   <%= @parking_request.vehicle_type %>
 </p>
@@ -20,5 +40,12 @@
   <%= @parking_request.app_status %>
 </p>
 
-<%= link_to 'Edit', edit_parking_request_path(@parking_request) %> |
-<%= link_to 'Back', parking_requests_path %>
+<% if session[:user] == 'student' %>
+ <%= link_to 'Edit', edit_parking_request_path(@parking_request) %> |
+ <%= link_to 'Cancel', @parking_request, method: :delete, data: { confirm: 'Are you sure?' } %> |
+ <%= link_to 'Back', menu_student_url %>
+<% elsif session[:user] == 'staff' %>
+ <%= link_to 'Approve parking request', signed_lease_path(signed_lease: {lease_no: @lease_no}), method: :put, type: "approve_parking", data: {confirm: 'Proceed to approve the parking request?'} %> |
+ <%= link_to 'Deny the paring request', edit_parking_request_url(@parking_request), data: {confirm: 'Proceed to deny this request?'} %> |
+ <%= link_to 'Back', menu_staff_url %>
+<% end %>
