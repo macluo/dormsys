@@ -54,14 +54,13 @@ class SignedLeasesController < ApplicationController
       end
 
       the_apt = FamilyApt.where(:apt_no => idx, :occupant => nil).first
-      @signed_lease.place_no = the_apt.apt_no;
+      @signed_lease.place_no = the_apt.apt_no
       @signed_lease.rent = the_apt.rent
       @type = 'family'
 
     else
 
       if !request.building_pref_1.nil? && !the_list.index{ |x| x[:unit_no] == request.building_pref_1}.nil?
-        puts "dada"
         idx = request.building_pref_1
       elsif !request.building_pref_2.nil? && !the_list.index{ |x| x[:unit] == request.building_pref_2}.nil?
         idx = request.building_pref_2
@@ -72,7 +71,8 @@ class SignedLeasesController < ApplicationController
       end
 
       the_room = Room.where(:unit_no => idx, :occupant => nil).first
-      @signed_lease.place_no = the_room.place_no;
+      @signed_lease.place_no = the_room.place_no
+      @signed_lease.unit_no = the_room.unit_no
       @signed_lease.rent = the_room.rent
       @type = 'single'
     end
@@ -106,6 +106,7 @@ class SignedLeasesController < ApplicationController
       @signed_lease.apt_no = nil
     else
       @signed_lease.place_no = nil
+      @signed_lease.unit_no = nil
     end
 
     @signed_lease.parking_spot = nil if @signed_lease == ''
@@ -120,7 +121,7 @@ class SignedLeasesController < ApplicationController
 
         #update to rooms or family apts
         if (params[:type] == 'single')
-          room = Room.find_by_place_no(@signed_lease.place_no)
+          room = Room.where(:place_no => @signed_lease.place_no, :unit_no =>@signed_lease.unit_no)
           room.occupant = request.sid # see if this works?
           room.save
         else
