@@ -185,8 +185,12 @@ class SignedLeasesController < ApplicationController
 
       else # any parking is fine
 
-        ParkingLot.all.each do |p|
-          
+        Room.where(:occupant => nil).each do |p|
+          if (parking_request.is_disabled && p.class_id == 5)
+            the_spot = p.spot_no
+          elsif (parking_request.vehicle_type == p.class_id)
+            the_spot = p.spot_no
+          end
         end
 
       end
