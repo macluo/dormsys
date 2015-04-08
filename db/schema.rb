@@ -11,20 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 9) do
+ActiveRecord::Schema.define(version: 1) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
-    t.string  "manager_fname",    limit: 20
-    t.string  "manager_lname",    limit: 20
-    t.string  "phone_no",         limit: 10
+    t.string  "manager_fname", limit: 20
+    t.string  "manager_lname", limit: 20
+    t.string  "address",       limit: 50
+    t.string  "phone_no",      limit: 15
     t.integer "category"
-    t.boolean "upper_class_only"
+    t.float   "rent",          limit: 24
+    t.float   "deposit",       limit: 24
+    t.boolean "upper_class"
+    t.integer "apt_no"
+    t.integer "no_bath"
   end
 
   create_table "family_apts", primary_key: "apt_no", force: true do |t|
+    t.string  "unit_no",  limit: 20
     t.integer "no_bedrm"
     t.integer "no_bath"
     t.float   "rent",     limit: 24
+    t.float   "deposit",  limit: 24
     t.string  "occupant", limit: 10
   end
 
@@ -44,15 +51,15 @@ ActiveRecord::Schema.define(version: 9) do
     t.boolean "parking"
     t.integer "park_class"
     t.boolean "pref_nearby"
+    t.integer "period"
+    t.integer "pay_option"
+    t.date    "movein_date"
     t.string  "building_pref_1", limit: 10
     t.string  "building_pref_2", limit: 10
     t.string  "building_pref_3", limit: 10
     t.string  "apt_pref_1",      limit: 10
     t.string  "apt_pref_2",      limit: 10
     t.string  "apt_pref_3",      limit: 10
-    t.integer "period"
-    t.integer "pay_option"
-    t.date    "movein_date"
   end
 
   add_index "housing_requests", ["apt_pref_1"], name: "apt_pref_1", using: :btree
@@ -90,9 +97,8 @@ ActiveRecord::Schema.define(version: 9) do
   end
 
   add_index "maintenance_requests", ["apt_no"], name: "apt_no", using: :btree
-  add_index "maintenance_requests", ["place_no"], name: "place_no", using: :btree
   add_index "maintenance_requests", ["sid"], name: "sid", using: :btree
-  add_index "maintenance_requests", ["unit_no"], name: "unit_no", using: :btree
+  add_index "maintenance_requests", ["unit_no", "place_no"], name: "unit_no", using: :btree
 
   create_table "parking_class", primary_key: "class_id", force: true do |t|
     t.string "class", limit: 10
@@ -168,42 +174,33 @@ ActiveRecord::Schema.define(version: 9) do
   add_index "proc_termination", ["t_req_no"], name: "t_req_no", using: :btree
 
   create_table "rooms", id: false, force: true do |t|
-    t.string  "unit_no",  limit: 20,              null: false
-    t.string  "place_no", limit: 10, default: "", null: false
-    t.integer "room_no"
-    t.float   "rent",     limit: 24
-    t.string  "occupant", limit: 10
+    t.string "unit_no",  limit: 20, null: false
+    t.string "place_no", limit: 10, null: false
+    t.string "room_no",  limit: 10
+    t.string "occupant", limit: 10
   end
 
   add_index "rooms", ["occupant"], name: "occupant", using: :btree
-  add_index "rooms", ["unit_no"], name: "unit_no", using: :btree
-
-  create_table "semesters", primary_key: "no", force: true do |t|
-    t.integer "year"
-    t.string  "term", limit: 10
-  end
 
   create_table "signed_leases", primary_key: "lease_no", force: true do |t|
     t.string  "sid",          limit: 10, null: false
+    t.string  "unit_no",      limit: 20
     t.string  "place_no",     limit: 10
     t.string  "apt_no",       limit: 10
     t.float   "rent",         limit: 24
     t.float   "parking_fee",  limit: 24
-    t.integer "start_sem"
-    t.integer "end_sem"
+    t.date    "start_date"
+    t.date    "end_date"
     t.float   "deposit",      limit: 24
     t.integer "pay_option"
     t.string  "parking_spot", limit: 10
     t.integer "permit_id"
-    t.string  "unit_no",      limit: 20
   end
 
   add_index "signed_leases", ["apt_no"], name: "apt_no", using: :btree
   add_index "signed_leases", ["parking_spot"], name: "parking_spot", using: :btree
-  add_index "signed_leases", ["permit_id"], name: "permit_id", unique: true, using: :btree
-  add_index "signed_leases", ["place_no"], name: "place_no", using: :btree
-  add_index "signed_leases", ["sid", "start_sem", "end_sem"], name: "chk_duplicate", unique: true, using: :btree
-  add_index "signed_leases", ["unit_no"], name: "unit_no", using: :btree
+  add_index "signed_leases", ["sid"], name: "sid", using: :btree
+  add_index "signed_leases", ["unit_no", "place_no"], name: "unit_no", using: :btree
 
   create_table "staffs", primary_key: "staff_id", force: true do |t|
     t.string "works_in_building", limit: 20
@@ -215,19 +212,22 @@ ActiveRecord::Schema.define(version: 9) do
   add_index "staffs", ["works_in_building"], name: "works_in_building", using: :btree
 
   create_table "students", primary_key: "sid", force: true do |t|
-    t.string  "s_type",          limit: 5
-    t.string  "add_comment",     limit: 100
+    t.string  "s_type",           limit: 5
+    t.string  "add_comment",      limit: 100
     t.integer "s_status"
     t.boolean "smoke"
-    t.string  "spec_sneeds",     limit: 50
-    t.string  "category",        limit: 20
-    t.string  "kin_street",      limit: 50
-    t.string  "kin_city",        limit: 50
-    t.string  "kin_country",     limit: 50
-    t.string  "kin_fname",       limit: 20,  null: false
-    t.string  "kin_lname",       limit: 20,  null: false
-    t.string  "kin_phone",       limit: 10,  null: false
-    t.string  "kin_middle_name", limit: 20
+    t.string  "spec_sneeds",      limit: 50
+    t.string  "category",         limit: 20
+    t.string  "course",           limit: 50
+    t.string  "kin_street",       limit: 50
+    t.string  "kin_city",         limit: 50
+    t.string  "kin_country",      limit: 50
+    t.string  "kin_fname",        limit: 20
+    t.string  "kin_lname",        limit: 20,  null: false
+    t.string  "kin_relationship", limit: 20
+    t.string  "kin_phone",        limit: 15,  null: false
+    t.string  "kin_middle_name",  limit: 20
+    t.boolean "family_student"
   end
 
   create_table "termination_requests", primary_key: "t_req_no", force: true do |t|

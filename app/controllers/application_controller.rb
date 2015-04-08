@@ -52,6 +52,10 @@ class ApplicationController < ActionController::Base
     5 # 2015, Spring
   end
 
+  def current_semester_end_date
+    "2015-07-31"
+  end
+
   def semester_list
     Semester.all
   end

@@ -39,11 +39,10 @@ class SignedLeasesController < ApplicationController
 
     #match available housing
     the_list = housing_vacant_list #get this list from application controller
-    if @student.s_type == 'family'
+    if @student.family_student == true
       puts "family"
 
       if !request.apt_pref_1.nil? && !the_list.index{ |x| x[:unit_no] == request.apt_pref_1}.nil?
-        puts "dada"
         idx = request.apt_pref_1
       elsif !request.apt_pref_2.nil? && !the_list.index{ |x| x[:unit] == request.apt_pref_2}.nil?
         idx = request.apt_pref_2
@@ -78,8 +77,8 @@ class SignedLeasesController < ApplicationController
     end
 
     @signed_lease.sid = @student.sid
-    @signed_lease.start_sem = current_semester
-    @signed_lease.end_sem = current_semester + request.period - 1
+    @signed_lease.start_date = request.movein_date
+    @signed_lease.end_date = semeser_end_date
     @signed_lease.pay_option = request.pay_option
 
     @request_id = request.req_no #pass housing request req_no

@@ -21,6 +21,11 @@
 </p>
 
 <p>
+  <strong>Unit No.:</strong>
+  <%= @maintenance_request.unit_no %>
+</p>
+
+<p>
   <strong>Place No.:</strong>
   <%= @signedLease.place_no %>
 </p>
@@ -47,12 +52,12 @@
 
 <p>
   <strong>Created Date:</strong>
-  <%= @maintenance_request.ticket_no %>
+  <%= @maintenance_request.created_date %>
 </p>
 
 <p>
-  <strong>Unit No.:</strong>
-  <%= @maintenance_request.unit_no %>
+  <strong>Status.:</strong>
+  <%= @maintenance_request.app_status %>
 </p>
 
 <p>

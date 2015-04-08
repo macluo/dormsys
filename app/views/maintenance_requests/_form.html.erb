@@ -27,9 +27,21 @@
     </p>
 
     <p>
+      <%= f.label :place_no %><br>
+      <%= f.text_field :place_no %>
+    </p>
+
+    <p>
       <%= f.label :unit_no %><br>
       <%= f.text_field :unit_no %>
     </p>
+
+    <% if session[:user] == 'staff' %>
+    <p>
+      <%= f.label :app_status %><br>
+      <%= f.text_field :app_status %>
+    </p>
+    <% end %>
 
     <div class="actions">
     <%= f.submit %>

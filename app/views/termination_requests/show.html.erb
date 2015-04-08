@@ -1,4 +1,70 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <strong>Student ID:</strong>
+  <%= @person.pid %>
+</p>
+
+<p>
+  <strong>First Name:</strong>
+  <%= @person.fname %>
+</p>
+
+<p>
+  <strong>Middle Name:</strong>
+  <%= @person.mname %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @person.lname %>
+</p>
+
+<p>
+  <strong>Lease No.:</strong>
+  <%= @signed_lease.lease_no %>
+</p>
+
+<p>
+  <strong>Unit No.:</strong>
+  <%= @signed_lease.unit_no %>
+</p>
+
+<p>
+  <strong>Place No.:</strong>
+  <%= @signed_lease.place_no %>
+</p>
+
+<p>
+  <strong>Apt No.:</strong>
+  <%= @signed_lease.apt_no %>
+</p>
+
+<p>
+  <strong>Ticket no.:</strong>
+  <%= @termination_request.t_req_no %>
+</p>
+
+<p>
+  <strong>Inspection Date:</strong>
+  <%= @termination_request.insp_date %>
+</p>
+
+<p>
+  <strong>Termination Date:</strong>
+  <%= @termination_request.termination_date %>
+</p>
+
+<p>
+  <strong>Reason:</strong>
+  <%= @termination_request.reason %>
+</p>
+
+<p>
+  <strong>status:</strong>
+  <%= @termination_request.app_status %>
+</p>
+
+
 <%= link_to 'Edit', edit_termination_request_path(@termination_request) %> |
 <%= link_to 'Back', termination_requests_path %>

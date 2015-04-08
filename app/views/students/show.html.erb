@@ -56,6 +56,11 @@
 </p>
 
 <p>
+  <strong>Course:</strong>
+  <%= @person.student.course %>
+</p>
+
+<p>
   <strong>Street:</strong>
   <%= @person.street %>
 </p>
@@ -101,18 +106,18 @@
 </p>
 
 <p>
-  <strong>Contact Person Middle Name:</strong>
-  <%= @person.student.kin_middle_name %>
+  <strong>Contact Person Last Name:</strong>
+  <%= @person.student.kin_lname %>
+</p>
+
+<p>
+  <strong>Relationship</strong>
+  <%= @person.student.kin_relationship %>
 </p>
 
 <p>
   <strong>Contact Person Phone Number:</strong>
   <%= @person.student.kin_phone %>
-</p>
-
-<p>
-  <strong>Contact Person Last Name:</strong>
-  <%= @person.student.kin_lname %>
 </p>
 
 <p>

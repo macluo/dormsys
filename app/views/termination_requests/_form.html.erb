@@ -11,7 +11,17 @@
     </div>
   <% end %>
 
-  <div class="actions">
+    <p>
+      <%= f.label :reason %><br>
+      <%= f.text_area :reason %>
+    </p>
+
+    <p>
+      <%= f.label :termination_date %><br>
+      <%= f.text_area :termination_date %>
+    </p>
+
+    <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
