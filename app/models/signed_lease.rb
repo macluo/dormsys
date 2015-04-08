@@ -6,6 +6,7 @@ class SignedLease < ActiveRecord::Base
     belongs_to :student, :class_name => 'Student', :foreign_key => :sid
     belongs_to :parking_spot, :class_name => 'ParkingSpot', :foreign_key => :parking_spot
     belongs_to :room, :class_name => 'Room', :foreign_key => :place_no
+    belongs_to :room, :class_name => 'Room', :foreign_key => :unit_no
     belongs_to :family_apt, :class_name => 'FamilyApt', :foreign_key => :apt_no
     has_many :termination_requests, :class_name => 'TerminationRequest', :foreign_key => :lease_no
 

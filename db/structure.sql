@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.20, for osx10.7 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.11, for osx10.7 (x86_64)
 --
--- Host: localhost    Database: CSC540_Project1
+-- Host: localhost    Database: CSC540_Project1a
 -- ------------------------------------------------------
--- Server version	5.6.20
+-- Server version	5.6.11
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,9 +26,14 @@ CREATE TABLE `buildings_apts` (
   `unit_no` varchar(20) NOT NULL DEFAULT '',
   `manager_fname` varchar(20) DEFAULT NULL,
   `manager_lname` varchar(20) DEFAULT NULL,
-  `phone_no` char(10) DEFAULT NULL,
+  `address` varchar(50) DEFAULT NULL,
+  `phone_no` char(15) DEFAULT NULL,
   `category` int(11) DEFAULT NULL,
-  `upper_class_only` tinyint(1) DEFAULT NULL,
+  `rent` float DEFAULT NULL,
+  `deposit` float DEFAULT NULL,
+  `upper_class` tinyint(1) DEFAULT NULL,
+  `apt_no` int(11) DEFAULT NULL,
+  `no_bath` int(11) DEFAULT NULL,
   PRIMARY KEY (`unit_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -41,10 +46,12 @@ DROP TABLE IF EXISTS `family_apts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `family_apts` (
-  `apt_no` varchar(10) NOT NULL DEFAULT '',
+  `unit_no` varchar(20) DEFAULT NULL,
+  `apt_no` varchar(10) NOT NULL,
   `no_bedrm` int(11) DEFAULT NULL,
   `no_bath` int(11) DEFAULT NULL,
   `rent` float DEFAULT NULL,
+  `deposit` float DEFAULT NULL,
   `occupant` char(10) DEFAULT NULL,
   PRIMARY KEY (`apt_no`),
   KEY `occupant` (`occupant`),
@@ -78,21 +85,21 @@ DROP TABLE IF EXISTS `housing_requests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `housing_requests` (
-  `req_no` int(11) NOT NULL DEFAULT '0',
+  `req_no` int(11) NOT NULL AUTO_INCREMENT,
   `sid` char(10) NOT NULL,
   `app_status` int(11) DEFAULT NULL,
   `parking` tinyint(1) DEFAULT NULL,
   `park_class` int(11) DEFAULT NULL,
   `pref_nearby` tinyint(1) DEFAULT NULL,
+  `period` int(11) DEFAULT NULL,
+  `pay_option` int(11) DEFAULT NULL,
+  `movein_date` date DEFAULT NULL,
   `building_pref_1` varchar(10) DEFAULT NULL,
   `building_pref_2` varchar(10) DEFAULT NULL,
   `building_pref_3` varchar(10) DEFAULT NULL,
   `apt_pref_1` varchar(10) DEFAULT NULL,
   `apt_pref_2` varchar(10) DEFAULT NULL,
   `apt_pref_3` varchar(10) DEFAULT NULL,
-  `period` int(11) DEFAULT NULL,
-  `pay_option` int(11) DEFAULT NULL,
-  `movein_date` date DEFAULT NULL,
   PRIMARY KEY (`req_no`),
   KEY `sid` (`sid`),
   KEY `park_class` (`park_class`),
@@ -132,10 +139,10 @@ CREATE TABLE `invoices` (
   `bill_start_date` date DEFAULT NULL,
   `bill_end_date` date DEFAULT NULL,
   PRIMARY KEY (`inv_no`),
-  KEY `sid` (`sid`),
   KEY `lease_no` (`lease_no`),
-  CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `students` (`sid`),
-  CONSTRAINT `invoices_ibfk_3` FOREIGN KEY (`lease_no`) REFERENCES `signed_leases` (`lease_no`)
+  KEY `sid` (`sid`),
+  CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`lease_no`) REFERENCES `signed_leases` (`lease_no`),
+  CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `students` (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -158,12 +165,11 @@ CREATE TABLE `maintenance_requests` (
   PRIMARY KEY (`ticket_no`),
   KEY `sid` (`sid`),
   KEY `apt_no` (`apt_no`),
-  KEY `unit_no` (`unit_no`),
-  KEY `place_no` (`place_no`),
+  KEY `unit_no` (`unit_no`,`place_no`),
   CONSTRAINT `maintenance_requests_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `students` (`sid`),
   CONSTRAINT `maintenance_requests_ibfk_2` FOREIGN KEY (`apt_no`) REFERENCES `family_apts` (`apt_no`),
-  CONSTRAINT `maintenance_requests_ibfk_4` FOREIGN KEY (`unit_no`) REFERENCES `buildings_apts` (`unit_no`),
-  CONSTRAINT `maintenance_requests_ibfk_5` FOREIGN KEY (`place_no`) REFERENCES `rooms` (`place_no`)
+  CONSTRAINT `maintenance_requests_ibfk_3` FOREIGN KEY (`unit_no`, `place_no`) REFERENCES `rooms` (`unit_no`, `place_no`),
+  CONSTRAINT `maintenance_requests_ibfk_4` FOREIGN KEY (`unit_no`) REFERENCES `buildings_apts` (`unit_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -298,8 +304,8 @@ CREATE TABLE `proc_maintenance` (
   `process_comments` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`staff_id`,`ticket_no`),
   KEY `ticket_no` (`ticket_no`),
-  CONSTRAINT `proc_maintenance_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`),
-  CONSTRAINT `proc_maintenance_ibfk_3` FOREIGN KEY (`ticket_no`) REFERENCES `maintenance_requests` (`ticket_no`)
+  CONSTRAINT `proc_maintenance_ibfk_1` FOREIGN KEY (`ticket_no`) REFERENCES `maintenance_requests` (`ticket_no`),
+  CONSTRAINT `proc_maintenance_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -317,8 +323,8 @@ CREATE TABLE `proc_termination` (
   `process_comments` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`staff_id`,`t_req_no`),
   KEY `t_req_no` (`t_req_no`),
-  CONSTRAINT `proc_termination_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`),
-  CONSTRAINT `proc_termination_ibfk_3` FOREIGN KEY (`t_req_no`) REFERENCES `termination_requests` (`t_req_no`)
+  CONSTRAINT `proc_termination_ibfk_1` FOREIGN KEY (`t_req_no`) REFERENCES `termination_requests` (`t_req_no`),
+  CONSTRAINT `proc_termination_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staffs` (`staff_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -331,43 +337,13 @@ DROP TABLE IF EXISTS `rooms`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rooms` (
   `unit_no` varchar(20) NOT NULL,
-  `place_no` varchar(10) NOT NULL DEFAULT '',
-  `room_no` int(11) DEFAULT NULL,
-  `rent` float DEFAULT NULL,
+  `place_no` varchar(10) NOT NULL,
+  `room_no` varchar(10) DEFAULT NULL,
   `occupant` char(10) DEFAULT NULL,
-  PRIMARY KEY (`place_no`,`unit_no`),
-  KEY `unit_no` (`unit_no`),
+  PRIMARY KEY (`unit_no`,`place_no`),
   KEY `occupant` (`occupant`),
   CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`unit_no`) REFERENCES `buildings_apts` (`unit_no`) ON DELETE CASCADE,
   CONSTRAINT `rooms_ibfk_2` FOREIGN KEY (`occupant`) REFERENCES `students` (`sid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `schema_migrations`
---
-
-DROP TABLE IF EXISTS `schema_migrations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `schema_migrations` (
-  `version` varchar(255) NOT NULL,
-  UNIQUE KEY `unique_schema_migrations` (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `semesters`
---
-
-DROP TABLE IF EXISTS `semesters`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `semesters` (
-  `no` int(11) NOT NULL DEFAULT '0',
-  `year` int(11) DEFAULT NULL,
-  `term` char(10) DEFAULT NULL,
-  PRIMARY KEY (`no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -381,29 +357,26 @@ DROP TABLE IF EXISTS `signed_leases`;
 CREATE TABLE `signed_leases` (
   `lease_no` int(11) NOT NULL AUTO_INCREMENT,
   `sid` char(10) NOT NULL,
+  `unit_no` varchar(20) DEFAULT NULL,
   `place_no` varchar(10) DEFAULT NULL,
   `apt_no` varchar(10) DEFAULT NULL,
   `rent` float DEFAULT NULL,
   `parking_fee` float DEFAULT NULL,
-  `start_sem` int(11) DEFAULT NULL,
-  `end_sem` int(11) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
   `deposit` float DEFAULT NULL,
   `pay_option` int(11) DEFAULT NULL,
   `parking_spot` char(10) DEFAULT NULL,
   `permit_id` int(11) DEFAULT NULL,
-  `unit_no` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`lease_no`),
-  UNIQUE KEY `permit_id` (`permit_id`),
-  UNIQUE KEY `chk_duplicate` (`sid`,`start_sem`,`end_sem`),
+  KEY `sid` (`sid`),
   KEY `parking_spot` (`parking_spot`),
+  KEY `unit_no` (`unit_no`,`place_no`),
   KEY `apt_no` (`apt_no`),
-  KEY `unit_no` (`unit_no`),
-  KEY `place_no` (`place_no`),
   CONSTRAINT `signed_leases_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `students` (`sid`),
   CONSTRAINT `signed_leases_ibfk_2` FOREIGN KEY (`parking_spot`) REFERENCES `parking_spots` (`spot_no`),
-  CONSTRAINT `signed_leases_ibfk_4` FOREIGN KEY (`apt_no`) REFERENCES `family_apts` (`apt_no`),
-  CONSTRAINT `signed_leases_ibfk_5` FOREIGN KEY (`unit_no`) REFERENCES `rooms` (`unit_no`),
-  CONSTRAINT `signed_leases_ibfk_6` FOREIGN KEY (`place_no`) REFERENCES `rooms` (`place_no`)
+  CONSTRAINT `signed_leases_ibfk_3` FOREIGN KEY (`unit_no`, `place_no`) REFERENCES `rooms` (`unit_no`, `place_no`),
+  CONSTRAINT `signed_leases_ibfk_4` FOREIGN KEY (`apt_no`) REFERENCES `family_apts` (`apt_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -443,13 +416,16 @@ CREATE TABLE `students` (
   `smoke` tinyint(1) DEFAULT NULL,
   `spec_sneeds` varchar(50) DEFAULT NULL,
   `category` varchar(20) DEFAULT NULL,
+  `course` varchar(50) DEFAULT NULL,
   `kin_street` varchar(50) DEFAULT NULL,
   `kin_city` varchar(50) DEFAULT NULL,
   `kin_country` varchar(50) DEFAULT NULL,
-  `kin_fname` varchar(20) NOT NULL,
+  `kin_fname` varchar(20) DEFAULT NULL,
   `kin_lname` varchar(20) NOT NULL,
-  `kin_phone` char(10) NOT NULL,
+  `kin_relationship` varchar(20) DEFAULT NULL,
+  `kin_phone` char(15) NOT NULL,
   `kin_middle_name` varchar(20) DEFAULT NULL,
+  `family_student` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`sid`),
   CONSTRAINT `students_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `persons` (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -484,20 +460,4 @@ CREATE TABLE `termination_requests` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-07 16:35:39
-INSERT INTO schema_migrations (version) VALUES ('1');
-
-INSERT INTO schema_migrations (version) VALUES ('3');
-
-INSERT INTO schema_migrations (version) VALUES ('4');
-
-INSERT INTO schema_migrations (version) VALUES ('5');
-
-INSERT INTO schema_migrations (version) VALUES ('6');
-
-INSERT INTO schema_migrations (version) VALUES ('7');
-
-INSERT INTO schema_migrations (version) VALUES ('8');
-
-INSERT INTO schema_migrations (version) VALUES ('9');
-
+-- Dump completed on 2015-04-08  1:05:42
