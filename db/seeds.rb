@@ -112,7 +112,7 @@ Room.create([
     {unit_no: 'Ravenclaw',
     place_no: '005',
     apt_no: '102',
-    room_no: '102-005'}])
+    room_no: '005'}])
 
 Room.create([
     {unit_no: 'Ravenclaw',
