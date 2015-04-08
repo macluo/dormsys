@@ -26,7 +26,7 @@ CREATE TABLE `buildings_apts` (
   `unit_no` varchar(20) NOT NULL DEFAULT '',
   `manager_fname` varchar(20) DEFAULT NULL,
   `manager_lname` varchar(20) DEFAULT NULL,
-  `address` varchar(50) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
   `phone_no` char(15) DEFAULT NULL,
   `category` int(11) DEFAULT NULL,
   `rent` float DEFAULT NULL,
@@ -270,6 +270,7 @@ CREATE TABLE `persons` (
   `phone` char(15) DEFAULT NULL,
   `alt_phone` char(15) DEFAULT NULL,
   `gender` char(1) DEFAULT NULL,
+  `zipcode` char(10) DEFAULT NULL,
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -476,8 +477,12 @@ CREATE TABLE `termination_requests` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-08 11:17:29
+-- Dump completed on 2015-04-08 12:55:31
 INSERT INTO schema_migrations (version) VALUES ('1');
 
 INSERT INTO schema_migrations (version) VALUES ('2');
+
+INSERT INTO schema_migrations (version) VALUES ('3');
+
+INSERT INTO schema_migrations (version) VALUES ('4');
 

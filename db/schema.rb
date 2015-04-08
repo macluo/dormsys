@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2) do
+ActiveRecord::Schema.define(version: 4) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
     t.string  "manager_fname", limit: 20
     t.string  "manager_lname", limit: 20
-    t.string  "address",       limit: 50
+    t.string  "address",       limit: 100
     t.string  "phone_no",      limit: 15
     t.integer "category"
     t.float   "rent",          limit: 24
@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 2) do
     t.string "phone",       limit: 15
     t.string "alt_phone",   limit: 15
     t.string "gender",      limit: 1
+    t.string "zipcode",     limit: 10
   end
 
   create_table "proc_housing", id: false, force: true do |t|
