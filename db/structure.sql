@@ -32,10 +32,9 @@ CREATE TABLE `buildings_apts` (
   `rent` float DEFAULT NULL,
   `deposit` float DEFAULT NULL,
   `upper_class` tinyint(1) DEFAULT NULL,
-  `apt_no` int(11) DEFAULT NULL,
   `no_bath` int(11) DEFAULT NULL,
   PRIMARY KEY (`unit_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,6 +312,7 @@ CREATE TABLE `rooms` (
   `place_no` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `room_no` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `occupant` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `apt_no` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   KEY `occupant` (`occupant`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -434,7 +434,7 @@ CREATE TABLE `termination_requests` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-08 13:49:54
+-- Dump completed on 2015-04-08 15:22:30
 INSERT INTO schema_migrations (version) VALUES ('1');
 
 INSERT INTO schema_migrations (version) VALUES ('2');
@@ -442,4 +442,6 @@ INSERT INTO schema_migrations (version) VALUES ('2');
 INSERT INTO schema_migrations (version) VALUES ('3');
 
 INSERT INTO schema_migrations (version) VALUES ('4');
+
+INSERT INTO schema_migrations (version) VALUES ('5');
 

@@ -6,6 +6,18 @@
 #   cities = City.create([{ name: 'Chicago' , { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# delete all data
+Room.delete_all
+Student.delete_all
+Staff.delete_all
+Person.delete_all
+Room.delete_all
+FamilyApt.delete_all
+BuildingsApt.delete_all
+ParkingSpot.delete_all
+ParkingClass.delete_all
+ParkingLot.delete_all
+
 # don't enter manager name here,
 #category: 1 halls
 BuildingsApt.create([
