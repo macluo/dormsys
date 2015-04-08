@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 5) do
+ActiveRecord::Schema.define(version: 0) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
     t.string  "manager_fname", limit: 20
@@ -91,9 +91,9 @@ ActiveRecord::Schema.define(version: 5) do
     t.string  "apt_no",       limit: 10
     t.string  "place_no",     limit: 20
     t.string  "unit_no",      limit: 20
+    t.integer "app_status"
     t.string  "comments",     limit: 50
     t.string  "sid",          limit: 10, null: false
-    t.integer "app_status"
   end
 
   add_index "maintenance_requests", ["apt_no"], name: "apt_no", using: :btree
@@ -180,8 +180,8 @@ ActiveRecord::Schema.define(version: 5) do
     t.string "unit_no",  limit: 20, null: false
     t.string "place_no", limit: 10, null: false
     t.string "room_no",  limit: 10
-    t.string "occupant", limit: 10
     t.string "apt_no",   limit: 10
+    t.string "occupant", limit: 10
   end
 
   add_index "rooms", ["occupant"], name: "occupant", using: :btree
