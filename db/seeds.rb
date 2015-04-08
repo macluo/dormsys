@@ -155,27 +155,27 @@ Room.create([
 
 #category: 3 family apts
 BuildingsApt.create([
-    {unit_no: 'Hufflepuff',
+    {unit_no: 'Hogwarts',
     address: '300, Wade Avenue, Raleigh - 27606, NC',
     phone_no: '919540005',
     category: 3}])
 
 FamilyApt.create([
-    {unit_no: 'Hufflepuff',
+    {unit_no: 'Hogwarts',
     apt_no:  '105',
     no_bedrm:  1,
     rent:  450,
     deposit: 500}])
 
 FamilyApt.create([
-    {unit_no: 'Hufflepuff',
+    {unit_no: 'Hogwarts',
     apt_no:  '106',
     no_bedrm:  2,
     rent:  550,
     deposit: 600}])
 
 FamilyApt.create([
-    {unit_no: 'Hufflepuff',
+    {unit_no: 'Hogwarts',
     apt_no:  '107',
     no_bedrm:  3,
     rent:  700,
