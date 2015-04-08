@@ -11,12 +11,12 @@ Room.delete_all
 Student.delete_all
 Staff.delete_all
 Person.delete_all
-Room.delete_all
-FamilyApt.delete_all
-BuildingsApt.delete_all
 ParkingSpot.delete_all
 ParkingClass.delete_all
 ParkingLot.delete_all
+Room.delete_all
+FamilyApt.delete_all
+BuildingsApt.delete_all
 
 # don't enter manager name here,
 #category: 1 halls
@@ -215,19 +215,31 @@ FamilyApt.create([
 # 3: bike
 # 4: handicapped
 
-execute("insert into parking_class values(1, 'Small car', 35)")
+ParkingClass.create([
+    {class_id: 1,
+    class_name: 'Small car',
+    fee: 35}])
 
-execute("insert into parking_class values(2, 'Large car', 40)")
+ParkingClass.create([
+    {class_id: 2,
+    class_name: 'Large car',
+    fee: 40}])
 
-execute("insert into parking_class values(3, 'Bike', 25)")
+ParkingClass.create([
+    {class_id: 3,
+    class_name: 'Bike',
+    fee: 30}])
 
-execute("insert into parking_class values(4, 'Handicapped', 25)")
+ParkingClass.create([
+    {class_id: 4,
+    class_name: 'Disabled',
+    fee: 25}])
 
 # each parkingLot only has one nearby building
 # parking lot 1
 ParkingLot.create([
     {lot_no: 1,
-    nearby_house: 'Gryffindor Hall'}])
+    nearby_housing: 'Gryffindor Hall'}])
 
 ParkingSpot.create([
     {spot_no: '001',
@@ -253,7 +265,7 @@ ParkingSpot.create([
 # parking lot 2
 ParkingLot.create([
     {lot_no: 2,
-    nearby_house: 'Slytherin Hall'}])
+    nearby_housing: 'Slytherin Hall'}])
 
 ParkingSpot.create([
     {spot_no: '005',
@@ -288,7 +300,7 @@ ParkingSpot.create([
 # parking lot 3
 ParkingLot.create([
     {lot_no: 3,
-    nearby_house: 'Ravenclaw'}])
+    nearby_housing: 'Ravenclaw'}])
 
 ParkingSpot.create([
     {spot_no: '011',
@@ -324,7 +336,7 @@ ParkingSpot.create([
 # parking lot 4
 ParkingLot.create([
     {lot_no: 4,
-    nearby_house: 'Ravenclaw'}])
+    nearby_housing: 'Ravenclaw'}])
 
 ParkingSpot.create([
     {spot_no: '017',
@@ -350,7 +362,7 @@ ParkingSpot.create([
 # parking lot 5
 ParkingLot.create([
     {lot_no: 5,
-    nearby_house: 'Hufflepuff'}])
+    nearby_housing: 'Hufflepuff'}])
 
 ParkingSpot.create([
     {spot_no: '021',
@@ -397,7 +409,7 @@ ParkingSpot.create([
 # parking lot 6
 ParkingLot.create([
     {lot_no: 6,
-    nearby_house: 'Hogwarts'}])
+    nearby_housing: 'Hogwarts'}])
 
 ParkingSpot.create([
     {spot_no: '029',
@@ -541,5 +553,5 @@ Person.create([
 
 Staff.create([
     {staff_id: 'A01',
-    workis_in_building: 'Gryffindor Hall',
-    job_title: 'Hall Manager/Supervisor'}])
+    works_in_building: 'Gryffindor Hall',
+    job_title: 'Supervisor'}])
