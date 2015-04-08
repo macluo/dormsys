@@ -39,7 +39,7 @@ class HousingRequestsController < ApplicationController
     @student= Student.find_by_sid(session[:pid])
     @nearby_parking = ParkingLot.select(:lot_no)
 
-    if @student.s_type == "family"
+    if @student.family_student == true
       @pref_housing = FamilyApt.select(:apt_no)
       @select_item = "apt_no"
     else # if not specified then treat students as single student

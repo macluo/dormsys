@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 1) do
+ActiveRecord::Schema.define(version: 2) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
     t.string  "manager_fname", limit: 20
@@ -87,13 +87,14 @@ ActiveRecord::Schema.define(version: 1) do
   add_index "invoices", ["sid"], name: "sid", using: :btree
 
   create_table "maintenance_requests", primary_key: "ticket_no", force: true do |t|
-    t.string "severity",     limit: 10
-    t.date   "created_date"
-    t.string "apt_no",       limit: 10
-    t.string "place_no",     limit: 20
-    t.string "unit_no",      limit: 20
-    t.string "comments",     limit: 50
-    t.string "sid",          limit: 10, null: false
+    t.string  "severity",     limit: 10
+    t.date    "created_date"
+    t.string  "apt_no",       limit: 10
+    t.string  "place_no",     limit: 20
+    t.string  "unit_no",      limit: 20
+    t.string  "comments",     limit: 50
+    t.string  "sid",          limit: 10, null: false
+    t.integer "app_status"
   end
 
   add_index "maintenance_requests", ["apt_no"], name: "apt_no", using: :btree
@@ -106,8 +107,10 @@ ActiveRecord::Schema.define(version: 1) do
   end
 
   create_table "parking_lots", primary_key: "lot_no", force: true do |t|
-    t.string "nearby_housing", limit: 60
+    t.string "nearby_housing", limit: 20
   end
+
+  add_index "parking_lots", ["nearby_housing"], name: "nearby_housing", using: :btree
 
   create_table "parking_requests", primary_key: "req_no", force: true do |t|
     t.string  "sid",          limit: 10, null: false
