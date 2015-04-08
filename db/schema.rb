@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 4) do
+ActiveRecord::Schema.define(version: 5) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
     t.string  "manager_fname", limit: 20
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 4) do
     t.float   "rent",          limit: 24
     t.float   "deposit",       limit: 24
     t.boolean "upper_class"
-    t.integer "apt_no"
     t.integer "no_bath"
   end
 
@@ -182,6 +181,7 @@ ActiveRecord::Schema.define(version: 4) do
     t.string "place_no", limit: 10, null: false
     t.string "room_no",  limit: 10
     t.string "occupant", limit: 10
+    t.string "apt_no",   limit: 10
   end
 
   add_index "rooms", ["occupant"], name: "occupant", using: :btree

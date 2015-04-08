@@ -75,37 +75,44 @@ address: '315, Gorman Crossings, Raleigh - 27606, NC',
 Room.create([
     {unit_no: 'Ravenclaw',
     place_no: '001',
-    room_no: '101-001'}])
+    apt_no: '101',
+    room_no: '001'}])
 
 Room.create([
     {unit_no: 'Ravenclaw',
     place_no: '002',
-    room_no: '101-002'}])
+    apt_no: '101',
+    room_no: '002'}])
 
 Room.create([
     {unit_no: 'Ravenclaw',
     place_no: '003',
-    room_no: '101-003'}])
+    apt_no: '101',
+    room_no: '003'}])
 
 Room.create([
     {unit_no: 'Ravenclaw',
     place_no: '004',
-    room_no: '102-004'}])
+    apt_no: '102',
+    room_no: '004'}])
 
 Room.create([
     {unit_no: 'Ravenclaw',
     place_no: '005',
+    apt_no: '102',
     room_no: '102-005'}])
 
 Room.create([
     {unit_no: 'Ravenclaw',
     place_no: '006',
-    room_no: '102-006'}])
+    apt_no: '102',
+    room_no: '006'}])
 
 Room.create([
     {unit_no: 'Ravenclaw',
     place_no: '007',
-    room_no: '102-007'}])
+    apt_no: '102',
+    room_no: '007'}])
 
 
 
@@ -120,37 +127,44 @@ address: '515, University Commons, Raleigh - 27606, NC',
 Room.create([
     {unit_no: 'Hufflepuff',
     place_no: '008',
-    room_no: '103-008'}])
+    apt_no: '103',
+    room_no: '008'}])
 
 Room.create([
     {unit_no: 'Hufflepuff',
     place_no: '009',
-    room_no: '103-009'}])
+    apt_no: '103',
+    room_no: '009'}])
 
 Room.create([
     {unit_no: 'Hufflepuff',
     place_no: '010',
-    room_no: '103-010'}])
+    apt_no: '103',
+    room_no: '010'}])
 
 Room.create([
     {unit_no: 'Hufflepuff',
     place_no: '011',
-    room_no: '104-011'}])
+    apt_no: '104',
+    room_no: '011'}])
 
 Room.create([
     {unit_no: 'Hufflepuff',
     place_no: '012',
-    room_no: '104-012'}])
+    apt_no: '104',
+    room_no: '012'}])
 
 Room.create([
     {unit_no: 'Hufflepuff',
     place_no: '013',
-    room_no: '104-013'}])
+    apt_no: '104',
+    room_no: '013'}])
 
 Room.create([
     {unit_no: 'Hufflepuff',
     place_no: '014',
-    room_no: '104-014'}])
+    apt_no: '104',
+    room_no: '014'}])
 
 
 #category: 3 family apts
