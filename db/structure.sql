@@ -162,6 +162,7 @@ CREATE TABLE `maintenance_requests` (
   `unit_no` varchar(20) DEFAULT NULL,
   `comments` varchar(50) DEFAULT NULL,
   `sid` char(10) NOT NULL,
+  `app_status` int(11) DEFAULT NULL,
   PRIMARY KEY (`ticket_no`),
   KEY `sid` (`sid`),
   KEY `apt_no` (`apt_no`),
@@ -197,8 +198,10 @@ DROP TABLE IF EXISTS `parking_lots`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `parking_lots` (
   `lot_no` int(11) NOT NULL DEFAULT '0',
-  `nearby_housing` varchar(60) DEFAULT NULL,
-  PRIMARY KEY (`lot_no`)
+  `nearby_housing` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`lot_no`),
+  KEY `nearby_housing` (`nearby_housing`),
+  CONSTRAINT `parking_lots_ibfk_1` FOREIGN KEY (`nearby_housing`) REFERENCES `buildings_apts` (`unit_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -348,6 +351,19 @@ CREATE TABLE `rooms` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `schema_migrations`
+--
+
+DROP TABLE IF EXISTS `schema_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `schema_migrations` (
+  `version` varchar(255) NOT NULL,
+  UNIQUE KEY `unique_schema_migrations` (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `signed_leases`
 --
 
@@ -460,4 +476,8 @@ CREATE TABLE `termination_requests` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-08  1:05:42
+-- Dump completed on 2015-04-08 11:17:29
+INSERT INTO schema_migrations (version) VALUES ('1');
+
+INSERT INTO schema_migrations (version) VALUES ('2');
+
