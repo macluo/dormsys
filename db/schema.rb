@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 0) do
     t.float   "rent",          limit: 24
     t.float   "deposit",       limit: 24
     t.boolean "upper_class"
-    t.integer "no_bath"
   end
 
   create_table "family_apts", primary_key: "apt_no", force: true do |t|
@@ -35,6 +34,7 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   add_index "family_apts", ["occupant"], name: "occupant", using: :btree
+  add_index "family_apts", ["unit_no"], name: "unit_no", using: :btree
 
   create_table "family_members", id: false, force: true do |t|
     t.string "sid",   limit: 10,              null: false
@@ -101,8 +101,8 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "maintenance_requests", ["unit_no", "place_no"], name: "unit_no", using: :btree
 
   create_table "parking_class", primary_key: "class_id", force: true do |t|
-    t.string "class", limit: 10
-    t.float  "fee",   limit: 24
+    t.string "class_name", limit: 10
+    t.float  "fee",        limit: 24
   end
 
   create_table "parking_lots", primary_key: "lot_no", force: true do |t|

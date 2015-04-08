@@ -214,25 +214,14 @@ FamilyApt.create([
 # 2: large car
 # 3: bike
 # 4: handicapped
-ParkingClass.create([
-    {class_id: 1,
-    :class => 'Small car',
-    fee: 35}])
 
-ParkingClass.create([
-    {class_id: 2,
-    :class => 'Large car',
-    fee: 40}])
+execute("insert into parking_class values(1, 'Small car', 35)")
 
-ParkingClass.create([
-    {class_id: 3,
-    :class => 'Bike',
-    fee: 30}])
+execute("insert into parking_class values(2, 'Large car', 40)")
 
-ParkingClass.create([
-    {class_id: 4,
-    :class => 'Handicapped',
-    fee: 25}])
+execute("insert into parking_class values(3, 'Bike', 25)")
+
+execute("insert into parking_class values(4, 'Handicapped', 25)")
 
 # each parkingLot only has one nearby building
 # parking lot 1

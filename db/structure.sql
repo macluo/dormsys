@@ -32,7 +32,6 @@ CREATE TABLE `buildings_apts` (
   `rent` float DEFAULT NULL,
   `deposit` float DEFAULT NULL,
   `upper_class` tinyint(1) DEFAULT NULL,
-  `no_bath` int(11) DEFAULT NULL,
   PRIMARY KEY (`unit_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -54,7 +53,9 @@ CREATE TABLE `family_apts` (
   `occupant` char(10) DEFAULT NULL,
   PRIMARY KEY (`apt_no`),
   KEY `occupant` (`occupant`),
-  CONSTRAINT `family_apts_ibfk_1` FOREIGN KEY (`occupant`) REFERENCES `students` (`sid`)
+  KEY `unit_no` (`unit_no`),
+  CONSTRAINT `family_apts_ibfk_1` FOREIGN KEY (`occupant`) REFERENCES `students` (`sid`),
+  CONSTRAINT `family_apts_ibfk_2` FOREIGN KEY (`unit_no`) REFERENCES `buildings_apts` (`unit_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -182,7 +183,7 @@ DROP TABLE IF EXISTS `parking_class`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `parking_class` (
   `class_id` int(11) NOT NULL DEFAULT '0',
-  `class` varchar(10) DEFAULT NULL,
+  `class_name` varchar(10) DEFAULT NULL,
   `fee` float DEFAULT NULL,
   PRIMARY KEY (`class_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -464,4 +465,4 @@ CREATE TABLE `termination_requests` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-08 15:32:11
+-- Dump completed on 2015-04-08 16:06:14
