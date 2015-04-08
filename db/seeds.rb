@@ -555,3 +555,444 @@ Staff.create([
     {staff_id: 'A01',
     works_in_building: 'Gryffindor Hall',
     job_title: 'Supervisor'}])
+
+Person.create([
+                  {pid: 'A02',
+                   password: '1234',
+                   fname: 'Severus',
+                   lname: 'Snape',
+                   street: 'Snape Road',
+                   city:  'Lahore',
+                   state: '',
+                   country: 'Pakistan',
+                   DOB: '1953-09-07',
+                   phone: '',
+                   gender: 'M'}])
+
+Staff.create([
+                 {staff_id: 'A02',
+                  works_in_building: 'Slytherin Hall',
+                  job_title: 'Supervisor'}])
+
+Person.create([
+                  {pid: 'A03',
+                   password: '1234',
+                   fname: 'Filius',
+                   lname: 'Flitwick',
+                   street: 'Flitwick Road',
+                   city:  'Sydney',
+                   state: '',
+                   country: 'Australia',
+                   DOB: '1960-11-06',
+                   phone: '',
+                   gender: 'M'}])
+
+Staff.create([
+                 {staff_id: 'A03',
+                  works_in_building: 'Ravenclaw',
+                  job_title: 'Supervisor'}])
+
+Person.create([
+                  {pid: 'A04',
+                   password: '1234',
+                   fname: 'Albus',
+                   lname: 'Dumbledore',
+                   street: 'Dumbledore Road',
+                   city:  'Gandhinagar',
+                   state: '',
+                   country: 'India',
+                   DOB: '1945-04-23',
+                   phone: '',
+                   gender: 'M'}])
+
+Staff.create([
+                 {staff_id: 'A04',
+                  works_in_building: 'Hogwarts',
+                  job_title: 'Supervisor'}])
+
+
+Person.create([
+                  {pid: 'A05',
+                   password: '1234',
+                   fname: 'Pomona',
+                   lname: 'Sprout',
+                   street: 'Sprout Road',
+                   city:  'Berlin',
+                   state: '',
+                   country: 'Germany',
+                   DOB: '1965-11-16',
+                   phone: '',
+                   gender: 'F'}])
+
+Staff.create([
+                 {staff_id: 'A05',
+                  works_in_building: 'Hogwarts',
+                  job_title: 'Supervisor'}])
+
+Person.create([
+                  {pid: '100540002',
+                   password: '1234',
+                   fname: 'Draco',
+                   lname: 'Malfoy',
+                   street: '31 B, Malfoy Drive',
+                   city:  'New York',
+                   state: 'NY',
+                   country: 'USA',
+                   DOB: '1990-06-05',
+                   phone: '',
+                   gender: 'M',
+                   nationality:'American',
+                   alt_phone:'',
+                   zipcode:'27506'}])
+Student.create([
+                   {sid: '100540002',
+                    s_type: 'S',
+                    add_comment:'',
+                    s_status:'1',
+                    smoke:'1',
+                    spec_sneeds:'',
+                    category:'Freshman',
+                    course:'Muggle Studies',
+                    kin_street:'31 B, Malfoy Drive',
+                    kin_city:'New York',
+                    kin_country:'USA',
+                    kin_fname:'Lucius',
+                    kin_lname:'Malfoy',
+                    kin_relationship:'Father',
+                    kin_phone:'9439560752',
+                    kin_middle_name:'',
+                    family_student:'0'
+
+                   }
+               ])
+
+Person.create([
+                  {pid: '100540003',
+                   password: '1234',
+                   fname: 'Ron',
+                   lname: 'Weasley',
+                   street: '31 B, Weasley Road',
+                   city:  'Rome',
+                   state: '',
+                   country: 'Italy',
+                   DOB: '1986-03-01',
+                   phone: '9189567067',
+                   gender: 'M',
+                   nationality:'Italian',
+                   alt_phone:'',
+                   zipcode:'27456'}])
+Student.create([
+                   {sid: '100540003',
+                    s_type: 'S',
+                    add_comment:'',
+                    s_status:'1',
+                    smoke:'0',
+                    spec_sneeds:'',
+                    category:'Graduate',
+                    course:'Care of Magical Creatures',
+                    kin_street:'31 B, Weasley Road',
+                    kin_city:'Rome',
+                    kin_country:'Italy',
+                    kin_fname:'Aurthur',
+                    kin_lname:'Weasley',
+                    kin_relationship:'Father',
+                    kin_phone:'9436660752',
+                    kin_middle_name:'',
+                    family_student:'0'
+
+                   }
+               ])
+Person.create([
+                  {pid: '100540004',
+                   password: '1234',
+                   fname: 'Hermione',
+                   lname: 'Granger',
+                   street: '32 A, Granger Road',
+                   city:  'Edinburg',
+                   state: '',
+                   country: 'Scotland',
+                   DOB: '1986-09-19',
+                   phone: '9189568567',
+                   gender: 'F',
+                   nationality:'Scottish',
+                   alt_phone:'',
+                   zipcode:'25556'}])
+Student.create([
+                   {sid: '100540004',
+                    s_type: 'S',
+                    add_comment:'',
+                    s_status:'1',
+                    smoke:'0',
+                    spec_sneeds:'',
+                    category:'Graduate',
+                    course:'Muggle Studies',
+                    kin_street:'32 A, Granger Road',
+                    kin_city:'Edinburg',
+                    kin_country:'Scotland',
+                    kin_fname:'Granger',
+                    kin_lname:'Mr.',
+                    kin_relationship:'Father',
+                    kin_phone:'9433360752',
+                    kin_middle_name:'',
+                    family_student:'0'
+
+                   }
+               ])
+Person.create([
+                  {pid: '100540001',
+                   password: '1234',
+                   fname: 'Harry',
+                   lname: 'Potter',
+                   street: '31 B, Privet Drive',
+                   city:  'London',
+                   state: '',
+                   country: 'England',
+                   DOB: '1991-07-21',
+                   phone: '9189327078',
+                   gender: 'M',
+                   nationality:'British',
+                   alt_phone:'9176326078',
+                   zipcode:'27605'}])
+Student.create([
+                   {sid: '100540001',
+                    s_type: 'S',
+                    add_comment:'',
+                    s_status:'1',
+                    smoke:'0',
+                    spec_sneeds:'',
+                    category:'Freshman',
+                    course:'Defence Against Dark Arts',
+                    kin_street:'12, Grimmauld Place',
+                    kin_city:'',
+                    kin_country:'',
+                    kin_fname:'Sirius',
+                    kin_lname:'Black',
+                    kin_relationship:'Godfather',
+                    kin_phone:'9439560752',
+                    kin_middle_name:'',
+                    family_student:'0'
+
+                   }
+               ])
+
+Person.create([
+                  {pid: '100540005',
+                   password: '1234',
+                   fname: 'Fred',
+                   lname: 'Weasley',
+                   street: '31 B, Weasley Road',
+                   city:  'Rome',
+                   state: '',
+                   country: 'Italy',
+                   DOB: '1982-11-20',
+                   phone: '9189327078',
+                   gender: 'M',
+                   nationality:'Italian',
+                   alt_phone:'9176326078',
+                   zipcode:'27605'}])
+Student.create([
+                   {sid: '100540005',
+                    s_type: 'S',
+                    add_comment:'',
+                    s_status:'1',
+                    smoke:'0',
+                    spec_sneeds:'',
+                    category:'Senior',
+                    course:'Muggle Studies',
+                    kin_street:'31 B, Weasley Road',
+                    kin_city:'Rome',
+                    kin_country:'Italy',
+                    kin_fname:'Aurthur',
+                    kin_lname:'Weasley',
+                    kin_relationship:'Father',
+                    kin_phone:'9436660752',
+                    kin_middle_name:'',
+                    family_student:'0'
+
+                   }
+               ])
+
+Person.create([
+                  {pid: '100540006',
+                   password: '1234',
+                   fname: 'George',
+                   lname: 'Weasley',
+                   street: '31 B, Weasley Road',
+                   city:  'Rome',
+                   state: '',
+                   country: 'Italy',
+                   DOB: '1982-11-20',
+                   phone: '9133368568',
+                   gender: 'M',
+                   nationality:'Italian',
+                   alt_phone:'',
+                   zipcode:'27605'}])
+Student.create([
+                   {sid: '100540006',
+                    s_type: 'S',
+                    add_comment:'',
+                    s_status:'1',
+                    smoke:'0',
+                    spec_sneeds:'',
+                    category:'Senior',
+                    course:'Muggle Studies',
+                    kin_street:'31 B, Weasley Road',
+                    kin_city:'Rome',
+                    kin_country:'Italy',
+                    kin_fname:'Aurthur',
+                    kin_lname:'Weasley',
+                    kin_relationship:'Father',
+                    kin_phone:'9436660752',
+                    kin_middle_name:'',
+                    family_student:'0'
+
+                   }
+               ])
+
+Person.create([
+                  {pid: '100540007',
+                   password: '1234',
+                   fname: 'Bill',
+                   lname: 'Weasley',
+                   street: '32 A, William Road',
+                   city:  'Brussels',
+                   state: '',
+                   country: 'Belgium',
+                   DOB: '1982-10-29',
+                   phone: '9198568567',
+                   gender: 'M',
+                   nationality:'Belgian',
+                   alt_phone:'',
+                   zipcode:'2535'}])
+Student.create([
+                   {sid: '100540007',
+                    s_type: 'F',
+                    add_comment:'',
+                    s_status:'1',
+                    smoke:'0',
+                    spec_sneeds:'Difficulty in walking',
+                    category:'Graduate',
+                    course:'Potions',
+                    kin_street:'31 B, Weasley Road',
+                    kin_city:'Rome',
+                    kin_country:'Italy',
+                    kin_fname:'Aurthur',
+                    kin_lname:'Weasley',
+                    kin_relationship:'Father',
+                    kin_phone:'9436660752',
+                    kin_middle_name:'',
+                    family_student:'0'
+
+                   }
+               ])
+
+Person.create([
+                  {pid: '200540001',
+                   password: '1234',
+                   fname: 'Viktor',
+                   lname: 'Krum',
+                   street: '32 A, Krum Road',
+                   city:  'Sofia',
+                   state: '',
+                   country: 'Bulgaria',
+                   DOB: '1982-10-29',
+                   phone: '9198333567',
+                   gender: 'M',
+                   nationality:'Bulgarian',
+                   alt_phone:'9198332233',
+                   zipcode:'2535'}])
+Student.create([
+                   {sid: '200540001',
+                    s_type: 'G',
+                    add_comment:'',
+                    s_status:'1',
+                    smoke:'1',
+                    spec_sneeds:'',
+                    category:'Graduate',
+                    course:'Coaching - Triwizard Cup',
+                    kin_street:'32 A, Krum Road',
+                    kin_city:'Sofia',
+                    kin_country:'Bulgaria',
+                    kin_fname:'Igor',
+                    kin_lname:'Karkaroff',
+                    kin_relationship:'Headmaster',
+                    kin_phone:'94363530752',
+                    kin_middle_name:'',
+                    family_student:'0'
+
+                   }
+               ])
+
+Person.create([
+                  {pid: '200540002',
+                   password: '1234',
+                   fname: 'Olympe',
+                   lname: 'Maxime',
+                   street: '32 A, Maxime Road',
+                   city:  'Paris',
+                   state: '',
+                   country: 'France',
+                   DOB: '1970-05-19',
+                   phone: '9197773567',
+                   gender: 'F',
+                   nationality:'French',
+                   alt_phone:'',
+                   zipcode:'2221'}])
+Student.create([
+                   {sid: '200540002',
+                    s_type: 'G',
+                    add_comment:'',
+                    s_status:'1',
+                    smoke:'1',
+                    spec_sneeds:'',
+                    category:'Graduate',
+                    course:'Guest Lecturer - Triwizard Cup',
+                    kin_street:'32 A, Bagshot Road',
+                    kin_city:'Zurich',
+                    kin_country:'Switzerland',
+                    kin_fname:'Bathilda',
+                    kin_lname:'Bagshot',
+                    kin_relationship:'Friend',
+                    kin_phone:'94363595752',
+                    kin_middle_name:'',
+                    family_student:'0'
+
+                   }
+               ])
+
+Person.create([
+                  {pid: '100540008',
+                   password: '1234',
+                   fname: 'Vernon',
+                   lname: 'Dursley',
+                   street: '32 A, Dursley Road',
+                   city:  'Raleigh',
+                   state: '',
+                   country: 'USA',
+                   DOB: '1975-11-29',
+                   phone: '9198954357',
+                   gender: 'M',
+                   nationality:'American',
+                   alt_phone:'9198954786',
+                   zipcode:'27606'}])
+Student.create([
+                   {sid: '100540008',
+                    s_type: 'F',
+                    add_comment:'',
+                    s_status:'1',
+                    smoke:'1',
+                    spec_sneeds:'',
+                    category:'Graduate',
+                    course:'Muggle Studies',
+                    kin_street:'32 A, Dursley Road',
+                    kin_city:'Raleigh',
+                    kin_country:'USA',
+                    kin_fname:'Petunia',
+                    kin_lname:'Dursley',
+                    kin_relationship:'Wife',
+                    kin_phone:'94363654752',
+                    kin_middle_name:'',
+                    family_student:'0'
+
+                   }
+               ])

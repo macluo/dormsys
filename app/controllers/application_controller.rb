@@ -86,16 +86,16 @@ class ApplicationController < ActionController::Base
 
   # only works for student users, staff will return false
   def has_active_lease?
-    signed_lease = SignedLease.where("sid = ? AND end_sem <= ?", current_user_id, current_semester)
+    signed_lease = SignedLease.where("sid = ? AND end_date <= ?", current_user_id, Time.now)
     return (signed_lease.length > 0)
   end
 
   def get_active_lease
-    return SignedLease.where("sid = ? AND end_sem <= ?", current_user_id, current_semester).first
+    return SignedLease.where("sid = ? AND end_date <= ?", current_user_id, Time.now).first
   end
 
   def get_active_lease(sid)
-    return SignedLease.where("sid = ? AND end_sem <= ?", sid, current_semester).first
+    return SignedLease.where("sid = ? AND end_date <= ?", sid, Time.now).first
   end
 
 end
