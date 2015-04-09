@@ -35,7 +35,7 @@ class ParkingRequestsController < ApplicationController
 
   # GET /parking_requests/new
   def new
-    redirect_to menu_student_url if has_pending_request? || !has_active_lease?
+    redirect_to menu_student_url if has_pending_request? || !has_active_lease? || !ParkingSpot.find_by_occupant(current_user_id).nil?
     @parking_request = ParkingRequest.new
     @student= Student.find_by_sid(current_user_id)
   end

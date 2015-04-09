@@ -35,7 +35,7 @@ class InvoicesController < ApplicationController
 
         else  # by semester
 
-          case current_semseter
+          case current_semester
             when 1
               @invoice.bill_start_date = spring_start_date
               @invoice.bill_end_date = spring_end_date

@@ -34,7 +34,7 @@ class HousingRequestsController < ApplicationController
 
   # GET /housing_requests/new
   def new
-    redirect_to menu_student_url if has_pending_request?
+    redirect_to menu_student_url if has_pending_request? || has_active_lease?
     @person = Person.find_by_pid(session[:pid])
     @student= Student.find_by_sid(session[:pid])
     @nearby_parking = ParkingLot.select(:lot_no)

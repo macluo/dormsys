@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
         redirect_to menu_staff_url, :notice => 'Logged in'
       elsif Student.exists?(user.pid)
         student = Student.find_by_sid(user.pid)
-        if student.s_type == "guest" # guest student
+        if student.category == "Visitor" # guest student (Visitor)
           session[:user] = 'guest'
           redirec_to menu_guest_url, :noteice => 'Logged in!'
         else

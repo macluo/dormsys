@@ -131,7 +131,7 @@ class ApplicationController < ActionController::Base
         return 1
       when summer_start_date..summer_end_date
         return 2
-      when fall_tart_date..fall_end_date
+      when fall_start_date..fall_end_date
         return 3
     end
   end
