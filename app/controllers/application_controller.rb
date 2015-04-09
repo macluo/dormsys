@@ -19,6 +19,9 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  db_update = ActiveRecord::Base.connection
+
   # Based on http://railscasts.com/episodes/250-authentication-from-scratch
   def current_user_id
     @current_user_id ||= Person.find_by_pid(session[:pid]) if session[:pid]
@@ -132,4 +135,5 @@ class ApplicationController < ActionController::Base
         return 3
     end
   end
+
 end

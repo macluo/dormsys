@@ -4,7 +4,7 @@ class SignedLease < ActiveRecord::Base
 
     has_many :invoices, :class_name => 'Invoice', :foreign_key => :lease_no
     belongs_to :student, :class_name => 'Student', :foreign_key => :sid
-    belongs_to :parking_spot, :class_name => 'ParkingSpot', :foreign_key => :parking_spot
+    #belongs_to :parking_spot, :class_name => 'ParkingSpot', :foreign_key => :parking_spot #Rails confuses parking_spot field with object!
     belongs_to :room, :class_name => 'Room', :foreign_key => :place_no
     belongs_to :room, :class_name => 'Room', :foreign_key => :unit_no
     belongs_to :family_apt, :class_name => 'FamilyApt', :foreign_key => :apt_no

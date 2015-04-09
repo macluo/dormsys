@@ -6,20 +6,25 @@
 #   cities = City.create([{ name: 'Chicago' , { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# The order is important! DO NOT CHANGE!
 # delete all data
 TerminationRequest.delete_all
 ParkingRequest.delete_all
 MaintenanceRequest.delete_all
+Invoice.delete_all
 SignedLease.delete_all
+ParkingSpot.delete_all
 Room.delete_all
 Student.delete_all
 Staff.delete_all
 Person.delete_all
-ParkingSpot.delete_all
 ParkingClass.delete_all
 ParkingLot.delete_all
 FamilyApt.delete_all
 BuildingsApt.delete_all
+
+#define query head
+db = ActiveRecord::Base.connection
 
 # don't enter manager name here,
 #category: 1 halls
@@ -669,6 +674,25 @@ Student.create([
                    }
                ])
 
+SignedLease.create([
+    {sid: '100540002',
+    place_no: '001',
+    unit_no: 'Ravenclaw',
+    start_date: '2015-01-01',
+    end_date: '2015-07-31',
+    pay_option: 2,
+    parking_spot: "013"
+}])
+
+#
+# can't use object update b/c super key
+#
+db.execute('update rooms set occupant = "100540002"
+  where unit_no = "Ravenclaw" and place_no = "001"')
+
+ParkingSpot.find_by_spot_no('013').update(occupant: '100540002')
+
+
 Person.create([
                   {pid: '100540003',
                    password: '1234',
@@ -705,6 +729,23 @@ Student.create([
 
                    }
                ])
+
+SignedLease.create([
+    {sid: '100540003',
+    place_no: '002',
+    unit_no: 'Gryffindor Hall',
+    start_date: '2015-01-01',
+    end_date: '2015-07-31',
+    pay_option: 1,
+}])
+
+#
+# can't use object update b/c super key
+#
+db.execute('update rooms set occupant = "100540003"
+  where unit_no = "Gryffindor Hall" and place_no = "002"')
+
+
 Person.create([
                   {pid: '100540004',
                    password: '1234',
@@ -741,6 +782,25 @@ Student.create([
 
                    }
                ])
+
+SignedLease.create([
+                       {sid: '100540004',
+    place_no: '003',
+    unit_no: 'Gryffindor Hall',
+    start_date: '2015-01-01',
+    end_date: '2015-07-31',
+    pay_option: 1,
+    parking_spot: "013"
+}])
+
+#
+# can't use object update b/c super key
+#
+db.execute('update rooms set occupant = "100540002"
+  where unit_no = "Gryffindor Hall" and place_no = "003"')
+
+
+
 Person.create([
                   {pid: '100540001',
                    password: '1234',
@@ -777,6 +837,25 @@ Student.create([
 
                    }
                ])
+
+SignedLease.create([
+                       {sid: '100540001',
+    place_no: '001',
+    unit_no: 'Gryffindor Hall',
+    start_date: '2015-01-01',
+    end_date: '2015-07-31',
+    pay_option: 2,
+    parking_spot: "003"
+}])
+
+#
+# can't use object update b/c super key
+#
+db.execute('update rooms set occupant = "100540001"
+  where unit_no = "Gryffindor Hall" and place_no = "003"')
+
+ParkingSpot.find_by_spot_no('003').update(occupant: '100540001')
+
 
 Person.create([
                   {pid: '100540005',
@@ -815,6 +894,25 @@ Student.create([
                    }
                ])
 
+SignedLease.create([
+                       {sid: '100540005',
+    place_no: '008',
+    unit_no: 'Hufflepuff',
+    start_date: '2015-01-01',
+    end_date: '2015-05-31',
+    pay_option: 1,
+    parking_spot: "027"
+}])
+
+#
+# can't use object update b/c super key
+#
+db.execute('update rooms set occupant = "100540005"
+  where unit_no = "Hufflepuff" and place_no = "008"')
+
+ParkingSpot.find_by_spot_no('027').update(occupant: '100540005')
+
+
 Person.create([
                   {pid: '100540006',
                    password: '1234',
@@ -852,6 +950,26 @@ Student.create([
                    }
                ])
 
+SignedLease.create([
+                       {sid: '100540006',
+    place_no: '009',
+    unit_no: 'Hufflepuff',
+    start_date: '2015-01-01',
+    end_date: '2015-07-31',
+    pay_option: 2,
+    parking_spot: "025"
+}])
+
+#
+# can't use object update b/c super key
+#
+db.execute('update rooms set occupant = "100540006"
+  where unit_no = "Hufflepuff" and place_no = "009"')
+
+ParkingSpot.find_by_spot_no('025').update(occupant: '100540006')
+
+
+
 Person.create([
                   {pid: '100540007',
                    password: '1234',
@@ -884,10 +1002,35 @@ Student.create([
                     kin_relationship:'Father',
                     kin_phone:'9436660752',
                     kin_middle_name:'',
-                    family_student:'0'
+                    family_student:'1'
 
                    }
                ])
+
+FamilyMember.create([{
+  sid: '100540007',
+  fname: 'Fleur',
+  lname: 'Delacour',
+  DOB: '1984-03-31'}])
+
+SignedLease.create([
+                       {sid: '100540007',
+    place_no: '006',
+    unit_no: 'Slytherin Hall',
+    start_date: '2015-01-01',
+    end_date: '2015-05-31',
+    pay_option: 2,
+    parking_spot: "007"
+}])
+
+#
+# can't use object update b/c super key
+#
+db.execute('update rooms set occupant = "100540005"
+  where unit_no = "Slytherin Hall" and place_no = "006"')
+
+ParkingSpot.find_by_spot_no('007').update(occupant: '100540007')
+
 
 Person.create([
                   {pid: '200540001',
@@ -911,7 +1054,7 @@ Student.create([
                     s_status:'1',
                     smoke:'1',
                     spec_sneeds:'',
-                    category:'Graduate',
+                    category: 'Visitor',
                     course:'Coaching - Triwizard Cup',
                     kin_street:'32 A, Krum Road',
                     kin_city:'Sofia',
@@ -925,6 +1068,26 @@ Student.create([
 
                    }
                ])
+
+
+SignedLease.create([
+                       {sid: '200540001',
+    place_no: '004',
+    unit_no: 'Ravenclaw',
+    start_date: '2015-03-01',
+    end_date: '2015-04-30',
+    pay_option: 1,
+    parking_spot: "045"
+}])
+
+#
+# can't use object update b/c super key
+#
+db.execute('update rooms set occupant = "200540001"
+  where unit_no = "Ravenclaw" and place_no = "004"')
+
+ParkingSpot.find_by_spot_no('045').update(occupant: '200540001')
+
 
 Person.create([
                   {pid: '200540002',
@@ -948,7 +1111,7 @@ Student.create([
                     s_status:'1',
                     smoke:'1',
                     spec_sneeds:'',
-                    category:'Graduate',
+                    category:'Visitor',
                     course:'Guest Lecturer - Triwizard Cup',
                     kin_street:'32 A, Bagshot Road',
                     kin_city:'Zurich',
@@ -962,6 +1125,23 @@ Student.create([
 
                    }
                ])
+
+SignedLease.create([
+                       {sid: '200540002',
+    place_no: '005',
+    unit_no: 'Ravenclaw',
+    start_date: '2015-04-01',
+    end_date: '2015-04-30',
+    pay_option: 1
+}])
+
+#
+# can't use object update b/c super key
+#
+db.execute('update rooms set occupant = "200540002"
+  where unit_no = "Ravenclaw" and place_no = "005"')
+
+
 
 Person.create([
                   {pid: '100540008',
@@ -995,19 +1175,110 @@ Student.create([
                     kin_relationship:'Wife',
                     kin_phone:'94363654752',
                     kin_middle_name:'',
-                    family_student:'0'
+                    family_student:'1'
 
                    }
                ])
 
-SignedLease.create([
-    {sid: '100540001',
-    place_no: '001',
-    unit_no: 'Gryffindor Hall',
-    start_date: '2015-01-01',
-    end_date: '2015-07-31',
-    pay_option: 2
-    }])
 
-#r = Room.where(:unit_no => 'Gryffindor Hall', :place_no => '001')[0]
-#r.update(:occupant => '100540001')
+FamilyMember.create([{
+                        sid: '100540008',
+    fname: 'Petunia',
+    lname: 'Dursley',
+    DOB: '1978-12-13'},
+    {sid: '100540008',
+    fname: 'Dudley',
+    lname: 'Dursley',
+    DOB: '2000-06-26'}])
+
+SignedLease.create([
+                       {sid: '100540008',
+    apt_no: '107',
+    unit_no: 'Hogwarts',
+    start_date: '2015-01-01',
+    end_date: '2015-05-31',
+    pay_option: 2,
+    parking_spot: "038"
+}])
+
+#
+# can't use object update b/c super key
+#
+db.execute('update rooms set occupant = "100540008"
+  where unit_no = "Hogwarts" and apt_no = "107"')
+
+ParkingSpot.find_by_spot_no('038').update(occupant: '100540008')
+
+
+Person.create([
+                  {pid: '100540015',
+    password: '1234',
+    fname: 'Neville',
+    lname: 'Longbottom',
+    street: '321, First Street',
+    city:  'Raleigh',
+    state: 'NC',
+    country: 'USA',
+    DOB: '1985-11-29',
+    phone: '9195942231',
+    gender: 'M',
+    nationality:'American',
+    alt_phone:'94363659982',
+    zipcode:'27606'}])
+
+Student.create([
+  {sid: '100540015',
+  s_type: 'F',
+  add_comment:'',
+  s_status:'0',
+  smoke: false,
+  spec_sneeds:'',
+  category:'Freshman',
+  course:'Herbology',
+  kin_street:'321, First Street',
+  kin_city:'Raleigh',
+  kin_country:'USA',
+  kin_fname:'Petunia',
+  kin_lname:'Dursley',
+  kin_relationship:'Grandmother',
+  kin_phone:'94363659982',
+  family_student:'0'
+
+  }
+  ])
+
+
+Person.create([
+                  {pid: '100540012',
+    password: '1234',
+    fname: 'Remus',
+    lname: 'Lupin',
+    street: '12, Grimmauld Place',
+    city:  'London',
+    country: 'England',
+    DOB: '1972-11-29',
+    phone: '919877767',
+    gender: 'M',
+    nationality:'British',
+    zipcode:'27605'}])
+
+
+Student.create([
+  {sid: '100540012',
+  s_type: 'G',
+  add_comment:'',
+  s_status:'0',
+  smoke: false,
+  spec_sneeds:'',
+  category:'Visitor',
+  course:'Defense Against Dark Arts',
+  kin_street:'12, Grimmauld Place',
+  kin_city:'London',
+  kin_country:'England',
+  kin_fname:'Nymphadora',
+  kin_lname:'Tonks',
+  kin_relationship:'Wife',
+  kin_phone:'9363555752',
+  family_student:'0'
+  }
+  ])
