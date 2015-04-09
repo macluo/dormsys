@@ -13,7 +13,7 @@
 
     <p>
       <%= f.label :created_date %><br>
-      <%= f.text_field :created_date %>
+      <%= f.text_field :created_date, :readonly => true %>
     </p>
 
     <p>
@@ -23,17 +23,17 @@
 
     <p>
       <%= f.label :unit_no %><br>
-      <%= f.text_field :unit_no %>
+      <%= f.text_field :unit_no, :readonly => true %>
     </p>
 
     <p>
       <%= f.label :place_no %><br>
-      <%= f.text_field :place_no %>
+      <%= f.text_field :place_no, :readonly => true %>
     </p>
 
     <p>
       <%= f.label :apt_no %><br>
-      <%= f.text_field :apt_no %>
+      <%= f.text_field :apt_no, :readonly => true %>
     </p>
 
     <% if session[:user] == 'staff' %>

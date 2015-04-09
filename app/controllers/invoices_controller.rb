@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+  before_action :set_invoice, only: [ :edit, :update, :destroy]
 
   # GET /invoices
   # GET /invoices.json
@@ -19,7 +19,7 @@ class InvoicesController < ApplicationController
       redirect_to menu_staff_url if @signed_lease.nil?
     else
       redirect_to menu_student_url if !has_active_lease?
-      @invoice = Invoice.where("sid = ? AND end_date >= ?", current_user_id, Time.now)
+      @invoice = Invoice.where("sid = ? AND bill_end_date >= ?", current_user_id, Time.now)
       @signed_lease = get_active_lease
 
       if (@invoice.count == 0) #need to create new invoice
@@ -30,8 +30,9 @@ class InvoicesController < ApplicationController
 
           @invoice.bill_start_date = Date.new(Time.now.year, Time.now.month, 1)
           @invoice.bill_end_date = Date.today.end_of_month
-          @inovice = payment_due = @signed_lease.rent
-          
+          @invoice.payment_due = @signed_lease.rent
+          @invoice.duedate = Date.today.end_of_month
+
         else  # by semester
 
           case current_semseter
@@ -52,6 +53,10 @@ class InvoicesController < ApplicationController
               @inovice.duedate = fall_start_date + 30.day
           end
 
+        end
+
+        if !@invoice.save
+          redirect_to menu_student_url #something is wrong!
         end
 
       else

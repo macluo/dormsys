@@ -21,38 +21,43 @@
 </p>
 
 <p>
-  <strong>Place No.:</strong>
-  <%= @signedLease.place_no %>
+  <strong>Invoice No:</strong>
+  <%= @invoice.inv_no %>
+</p>
+
+<p>
+  <strong>Unit No:</strong>
+  <%= @signed_lease.unit_no %>
+</p>
+
+<p>
+  <strong>Place No:</strong>
+  <%= @signed_lease.place_no %>
 </p>
 
 <p>
   <strong>Apt No.:</strong>
-  <%= @signedLease.apt_no %>
+  <%= @signed_lease.apt_no %>
 </p>
 
 <p>
   <strong>Parking:</strong>
-  <%= @signedLease.parking_spot %>
+  <%= @signed_lease.parking_spot %>
 </p>
 
 <p>
   <strong>Parking Permit ID.:</strong>
-  <%= @signedLease.permit_id %>
+  <%= @signed_lease.permit_id %>
 </p>
 
 <p>
   <strong>Rent:</strong>
-  <%= @signedLease.rent %>
+  <%= @signed_lease.rent %>
 </p>
 
 <p>
   <strong>Parking fee:</strong>
-  <%= @signedLease.parking_fee %>
-</p>
-
-<p>
-  <strong>Invoice No.</strong>
-  <%= @invoice.inv_no %>
+  <%= @signed_lease.parking_fee %>
 </p>
 
 <p>
@@ -91,5 +96,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
+<%#= link_to 'Edit', edit_invoice_path(@invoice) %> |
 <%= link_to 'Back', invoices_path %>
