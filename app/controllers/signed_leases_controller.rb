@@ -19,9 +19,9 @@ class SignedLeasesController < ApplicationController
 
     if is_adm?
       @signed_lease = SignedLease.find_by_lease_no(params[:id])
-      redirect_to menu_staff_url if @signed_lease.count = 0
+      redirect_to menu_staff_url if @signed_lease.nil?
     else
-      @signed_lease = SignedLease.where("sid = ? AND end_date <= ?", current_user_id, Time.now)
+      @signed_lease = SignedLease.where("sid = ? AND end_date >= ?", current_user_id, Time.now)
       redirect_to menu_student_url if @signed_lease.count == 0 #exit if no record
       @signed_lease = @signed_lease.first #because it is in an array
     end
@@ -144,7 +144,7 @@ class SignedLeasesController < ApplicationController
 
     if params[:type] == "approve_parking" # by staff
       parking_request = ParkingRequest.find_by_req_no(params[:id])
-      the_lease = get_active_lease(parking_request.sid);
+      the_lease = get_user_lease(parking_request.sid);
 
       if (parking_request.pref_nearby == true)
 

@@ -4,12 +4,61 @@ class InvoicesController < ApplicationController
   # GET /invoices
   # GET /invoices.json
   def index
-    @invoices = Invoice.all
+    if is_adm?
+      @invoices = Invoice.all
+    else
+      @invoices = Invoice.where("sid = ? AND bill_end_date < ?", current_user_id, Time.now)
+    end
   end
 
   # GET /invoices/1
   # GET /invoices/1.json
   def show
+    if is_adm?
+      @invoice = Invoice.find_by_inv_no(params[:id])
+      redirect_to menu_staff_url if @signed_lease.nil?
+    else
+      redirect_to menu_student_url if !has_active_lease?
+      @invoice = Invoice.where("sid = ? AND end_date >= ?", current_user_id, Time.now)
+      @signed_lease = get_active_lease
+
+      if (@invoice.count == 0) #need to create new invoice
+
+        @invoice = Invoice.new({:sid => current_user_id, :lease_no => @signed_lease.lease_no})
+
+        if (@signed_lease.pay_option == 1) ## monthly
+
+          @invoice.bill_start_date = Date.new(Time.now.year, Time.now.month, 1)
+          @invoice.bill_end_date = Date.today.end_of_month
+          @inovice = payment_due = @signed_lease.rent
+          
+        else  # by semester
+
+          case current_semseter
+            when 1
+              @invoice.bill_start_date = spring_start_date
+              @invoice.bill_end_date = spring_end_date
+              @invoice.payment_due = 5*@signed_lease.rent
+              @inovice.duedate = spring_start_date + 30.day
+            when 2
+              @invoice.bill_start_date = summer_start_date
+              @invoice.bill_end_date = summer_end_date
+              @invoice.payment_due = 2*@signed_lease.rent
+              @inovice.duedate = summer_start_date + 30.day
+            when 3
+              @inovice.bill_start_date = fall_start_date
+              @inovice.bill_end_date = fall_end_date
+              @invoice.payment_due = 5*@signed_lease.rent
+              @inovice.duedate = fall_start_date + 30.day
+          end
+
+        end
+
+      else
+        @invoice = @invoice.first #because it is in an array
+      end
+    end
+    @person = Person.find_by_pid(@signed_lease.sid)
   end
 
   # GET /invoices/new

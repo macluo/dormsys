@@ -1006,7 +1006,7 @@ SignedLease.create([
     unit_no: 'Gryffindor Hall',
     start_date: '2015-01-01',
     end_date: '2015-07-31',
-    pay_option: 1
+    pay_option: 2
     }])
 
 #r = Room.where(:unit_no => 'Gryffindor Hall', :place_no => '001')[0]

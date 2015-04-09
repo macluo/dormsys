@@ -86,16 +86,50 @@ class ApplicationController < ActionController::Base
 
   # only works for student users, staff will return false
   def has_active_lease?
-    signed_lease = SignedLease.where("sid = ? AND end_date <= ?", current_user_id, Time.now)
+    signed_lease = SignedLease.where("sid = ? AND end_date >= ?", current_user_id, Time.now)
     return (signed_lease.length > 0)
   end
 
   def get_active_lease
-    return SignedLease.where("sid = ? AND end_date <= ?", current_user_id, Time.now).first
+    return SignedLease.where("sid = ? AND end_date >= ?", current_user_id, Time.now).first
   end
 
-  def get_active_lease(sid)
-    return SignedLease.where("sid = ? AND end_date <= ?", sid, Time.now).first
+  def get_user_lease(sid)
+    return SignedLease.where("sid = ? AND end_date >= ?", sid, Time.now).first
   end
 
+  def fall_start_date
+    return Date.new(Time.now.year, 8, 1)
+  end
+
+  def fall_end_date
+    return Date.new(Time.now.year, 12, 31)
+  end
+
+  def spring_start_date
+    return Date.new(Time.now.year, 1, 1)
+  end
+
+  def spring_end_date
+    return Date.new(Time.now.year, 7, 31)
+  end
+
+  def summer_start_date
+    return Date.new(Time.now.year, 6, 1)
+  end
+
+  def summer_end_date
+    return Date.new(Time.now.year, 7, 31)
+  end
+
+  def current_semester
+    case Time.now
+      when spring_start_date..spring_end_date
+        return 1
+      when summer_start_date..summer_end_date
+        return 2
+      when fall_tart_date..fall_end_date
+        return 3
+    end
+  end
 end

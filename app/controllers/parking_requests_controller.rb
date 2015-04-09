@@ -12,7 +12,7 @@ class ParkingRequestsController < ApplicationController
   # GET /parking_requests/1.json
   def show
     if (is_student?)
-      redirect_to menu_student_url if !has_pending_request?
+      redirect_to menu_student_url if has_pending_request? || !has_active_lease?
       @person = Person.find_by_pid(session[:pid])
       @student = Student.find_by_sid(session[:pid])
       request = ParkingRequest.where("sid = :student_id AND app_status <= 1", {student_id: current_user_id}).first
@@ -24,7 +24,7 @@ class ParkingRequestsController < ApplicationController
       request = ParkingRequest.find_by_req_no(params[:id])
       @person = Person.find_by_pid(request.sid)
       @student = Student.find_by_sid(request.sid)
-      @lease_no = get_active_lease(request.sid).lease_no
+      @lease_no = get_user_lease(request.sid).lease_no
       if !request
         flash.now.alert = 'No pending request is found'
         #redirect_to menu_student_url
