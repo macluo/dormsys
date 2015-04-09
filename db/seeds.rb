@@ -1202,10 +1202,9 @@ SignedLease.create([
 }])
 
 #
-# can't use object update b/c super key
+# Family apt!
 #
-db.execute('update rooms set occupant = "100540008"
-  where unit_no = "Hogwarts" and apt_no = "107"')
+FamilyApt.find_by_apt_no('107').update(occupant: '100540008')
 
 ParkingSpot.find_by_spot_no('038').update(occupant: '100540008')
 

@@ -120,9 +120,11 @@ class SignedLeasesController < ApplicationController
 
         #update to rooms or family apts
         if (params[:type] == 'single')
-          room = Room.where(:place_no => @signed_lease.place_no, :unit_no =>@signed_lease.unit_no)
-          room.occupant = request.sid # see if this works?
-          room.save
+          # can't use update because of rooms has superkey!
+          #room = Room.where(:place_no => @signed_lease.place_no, :unit_no =>@signed_lease.unit_no)
+          #room.occupant = request.sid # see if this works?
+          #room.save
+          DB_update.execute('update rooms set occupant = "#{request.sid}" where unit_no = "#{@signed_lease.unit_no}" and place_no = "#{@signed_lease.place_no}"')
         else
           family_apt = FamilyApt.find_by_apt_no(@signed_lease.apt_no)
           family_apt.occupant = request.sid
