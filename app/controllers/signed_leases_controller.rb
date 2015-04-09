@@ -21,7 +21,7 @@ class SignedLeasesController < ApplicationController
       @signed_lease = SignedLease.find_by_lease_no(params[:id])
       redirect_to menu_staff_url if @signed_lease.count = 0
     else
-      @signed_lease = SignedLease.where("sid = ? AND end_sem <= ?", current_user_id, current_semester)
+      @signed_lease = SignedLease.where("sid = ? AND end_date <= ?", current_user_id, Time.now)
       redirect_to menu_student_url if @signed_lease.count == 0 #exit if no record
       @signed_lease = @signed_lease.first #because it is in an array
     end

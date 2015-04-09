@@ -7,6 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # delete all data
+TerminationRequest.delete_all
+ParkingRequest.delete_all
+MaintenanceRequest.delete_all
+SignedLease.delete_all
 Room.delete_all
 Student.delete_all
 Staff.delete_all
@@ -14,7 +18,6 @@ Person.delete_all
 ParkingSpot.delete_all
 ParkingClass.delete_all
 ParkingLot.delete_all
-Room.delete_all
 FamilyApt.delete_all
 BuildingsApt.delete_all
 
@@ -996,3 +999,15 @@ Student.create([
 
                    }
                ])
+
+SignedLease.create([
+    {sid: '100540001',
+    place_no: '001',
+    unit_no: 'Gryffindor Hall',
+    start_date: '2015-01-01',
+    end_date: '2015-07-31',
+    pay_option: 1
+    }])
+
+#r = Room.where(:unit_no => 'Gryffindor Hall', :place_no => '001')[0]
+#r.update(:occupant => '100540001')
