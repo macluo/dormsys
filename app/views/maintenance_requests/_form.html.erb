@@ -18,7 +18,7 @@
 
     <p>
       <%= f.label :severity %><br>
-      <%= f.text_field :severity %>
+      <%= f.select :severity, options_for_select({"Low" => 'low', "Medium" => 'medium', "High" => 'high'}) %>
     </p>
 
     <p>
@@ -34,6 +34,11 @@
     <p>
       <%= f.label :apt_no %><br>
       <%= f.text_field :apt_no, :readonly => true %>
+    </p>
+
+    <p>
+      <%= f.label :comments %><br>
+      <%= f.text_area :comments %>
     </p>
 
     <% if session[:user] == 'staff' %>

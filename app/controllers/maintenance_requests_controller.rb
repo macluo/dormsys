@@ -1,22 +1,32 @@
 class MaintenanceRequestsController < ApplicationController
-  before_action :set_maintenance_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_maintenance_request, only: [:edit, :destroy]
 
   # GET /maintenance_requests
   # GET /maintenance_requests.json
   def index
     permission_denied if !is_adm?
-    @maintenance_requests = MaintenanceRequest.all
+    @maintenance_requests = MaintenanceRequest.where("app_status = 0")
   end
 
   # GET /maintenance_requests/1
   # GET /maintenance_requests/1.json
   def show
-    redirect_to menu_student_url if !has_pending_request?
-    request = MaintenanceRequest.find_by_sid(session[:pid])
-    if !request
-      flash.now.alert = 'No pending request is found'
-      #redirect_to menu_student_url
+    if (is_student?)
+      redirect_to menu_student_url if !has_pending_request? || !has_active_lease?
+      request = MaintenanceRequest.where("sid = :student_id AND app_status <= 1", {student_id: current_user_id}).first
+      if !request
+        flash.now.alert = 'No pending request is found'
+        #redirect_to menu_student_url
+      end
+    elsif (is_adm?)
+      request = MaintenanceRequest.find_by_ticket_no(params[:id])
+      @ticket_no = request.ticket_no
+      if !request
+        flash.now.alert = 'No pending request is found'
+        #redirect_to menu_student_url
+      end
     end
+    @maintenance_request = request
   end
 
   # GET /maintenance_requests/new
@@ -38,6 +48,12 @@ class MaintenanceRequestsController < ApplicationController
     @maintenance_request.sid = current_user_id
     @maintenance_request.app_status = 0 #set pending flag
 
+    if @maintenance_request.apt_no == ''
+      @maintenance_request.apt_no = nil
+    elsif @maintenance_request.place_no == ''
+      @maintenance_request.place_no = nil
+    end
+
     respond_to do |format|
       if @maintenance_request.save
         format.html { redirect_to @maintenance_request, notice: 'Maintenance request was successfully created.' }
@@ -52,6 +68,17 @@ class MaintenanceRequestsController < ApplicationController
   # PATCH/PUT /maintenance_requests/1
   # PATCH/PUT /maintenance_requests/1.json
   def update
+
+    if is_adm? && params[:type] == 'complete'
+      request = MaintenanceRequest.find(maintenance_request_params[:ticket_no])
+      request.app_status = 2
+      request.save
+      redirect_to maintenance_requests_url
+      return
+    else
+      @maintenance_request = MaintenanceRequest.find(params[:id])
+    end
+
     respond_to do |format|
       if @maintenance_request.update(maintenance_request_params)
         format.html { redirect_to @maintenance_request, notice: 'Maintenance request was successfully updated.' }
@@ -76,7 +103,7 @@ class MaintenanceRequestsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_maintenance_request
-      #@maintenance_request = MaintenanceRequest.find(params[:id])
+      @maintenance_request = MaintenanceRequest.find(params[:id])
     end
 
     def has_pending_request?

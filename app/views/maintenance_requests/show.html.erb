@@ -1,23 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Student ID:</strong>
-  <%= @person.pid %>
-</p>
-
-<p>
-  <strong>Middle Name:</strong>
-  <%= @person.mname %>
-</p>
-
-<p>
-  <strong>Last Name:</strong>
-  <%= @person.lname %>
-</p>
-
-<p>
-  <strong>Lease No.:</strong>
-  <%= @signedLease.lease_no %>
+  <strong>Ticket No.:</strong>
+  <%= @maintenance_request.ticket_no %>
 </p>
 
 <p>
@@ -27,22 +12,12 @@
 
 <p>
   <strong>Place No.:</strong>
-  <%= @signedLease.place_no %>
+  <%= @maintenance_request.place_no %>
 </p>
 
 <p>
   <strong>Apt No.:</strong>
-  <%= @signedLease.apt_no %>
-</p>
-
-<p>
-  <strong>Ticket No.:</strong>
-  <%= @maintenance_request.ticket_no %>
-</p>
-
-<p>
-  <strong>Created Date:</strong>
-  <%= @maintenance_request.date %>
+  <%= @maintenance_request.apt_no %>
 </p>
 
 <p>
@@ -65,5 +40,13 @@
   <%= @maintenance_request.comments %>
 </p>
 
-<%= link_to 'Edit', edit_maintenance_request_path(@maintenance_request) %> |
-<%= link_to 'Back', maintenance_requests_path %>
+
+<% if session[:user] == 'student' %>
+    <%= link_to 'Edit', edit_maintenance_request_path(@maintenance_request) %> |
+    <%= link_to 'Cancel', @maintenance_request, method: :delete, data: { confirm: 'Are you sure?' } %> |
+    <%= link_to 'Back', menu_student_url %>
+<% elsif session[:user] == 'staff' %>
+    <%= link_to 'Complete maintenance request', maintenance_request_path(maintenance_request: {ticket_no: @ticket_no}, type: "complete"), method: :put, data: {confirm: 'Proceed to complete the maintenance request?'} %> |
+    <%= link_to 'Deny the paring request', edit_maintenance_request_url(@maintenance_request), data: {confirm: 'Proceed to deny this request?'} %> |
+    <%= link_to 'Back', menu_staff_url %>
+<% end %>
