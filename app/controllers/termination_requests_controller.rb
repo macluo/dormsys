@@ -1,30 +1,32 @@
 class TerminationRequestsController < ApplicationController
-  before_action :set_termination_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_termination_request, only: [:edit, :update, :destroy]
 
   # GET /termination_requests
   # GET /termination_requests.json
   def index
     permission_denied if !is_adm?
-    @termination_requests = TerminationRequest.all
+    @termination_requests = TerminationRequest.where("app_status = 0")
   end
 
   # GET /termination_requests/1
   # GET /termination_requests/1.json
   def show
     if (is_student?)
-      redirect_to menu_student_url if !has_pending_request?
-      @person = Person.find_by_pid(session[:pid])
-      @student = Student.find_by_sid(session[:pid])
-      request = TerminationRequest.where("sid = :student_id AND app_status <= 1", {student_id: current_user_id}).first
+      return redirect_to menu_student_url if !has_pending_request? || !has_active_lease?
+      request = TerminationRequest.where("lease_no = :lease_no AND app_status <= 1", {lease_no: get_active_lease.lease_no}).first
+      @person = Person.find_by_pid(current_user_id)
+      @student = Student.find_by_sid(current_user_id)
+      @signed_lease = get_active_lease
       if !request
         flash.now.alert = 'No pending request is found'
         #redirect_to menu_student_url
       end
     elsif (is_adm?)
-      request = TerminationRequest.find_by_req_no(params[:id])
-      @person = Person.find_by_pid(request.sid)
-      @student = Student.find_by_sid(request.sid)
-      @lease_no = get_user_lease(request.sid).lease_no
+      request = TerminationRequest.find_by_t_req_no(params[:id])
+      @signed_lease = SignedLease.find_by_lease_no(request.lease_no)
+      @person = Person.find_by_pid(@signed_lease.sid)
+      @student = Student.find_by_sid(@signed_lease.sid)
+      @ticket_no = request.t_req_no
       if !request
         flash.now.alert = 'No pending request is found'
         #redirect_to menu_student_url
@@ -35,10 +37,9 @@ class TerminationRequestsController < ApplicationController
 
   # GET /termination_requests/new
   def new
-    redirect_to menu_student_url if has_pending_request? || !has_active_lease?
-    @person = Person.find_by_pid(session[:pid])
-    @student= Student.find_by_sid(session[:pid])
-    lease = SignedLease.getCurrentLease(session[:pid])
+    return redirect_to menu_student_url if !has_active_lease?
+    return redirect_to termination_request_url(@request) if has_pending_request? #show termination content
+    lease = get_active_lease
 
     if lease
       @termination_request = TerminationRequest.new
@@ -57,6 +58,8 @@ class TerminationRequestsController < ApplicationController
   # POST /termination_requests.json
   def create
     @termination_request = TerminationRequest.new(termination_request_params)
+    @termination_request.lease_no = get_active_lease.lease_no
+    @termination_request.app_status = 0 #set pending flag
 
     respond_to do |format|
       if @termination_request.save
@@ -72,6 +75,29 @@ class TerminationRequestsController < ApplicationController
   # PATCH/PUT /termination_requests/1
   # PATCH/PUT /termination_requests/1.json
   def update
+
+    if is_adm? && params[:type] == 'terminate'
+      request = TerminationRequest.find_by_t_req_no(termination_request_params[:ticket_no])
+      the_lease = SignedLease.find_by_lease_no(request.lease_no)
+
+      if the_lease.end_date > request.termination_date
+        the_lease.end_date = request.termination_date
+      end
+
+      # redo invoice
+
+      # redo removal when time comes
+
+      the_lease.save
+      request.app_status = 2
+      request.save
+
+      redirect_to termination_requests_url
+      return
+    else
+      @termination_request = TerminationRequest.find(params[:id])
+    end
+
     respond_to do |format|
       if @termination_request.update(termination_request_params)
         format.html { redirect_to @termination_request, notice: 'Termination request was successfully updated.' }
@@ -101,8 +127,9 @@ class TerminationRequestsController < ApplicationController
 
     def has_pending_request?
       @lease = get_active_lease
-      request = TerminationRequest.where("lease_no = :student_id AND app_status <= 1", {student_id: current_user_id}) # pending or reviewing
+      request = TerminationRequest.where("lease_no = :lease_no AND app_status <= 1", {lease_no: get_active_lease.lease_no}) # pending or reviewing
       if request.count > 0
+        @request = request[0]
         return true
       else
         return false

@@ -12,7 +12,7 @@ class MaintenanceRequestsController < ApplicationController
   # GET /maintenance_requests/1.json
   def show
     if (is_student?)
-      redirect_to menu_student_url if !has_pending_request? || !has_active_lease?
+      return redirect_to menu_student_url if !has_pending_request? || !has_active_lease?
       request = MaintenanceRequest.where("sid = :student_id AND app_status <= 1", {student_id: current_user_id}).first
       if !request
         flash.now.alert = 'No pending request is found'
@@ -31,7 +31,7 @@ class MaintenanceRequestsController < ApplicationController
 
   # GET /maintenance_requests/new
   def new
-    redirect_to menu_student_url if has_pending_request? || !has_active_lease?
+    return redirect_to menu_student_url if has_pending_request? || !has_active_lease?
     lease = get_active_lease
     @maintenance_request = MaintenanceRequest.new({:created_date => Date.today,
         :unit_no => lease.unit_no, :place_no => lease.place_no, :apt_no => lease.apt_no})

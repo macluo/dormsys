@@ -66,5 +66,12 @@
 </p>
 
 
-<%= link_to 'Edit', edit_termination_request_path(@termination_request) %> |
-<%= link_to 'Back', termination_requests_path %>
+<% if session[:user] == 'student' %>
+    <%= link_to 'Edit', edit_termination_request_path(@termination_request) %> |
+    <%= link_to 'Cancel', @termination_request, method: :delete, data: { confirm: 'Are you sure?' } %> |
+    <%= link_to 'Back', menu_student_url %>
+<% elsif session[:user] == 'staff' %>
+    <%= link_to 'Terminate the lease', termination_request_path(termination_request: {ticket_no: @ticket_no}, type: "terminate"), method: :put, data: {confirm: 'Proceed to complete the maintenance request?'} %> |
+    <%= link_to 'Deny the paring request', edit_termination_request_url(@termination_request), data: {confirm: 'Proceed to deny this request?'} %> |
+    <%= link_to 'Back', menu_staff_url %>
+<% end %>
