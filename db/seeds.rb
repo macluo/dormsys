@@ -11,16 +11,17 @@
 TerminationRequest.delete_all
 ParkingRequest.delete_all
 MaintenanceRequest.delete_all
+HousingRequest.delete_all
 Invoice.delete_all
 SignedLease.delete_all
 ParkingSpot.delete_all
 Room.delete_all
+FamilyApt.delete_all
 Student.delete_all
 Staff.delete_all
 Person.delete_all
 ParkingClass.delete_all
 ParkingLot.delete_all
-FamilyApt.delete_all
 BuildingsApt.delete_all
 
 #define query head
