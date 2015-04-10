@@ -16,9 +16,9 @@ class InvoicesController < ApplicationController
   def show
     if is_adm?
       @invoice = Invoice.find_by_inv_no(params[:id])
-      redirect_to menu_staff_url if @signed_lease.nil?
+      return redirect_to menu_staff_url if @signed_lease.nil?
     else
-      redirect_to menu_student_url if !has_active_lease?
+      return redirect_to menu_student_url if !has_active_lease?
       @invoice = Invoice.where("sid = ? AND bill_end_date >= ?", current_user_id, Time.now)
       @signed_lease = get_active_lease
 
@@ -56,7 +56,7 @@ class InvoicesController < ApplicationController
         end
 
         if !@invoice.save
-          redirect_to menu_student_url #something is wrong!
+          return redirect_to menu_student_url #something is wrong!
         end
 
       else

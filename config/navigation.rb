@@ -85,9 +85,9 @@ SimpleNavigation::Configuration.run do |navigation|
       user.item :user_3_1_2, '2. Parking option' do |parking|
         parking.item :user_3B_1, '1. Request parking', new_parking_request_url
         parking.item :user_3B_2, '2. View parking lot info', parking_lots_url
-        parking.item :user_3B_3, '3. View current parking spot', signed_lease_url(session[:pid])
+        parking.item :user_3B_3, '3. View current parking spot', menu_parking_url
         parking.item :user_3B_4, '4. Renew parking spot'
-        parking.item :user_3B_5, '5. Cancel parking spot'
+        parking.item :user_3B_5, '5. Cancel parking spot', menu_parking_url
         parking.item :user_3B_6, '6. View request status', parking_request_url(session[:pid])
         parking.item :user_3B_7, '7. Back'
       end

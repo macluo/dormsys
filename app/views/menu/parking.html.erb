@@ -1,0 +1,65 @@
+<p id="Lease_content"><%= notice %></p>
+
+
+<p>
+  <strong>Student ID:</strong>
+  <%= @person.pid %>
+</p>
+
+<p>
+  <strong>First Name:</strong>
+  <%= @person.fname %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @person.lname %>
+</p>
+
+<p>
+  <strong>Lease No.:</strong>
+  <%= @signed_lease.lease_no %>
+</p>
+
+<p>
+  <strong>Unit No.:</strong>
+  <%= @signed_lease.unit_no %>
+</p>
+
+<p>
+  <strong>Place No.:</strong>
+  <%= @signed_lease.place_no %>
+</p>
+
+<p>
+  <strong>Apt No.:</strong>
+  <%= @signed_lease.apt_no %>
+</p>
+
+<p>
+  <strong>Parking:</strong>
+  <%= @signed_lease.parking_spot %>
+</p>
+
+<p>
+  <strong>Parking Permit ID.:</strong>
+  <%= @signed_lease.permit_id %>
+</p>
+
+<p>
+  <strong>Rent:</strong>
+  <%= @signed_lease.rent %>
+</p>
+
+<p>
+  <strong>Parking fee:</strong>
+  <%= @signed_lease.parking_fee %>
+</p>
+
+
+<% if session[:user] == 'staff' %>
+<%= link_to 'Edit', edit_signed_lease_path(@signed_lease) %> |
+<% elsif session[:user] == 'student' %>
+<%= link_to 'Cancel parking spot', signed_lease_path(signed_lease: {lease_no: @lease_no}, type: "cancel_parking"), method: :put, data: {confirm: 'This will cancel your current parking spot. Are you sure?'} %> |
+<%= link_to 'Back',  menu_student_url %>
+<% end %>
