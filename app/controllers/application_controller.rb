@@ -98,6 +98,11 @@ class ApplicationController < ActionController::Base
     return SignedLease.where("sid = ? AND end_date >= ?", sid, Time.now).first
   end
 
+  def get_current_invoice
+    return nil if !has_active_lease?
+    invoice = Invoice.where("sid = ? AND bill_end_date >= ?", current_user_id, Time.now)
+  end
+
   def fall_start_date
     return Date.new(Time.now.year, 8, 1)
   end

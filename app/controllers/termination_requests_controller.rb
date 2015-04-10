@@ -82,9 +82,19 @@ class TerminationRequestsController < ApplicationController
 
       if the_lease.end_date > request.termination_date
         the_lease.end_date = request.termination_date
-      end
 
-      # redo invoice
+        #redo invoice
+        diff = (the_lease.end_date - request.termination_date).to_i
+        if diff < 30
+          #remaining has to be paid, don't do anything
+        elsif diff < 60
+          invoice = get_current_invoice
+          amount = (invoice.bill_end_date - request.termination_date).to_i/(invoice.bill_end_date - invoice.bill_start_date).to_i*0.6
+          invoice.payment_due = amount
+          invoice.save
+        end
+
+      end
 
       # redo removal when time comes
 
