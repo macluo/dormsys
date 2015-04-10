@@ -60,6 +60,6 @@
 <% if session[:user] == 'staff' %>
 <%= link_to 'Edit', edit_signed_lease_path(@signed_lease) %> |
 <% elsif session[:user] == 'student' %>
-<%= link_to 'Cancel parking spot', signed_lease_path(signed_lease: {lease_no: @lease_no}, type: "cancel_parking"), method: :put, data: {confirm: 'This will cancel your current parking spot. Are you sure?'} %> |
+<%#= link_to 'Cancel parking spot', signed_lease_path(signed_lease: {lease_no: @lease_no}, type: "cancel_parking"), method: :put, data: {confirm: 'This will cancel your current parking spot. Are you sure?'} %> |
 <%= link_to 'Back',  menu_student_url %>
 <% end %>

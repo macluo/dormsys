@@ -55,7 +55,7 @@ SimpleNavigation::Configuration.run do |navigation|
     #
     #primary.item :user, '1. Login', 'log_in' do |user|
       user.item :user_3_1_1, '1. Housing option' do |sub_nav1|
-        sub_nav1.item :user_3A_1, '1. View invoices', invoices_url do |sub_nav2|
+        sub_nav1.item :user_3A_1, '1. View invoices'  do |sub_nav2|
           sub_nav2.item :user_3A_1_1, '1. View current invoice', invoice_url(session[:pid])
           sub_nav2.item :user_3A_1_2, '2. View past invoices', invoices_url
           sub_nav2.item :user_3A_1_3, '3. Back'

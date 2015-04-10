@@ -24,6 +24,25 @@ class InvoicesController < ApplicationController
 
       if (@invoice.count == 0) #need to create new invoice
 
+        # fix seeded data
+        if @signed_lease.rent.nil?
+
+          if !@signed_lease.place_no.nil? # apt_no not nil
+            house = BuildingsApt.find_by_unit_no(@signed_lease.unit_no)
+            @signed_lease.rent = house.rent
+            @signed_lease.deposit = house.deposit
+          else
+            apt = FamilyApt.find_by_apt_no(@signed_lease.apt_no)
+            @signed_lease.rent = apt.rent
+            @signed_lease.deposit = apt.deposit
+          end
+
+          if !@signed_lease.parking_spot.nil? # has parking spot
+            @signed_lease.parking_fee = ParkingClass.find_by_class_id(ParkingSpot.find_by_spot_no(@signed_lease.parking_spot)).fee
+          end
+          @signed_lease.save
+        end
+
         @invoice = Invoice.new({:sid => current_user_id, :lease_no => @signed_lease.lease_no})
 
         if (@signed_lease.pay_option == 1) ## monthly
@@ -40,17 +59,17 @@ class InvoicesController < ApplicationController
               @invoice.bill_start_date = spring_start_date
               @invoice.bill_end_date = spring_end_date
               @invoice.payment_due = 5*@signed_lease.rent
-              @inovice.duedate = spring_start_date + 30.day
+              @invoice.duedate = spring_start_date + 30.day
             when 2
               @invoice.bill_start_date = summer_start_date
               @invoice.bill_end_date = summer_end_date
               @invoice.payment_due = 2*@signed_lease.rent
-              @inovice.duedate = summer_start_date + 30.day
+              @invoice.duedate = summer_start_date + 30.day
             when 3
               @inovice.bill_start_date = fall_start_date
               @inovice.bill_end_date = fall_end_date
               @invoice.payment_due = 5*@signed_lease.rent
-              @inovice.duedate = fall_start_date + 30.day
+              @invoice.duedate = fall_start_date + 30.day
           end
 
         end

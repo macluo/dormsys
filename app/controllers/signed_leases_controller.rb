@@ -136,38 +136,39 @@ class SignedLeasesController < ApplicationController
       parking_request = ParkingRequest.find_by_req_no(params[:id])
       the_lease = get_user_lease(parking_request.sid);
 
+      # set up variables
+      the_lot = nil
+      the_fee = nil
+      the_spot = nil
+
       if (parking_request.pref_nearby == true)
 
         #find nearby housing first
 
-        if the_lease.place_no.nil? #family student
-          building_no = the_lease.apt_no
-        else #single student
-          building_no = Room.find_by_place_no(the_lease.place_no).unit_no
-        end
+        building_no = the_lease.unit_no
 
         ParkingLot.all.each do |t|
-          if JSON.parse(t.nearby_housing).include?(building_no)
+          if t.nearby_housing == building_no
               the_lot = t.lot_no
           end
           break if !the_lot.nil?
         end
 
         if (parking_request.is_disabled)  # disabled?
-          ParkingSpot.where(:spot_no => the_lot, :occupant => nil).each do |t|
-            if t.class_id == 5
+          ParkingSpot.where(:lot_no => the_lot, :occupant => nil).each do |t|
+            if t.class_id == 4
               the_spot = t
-              the_fee = ParkingClass.find_by_class_id(p.class_id).fee
+              the_fee = ParkingClass.find_by_class_id(t.class_id).fee
             end
             break if !the_spot.nil?
           end
 
         else # not disabled!
 
-          ParkingSpot.where(:spot_no => the_lot, :occupant => nil).each do |t|
+          ParkingSpot.where(:lot_no => the_lot, :occupant => nil).each do |t|
             if t.class_id == parking_request.vehicle_type
               the_spot = t
-              the_fee = ParkingClass.find_by_class_id(p.class_id).fee
+              the_fee = ParkingClass.find_by_class_id(t.class_id).fee
             end
             break if !the_spot.nil?
           end
@@ -176,8 +177,8 @@ class SignedLeasesController < ApplicationController
 
       else # any parking is fine
 
-        Room.where(:occupant => nil).each do |p|
-          if (parking_request.is_disabled && p.class_id == 5)
+        ParkingSpot.where(:occupant => nil).each do |p|
+          if (parking_request.is_disabled && p.class_id == 4)
             the_spot = p
             the_fee = ParkingClass.find_by_class_id(p.class_id).fee
           elsif (parking_request.vehicle_type == p.class_id)

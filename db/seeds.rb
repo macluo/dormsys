@@ -737,6 +737,7 @@ SignedLease.create([
     unit_no: 'Gryffindor Hall',
     start_date: '2015-01-01',
     end_date: '2015-07-31',
+    parking_spot: '002',
     pay_option: 1,
 }])
 
@@ -746,6 +747,7 @@ SignedLease.create([
 db.execute('update rooms set occupant = "100540003"
   where unit_no = "Gryffindor Hall" and place_no = "002"')
 
+ParkingSpot.find_by_spot_no('002').update(occupant: '100540003')
 
 Person.create([
                   {pid: '100540004',

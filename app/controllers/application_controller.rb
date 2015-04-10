@@ -77,8 +77,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    # add family apartments
-    #the_list << {:unit_no => 'Family housing', :vacancy => FamilyApt.where(:occupant => nil).count}
+    the_list
   end
 
   def parking_vacant_list

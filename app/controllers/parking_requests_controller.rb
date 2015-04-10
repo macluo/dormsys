@@ -1,5 +1,5 @@
 class ParkingRequestsController < ApplicationController
-  before_action :set_parking_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_parking_request, only: [:edit, :update, :destroy]
 
   # GET /parking_requests
   # GET /parking_requests.json
@@ -12,7 +12,7 @@ class ParkingRequestsController < ApplicationController
   # GET /parking_requests/1.json
   def show
     if (is_student?)
-      redirect_to menu_student_url if has_pending_request? || !has_active_lease?
+      redirect_to menu_student_url if !has_pending_request? || !has_active_lease?
       @person = Person.find_by_pid(session[:pid])
       @student = Student.find_by_sid(session[:pid])
       request = ParkingRequest.where("sid = :student_id AND app_status <= 1", {student_id: current_user_id}).first
@@ -89,7 +89,7 @@ class ParkingRequestsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_parking_request
-      #@parking_request = ParkingRequest.find(params[:id])
+      @parking_request = ParkingRequest.find(params[:id])
     end
 
     def has_pending_request?
