@@ -42,6 +42,12 @@ class HousingRequestsController < ApplicationController
     if @student.family_student == true
       @pref_housing = BuildingsApt.select(:unit_no)
       @select_item = "unit_no"
+    elsif @student.category == 'Graduate'
+      @pref_housing = BuildingsApt.where("category < 3 and upper_class = 1" ).select(:unit_no)
+      @select_item = "unit_no"
+    elsif @student.category == 'Freshman'
+      @pref_housing = BuildingsApt.where("category < 3 and unit_no <> 'Slytherin Hall'").select(:unit_no)
+      @select_item = "unit_no"
     else # if not specified then treat students as single student
       @pref_housing = BuildingsApt.where("category < 3").select(:unit_no)
       @select_item = "unit_no"

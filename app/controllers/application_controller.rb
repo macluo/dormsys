@@ -43,21 +43,14 @@ class ApplicationController < ActionController::Base
   end
 
   def is_guest?
-    (current_user == 'guest')
+    return false if is_adm?
+    return (session[:type] == "Visitor") # guest student (Visitor)
   end
 
   def is_login?
     return (session[:user] != nil)
   end
 
-  # use numerical value to represent the current semester
-  def current_semester
-    5 # 2015, Spring
-  end
-
-  def current_semester_end_date
-    "2015-07-31"
-  end
 
   def semester_list
     Semester.all

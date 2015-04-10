@@ -1251,7 +1251,7 @@ Student.create([
 
 
 Person.create([
-                  {pid: '100540012',
+                  {pid: '200540012',
     password: '1234',
     fname: 'Remus',
     lname: 'Lupin',
@@ -1266,7 +1266,7 @@ Person.create([
 
 
 Student.create([
-  {sid: '100540012',
+  {sid: '200540012',
   s_type: 'G',
   add_comment:'',
   s_status:'0',

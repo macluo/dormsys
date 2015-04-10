@@ -30,7 +30,7 @@ SimpleNavigation::Configuration.run do |navigation|
   # The auto highlight feature is turned on by default.
   # This turns it off globally (for the whole plugin)
   # navigation.auto_highlight = false
-  
+
   # If this option is set to true, all item names will be considered as safe (passed through html_safe). Defaults to false.
   # navigation.consider_item_names_as_safe = false
 
@@ -54,57 +54,57 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
     #primary.item :user, '1. Login', 'log_in' do |user|
-      user.item :user_5A_1, '1. Housing Option'do |sub_nav1|
-        sub_nav1.item :user_3A_1, '1. View invoices', invoices_url do |sub_nav2|
-          sub_nav2.item :user_3A_1_1, '1. View current invoice'
-          sub_nav2.item :user_3A_1_2, '2. View past invoices'
-          sub_nav2.item :user_3A_1_3, '3. Back'
-        end
-
-        sub_nav1.item :user_3A_2, '2. View leases' do |sub_nav2|
-          sub_nav2.item :user_3A_2_1, '1. View current lease'
-          sub_nav2.item :user_3A_2_2, '2. View past leases'
-          sub_nav2.item :user_3A_2_3, '3. Back'
-        end
-
-        sub_nav1.item :user_3A_3, '3. New request' do |sub_nav2|
-          sub_nav2.item :user_3A_3_1, '1. New lease request', new_housing_request_url
-          sub_nav2.item :user_3A_3_2, '2. Terminate lease request', new_termination_request_url
-          sub_nav2.item :user_3A_3_3, '3. Back'
-        end
-        sub_nav1.item :user_3A_4, '4. View/Cancel requests' do |sub_nav2|
-          sub_nav2.item :user_3A_4_1, '1. View request', housing_request_url(session[:pid])
-          sub_nav2.item :user_3A_4_2, '2. Cancel request'
-          sub_nav2.item :user_3A_4_3, '3. Back'
-        end
-
-        sub_nav1.item :user_3A_5, '5. View vacancy'
-        sub_nav1.item :user_3A_6, '6. Back'
+    user.item :user_3_1_1, '1. Housing option' do |sub_nav1|
+      sub_nav1.item :user_3A_1, '1. View invoices'  do |sub_nav2|
+        sub_nav2.item :user_3A_1_1, '1. View current invoice', invoice_url(session[:pid])
+        sub_nav2.item :user_3A_1_2, '2. View past invoices', invoices_url
+        sub_nav2.item :user_3A_1_3, '3. Back'
       end
 
-      user.item :user_5A_2, '2. Parking Option' do |parking|
-        parking.item :user_3B_1, '1. Request parking', new_parking_request_url
-        parking.item :user_3B_2, '2. View parking lot info', parking_lots_url
-        parking.item :user_3B_3, '3. View current parking spot'
-        parking.item :user_3B_4, '4. Renew parking spot'
-        parking.item :user_3B_5, '5. Cancel parking spot'
-        parking.item :user_3B_6, '6. View request status', parking_request_url(session[:pid])
-        parking.item :user_3B_7, '7. Back'
+      sub_nav1.item :user_3A_2, '2. View leases' do |sub_nav2|
+        sub_nav2.item :user_3A_2_1, '1. View current lease', signed_lease_url(session[:pid])
+        sub_nav2.item :user_3A_2_2, '2. View past leases', signed_leases_url
+        sub_nav2.item :user_3A_2_3, '3. Back'
       end
 
-      user.item :user_5A_3, '3. Maintenance' do |sub_nav|
-        sub_nav.item :user_3C_1, '1. New ticket', new_maintenance_request_url
-        sub_nav.item :user_3C_2, '2. View ticket status', maintenance_request_url(session[:pid])
-        sub_nav.item :user_3C_3, '3. Back'
+      sub_nav1.item :user_3A_3, '3. New request' do |sub_nav2|
+        sub_nav2.item :user_3A_3_1, '1. New lease request', new_housing_request_url
+        sub_nav2.item :user_3A_3_2, '2. Terminate lease request', new_termination_request_url
+        sub_nav2.item :user_3A_3_3, '3. Back'
+      end
+      sub_nav1.item :user_3A_4, '4. View/Cancel requests' do |sub_nav2|
+        sub_nav2.item :user_3A_4_1, '1. View request', housing_request_url(session[:pid])
+        sub_nav2.item :user_3A_4_2, '2. Cancel request'
+        sub_nav2.item :user_3A_4_3, '3. Back'
       end
 
-      user.item :user_5A_4, '4. Profile' do |sub_nav|
-        sub_nav.item :user_3D_1, '1. View profile', student_url(session[:pid])
-        sub_nav.item :user_3D_2, '2. Edit profile', edit_student_url(session[:pid])
-        sub_nav.item :user_3D_3, '3. Back'
-      end
+      sub_nav1.item :user_3A_5, '5. View vacancy', menu_housing_vacancy_url
+      sub_nav1.item :user_3A_6, '6. Back'
+    end
 
-      user.item :user_5A_5, '5. Logout', 'log_out'
+    user.item :user_3_1_2, '2. Parking option' do |parking|
+      parking.item :user_3B_1, '1. Request parking', new_parking_request_url
+      parking.item :user_3B_2, '2. View parking lot info', parking_lots_url
+      parking.item :user_3B_3, '3. View current parking spot', menu_parking_url
+      parking.item :user_3B_4, '4. Renew parking spot'
+      parking.item :user_3B_5, '5. Cancel parking spot', menu_parking_url
+      parking.item :user_3B_6, '6. View request status', parking_request_url(session[:pid])
+      parking.item :user_3B_7, '7. Back'
+    end
+
+    user.item :user_3_1_3, '3. Maintenance' do |sub_nav|
+      sub_nav.item :user_3C_1, '1. New ticket', new_maintenance_request_url
+      sub_nav.item :user_3C_2, '2. View ticket status', maintenance_request_url(session[:pid])
+      sub_nav.item :user_3C_3, '3. Back'
+    end
+
+    user.item :user_3_1_4, '4. Profile' do |sub_nav|
+      sub_nav.item :user_3D_1, '1. View profile', student_url(session[:pid])
+      sub_nav.item :user_3D_2, '2. Edit profile', edit_student_url(session[:pid])
+      sub_nav.item :user_3D_3, '3. Back'
+    end
+
+    user.item :user_3_1_5, '5. Logout', 'log_out'
     #end
 
     #primary.item :guest, '2. Guest Login'

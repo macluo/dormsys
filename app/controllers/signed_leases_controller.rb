@@ -175,6 +175,16 @@ class SignedLeasesController < ApplicationController
 
         end
 
+      elsif is_guest? #only general parking is allowed
+
+        ParkingSpot.where(:lot_no => 7, :occupant => nil).each do |t|
+          if t.class_id == parking_request.vehicle_type
+            the_spot = t
+            the_fee = ParkingClass.find_by_class_id(t.class_id).fee
+          end
+          break if !the_spot.nil?
+        end
+
       else # any parking is fine
 
         ParkingSpot.where(:occupant => nil).each do |p|
