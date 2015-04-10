@@ -395,7 +395,7 @@ ParkingSpot.create([
 ParkingSpot.create([
     {spot_no: '025',
     class_id: 1,
-    lot_no: 4}])
+    lot_no: 5}])
 
 ParkingSpot.create([
     {spot_no: '026',

@@ -40,10 +40,10 @@ class HousingRequestsController < ApplicationController
     @nearby_parking = ParkingLot.select(:lot_no)
 
     if @student.family_student == true
-      @pref_housing = FamilyApt.select(:apt_no)
+      @pref_housing = BuildingsApt.select(:unit_no)
       @select_item = "apt_no"
     else # if not specified then treat students as single student
-      @pref_housing = BuildingsApt.select(:unit_no)
+      @pref_housing = BuildingsApt.where("category < 3")select(:unit_no)
       @select_item = "unit_no"
     end
 
