@@ -852,7 +852,7 @@ SignedLease.create([
 # can't use object update b/c super key
 #
 db.execute('update rooms set occupant = "100540001"
-  where unit_no = "Gryffindor Hall" and place_no = "003"')
+  where unit_no = "Gryffindor Hall" and place_no = "001"')
 
 ParkingSpot.find_by_spot_no('003').update(occupant: '100540001')
 

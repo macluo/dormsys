@@ -39,25 +39,6 @@ class SignedLeasesController < ApplicationController
 
     #match available housing
     the_list = housing_vacant_list #get this list from application controller
-    if @student.family_student == true
-      puts "family"
-
-      if !request.apt_pref_1.nil? && !the_list.index{ |x| x[:unit_no] == request.apt_pref_1}.nil?
-        idx = request.apt_pref_1
-      elsif !request.apt_pref_2.nil? && !the_list.index{ |x| x[:unit] == request.apt_pref_2}.nil?
-        idx = request.apt_pref_2
-      elsif !request.apt_pref_3.nil? && !the_list.index{ |x| x[:unit] == request.apt_pref_3}.nil?
-        idx = request.apt_pref_3
-      else # no vacant
-
-      end
-
-      the_apt = FamilyApt.where(:apt_no => idx, :occupant => nil).first
-      @signed_lease.place_no = the_apt.apt_no
-      @signed_lease.rent = the_apt.rent
-      @type = 'family'
-
-    else
 
       if !request.building_pref_1.nil? && !the_list.index{ |x| x[:unit_no] == request.building_pref_1}.nil?
         idx = request.building_pref_1
@@ -69,16 +50,23 @@ class SignedLeasesController < ApplicationController
 
       end
 
-      the_room = Room.where(:unit_no => idx, :occupant => nil).first
-      @signed_lease.place_no = the_room.place_no
+      category = BuildingsApt.find_by_unit_no(idx).category
+      if category == 3 #family apts
+        the_room = FamilyApt.where(:unit_no => idx, :occupant => nil).first;
+        @signed_lease.apt_no = the_room.apt_no
+        @signed_lease.rent = the_room.rent
+        @type = 'family'
+      else
+        the_room = Room.where(:unit_no => idx, :occupant => nil)[0]  #can't use .first because of index error for superkey
+        @signed_lease.place_no = the_room.place_no
+        @signed_lease.rent = BuildingsApt.find_by_unit_no(idx).rent
+        @type = 'single'
+      end
       @signed_lease.unit_no = the_room.unit_no
-      @signed_lease.rent = the_room.rent
-      @type = 'single'
-    end
 
     @signed_lease.sid = @student.sid
     @signed_lease.start_date = request.movein_date
-    @signed_lease.end_date = semeser_end_date
+    @signed_lease.end_date = current_semester_end_date
     @signed_lease.pay_option = request.pay_option
 
     @request_id = request.req_no #pass housing request req_no
@@ -124,7 +112,7 @@ class SignedLeasesController < ApplicationController
           #room = Room.where(:place_no => @signed_lease.place_no, :unit_no =>@signed_lease.unit_no)
           #room.occupant = request.sid # see if this works?
           #room.save
-          DB_update.execute('update rooms set occupant = "#{request.sid}" where unit_no = "#{@signed_lease.unit_no}" and place_no = "#{@signed_lease.place_no}"')
+          ActiveRecord::Base.connection.execute('update rooms set occupant = "#{request.sid}" where unit_no = "#{@signed_lease.unit_no}" and place_no = "#{@signed_lease.place_no}"')
         else
           family_apt = FamilyApt.find_by_apt_no(@signed_lease.apt_no)
           family_apt.occupant = request.sid

@@ -35,8 +35,6 @@
   <%= @housing_request.pref_nearby %>
 </p>
 
-<% if @student.s_type != 'family' %>
-
 <p>
   <strong>Building & apartment preference 1:</strong>
   <%= @housing_request.building_pref_1 %>
@@ -52,24 +50,10 @@
   <%= @housing_request.building_pref_3 %>
 </p>
 
-<% else %>
-
 <p>
-  <strong>Family apartment preference 1:</strong>
-  <%= @housing_request.apt_pref_1 %>
+  <strong>Movein date:</strong>
+  <%= @housing_request.movein_date %>
 </p>
-
-<p>
-  <strong>Family apartment preference 2:</strong>
-  <%= @housing_request.apt_pref_2 %>
-</p>
-
-<p>
-  <strong>Family apartment preference 3:</strong>
-  <%= @housing_request.apt_pref_3 %>
-</p>
-
-<% end %>
 
 <p>
   <strong>Application status:</strong>

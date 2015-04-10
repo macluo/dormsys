@@ -68,12 +68,17 @@ class ApplicationController < ActionController::Base
     builds_apts = BuildingsApt.all
 
     builds_apts.each do |b|
-      the_list << {:unit_no => b.unit_no, :vacancy => Room.where(:unit_no => b.unit_no,
+      if b.category < 3 # category 1,2 single family apts
+        the_list << {:unit_no => b.unit_no, :vacancy => Room.where(:unit_no => b.unit_no,
                                                                  :occupant => nil).count}
+      elsif b.category == 3
+        the_list << {:unit_no => b.unit_no, :vacancy => FamilyApt.where(:unit_no => b.unit_no,
+                                                                   :occupant => nil).count}
+      end
     end
 
     # add family apartments
-    the_list << {:unit_no => 'Family housing', :vacancy => FamilyApt.where(:occupant => nil).count}
+    #the_list << {:unit_no => 'Family housing', :vacancy => FamilyApt.where(:occupant => nil).count}
   end
 
   def parking_vacant_list
@@ -114,7 +119,7 @@ class ApplicationController < ActionController::Base
   end
 
   def spring_end_date
-    return Date.new(Time.now.year, 7, 31)
+    return Date.new(Time.now.year, 5, 31)
   end
 
   def summer_start_date
@@ -126,13 +131,24 @@ class ApplicationController < ActionController::Base
   end
 
   def current_semester
-    case Time.now
-      when spring_start_date..spring_end_date
-        return 1
-      when summer_start_date..summer_end_date
-        return 2
-      when fall_start_date..fall_end_date
-        return 3
+    t = Time.now
+    if spring_start_date < t && t < spring_end_date
+      return 1
+    elsif summer_start_date < t && t < summer_end_date
+      return 2
+    elsif fall_start_date < t && t < fall_end_date
+      return 3
+    end
+  end
+
+  def current_semester_end_date
+    case current_semester
+      when 1
+        return spring_end_date
+      when 2
+        return summer_end_date
+      when 3
+        return fall_end_date
     end
   end
 

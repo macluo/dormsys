@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 1) do
 
   create_table "buildings_apts", primary_key: "unit_no", force: true do |t|
     t.string  "manager_fname", limit: 20
@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer "period"
     t.integer "pay_option"
     t.date    "movein_date"
-    t.string  "building_pref_1", limit: 10
-    t.string  "building_pref_2", limit: 10
-    t.string  "building_pref_3", limit: 10
+    t.string  "building_pref_1", limit: 20
+    t.string  "building_pref_2", limit: 20
+    t.string  "building_pref_3", limit: 20
     t.string  "apt_pref_1",      limit: 10
     t.string  "apt_pref_2",      limit: 10
     t.string  "apt_pref_3",      limit: 10
